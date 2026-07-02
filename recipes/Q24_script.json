@@ -1,0 +1,56 @@
+{
+  "id": 24,
+  "title": "Products - Changing the VAT Level for food products",
+  "workflow_title": "Products - Changing the VAT Level for food products",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, under Articles open Products.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Use the Product group dropdown to select the groups that contain food items.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the VAT entry of a product and select your preferred VAT rate from the dropdown.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "If a whole product group is food, update its default VAT too: open Product groups.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click the pencil icon of the group you want to update.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Change the Default VAT level.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Save your changes.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Then check Price management for price-rule sets that change VAT, and send the changes via General > General > Send.",
+      "highlight": ""
+    }
+  ]
+}

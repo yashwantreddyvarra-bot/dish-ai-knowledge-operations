@@ -1,0 +1,56 @@
+{
+  "id": 19,
+  "title": "Menus - Managing and arranging menus (incl. sub-menus)",
+  "workflow_title": "Menus - Managing and arranging menus (incl. sub-menus)",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "Under Articles, open Menus.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Under a product group, click Add submenu to create a new submenu.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Choose a colour for the submenu (used in the app) and optionally + Upload image.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "To add products, select them in the right column and drag them into the submenu.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Use the pencil icon to rename a submenu, or the trash icon to delete it (this cannot be undone).",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "To add an extra menu, click Add menu at the top right.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Link the menu to a location, for example an area, table or restaurant.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Then go to General, the sub-category General, and click Send to push the changes to your POS.",
+      "highlight": ""
+    }
+  ]
+}

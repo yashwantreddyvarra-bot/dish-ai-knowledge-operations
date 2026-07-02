@@ -1,0 +1,44 @@
+{
+  "id": 14,
+  "title": "Price Management - Adding and managing price levels",
+  "workflow_title": "Price Management - Adding and managing price levels",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, under Articles open Price levels.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click Add price level to create a new one.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Give the price level a Name, for example Takeaway menu.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Set the Sort order (its order in the Backoffice) and Number in app (its order in the app).",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "A price level can be used by a key in the app, or linked to a facility, customer or store.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Click Save to store the price level.",
+      "highlight": ""
+    }
+  ]
+}

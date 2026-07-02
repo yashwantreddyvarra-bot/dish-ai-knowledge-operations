@@ -1,0 +1,51 @@
+{
+  "id": 32,
+  "title": "Sales Channels - Changing settings for DISH Payment",
+  "workflow_title": "Changing settings for DISH Payment",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to change the settings for DISH Payment.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Self-service and click Sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the edit (pencil) icon of your QR (Payment) sales channel.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "On the Content tab, edit the Payment text shown to customers during DISH Payment.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Open the Tipping tab and switch on Tipping active to configure tips for DISH Payment.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Open the General menu (General → General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

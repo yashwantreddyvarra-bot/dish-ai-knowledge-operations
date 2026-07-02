@@ -1,0 +1,22 @@
+{
+  "qid": 30, "title": "Setting up the imprint for web shops and QR sales channels",
+  "workflow_title": "Setting up the imprint for web shops and QR sales channels",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "target": "sidebar: Sales channels"},
+    {"snap": 3, "highlight": ["tr:has-text(\"QR Ordening\") [data-track-button-id=\"edit-item\"]"], "target": "edit: QR sales channel"},
+    {"click": ["tr:has-text(\"QR Ordening\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"click": ["text=Legal notice", ":text(\"Legal notice\")"], "t": 3000}, {"wait": 1500}, {"settle": 1500},
+    {"snap": 4, "highlight": ["text=Legal notice", ":text(\"Legal notice\")"], "target": "tab: Legal notice"},
+    {"scrollto": [":text-is(\"Imprint\")", "text=Imprint"], "t": 1200},
+    {"dump": "imp_scrolled"},
+    {"snap": 5, "highlight": ["p-editor:below(:text-is(\"Imprint\"))", ":text-is(\"Imprint\")", "text=Imprint"], "target": "field: Imprint"},
+    {"snap": 6, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 7, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

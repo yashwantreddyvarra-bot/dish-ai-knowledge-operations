@@ -1,0 +1,160 @@
+{
+  "qid": 10,
+  "title": "Managing and adding products",
+  "workflow_title": "Managing and adding products",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "snap": 1
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:text-is(\"Products\")"
+      ]
+    },
+    {
+      "snap": 3
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ]
+    },
+    {
+      "click": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ],
+      "t": 3500
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "app-product-information button:has-text(\"Save\")",
+        "button:has-text(\"Save\"):not(:has-text(\"add new\"))",
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "click": [
+        "app-product-information button:has-text(\"Cancel\")",
+        "button:has-text(\"Cancel\")"
+      ],
+      "t": 3000
+    },
+    {
+      "settle": 2200
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"duplicate-item\"]",
+        "tbody tr:nth-child(1) [data-track-button-id=\"copy-item\"]",
+        "tbody tr:nth-child(1) button:nth-of-type(2)"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "tbody tr:nth-child(1) td:nth-child(3)",
+        "text=3-course Menu",
+        "tbody tr:nth-child(1) a"
+      ]
+    },
+    {
+      "snap": 8,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"delete-item\"]",
+        "tbody tr:nth-child(1) [data-track-button-id=\"remove-item\"]",
+        "tbody tr:nth-child(1) button:nth-of-type(3)"
+      ]
+    },
+    {
+      "click": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"delete-item\"]",
+        "tbody tr:nth-child(1) [data-track-button-id=\"remove-item\"]",
+        "tbody tr:nth-child(1) button:nth-of-type(3)"
+      ],
+      "t": 2500
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "snap": 9,
+      "highlight": [
+        "button:has-text(\"Delete\")",
+        "[data-track-button-id*=\"confirm\" i]"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Cancel\")",
+        "[data-track-button-id*=\"cancel\" i]"
+      ],
+      "t": 2000
+    },
+    {
+      "wait": 800
+    },
+    {
+      "snap": 10,
+      "highlight": [
+        "button:has-text(\"Add product\")"
+      ]
+    },
+    {
+      "goto": "CREATE",
+      "settle": 3200
+    },
+    {
+      "snap": 11,
+      "highlight": [
+        "input[formcontrolname*=\"name\" i]",
+        "input[name*=\"name\" i]"
+      ]
+    },
+    {
+      "snap": 12,
+      "highlight": [
+        "[role=\"combobox\"]:right-of(input[formcontrolname=\"name\" i]):above(:text-is(\"Prices\"))",
+        ":nth-match([role=\"combobox\"]:above(:text-is(\"Prices\")),1)"
+      ]
+    },
+    {
+      "snap": 13,
+      "highlight": [
+        ":nth-match([role=\"combobox\"]:right-of(input[formcontrolname=\"name\" i]):above(:text-is(\"Prices\")),2)",
+        ":nth-match([role=\"combobox\"]:above(:text-is(\"Prices\")),2)"
+      ]
+    },
+    {
+      "snap": 14,
+      "highlight": [
+        "input:near(:text-is(\"Price\"))",
+        "input:below(:text-is(\"Prices\"))"
+      ]
+    },
+    {
+      "snap": 15,
+      "highlight": [
+        "app-product-information button:has-text(\"Save\")",
+        "button:has-text(\"Save\"):not(:has-text(\"add new\"))",
+        "button:has-text(\"Save\")"
+      ]
+    }
+  ]
+}

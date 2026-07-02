@@ -1,0 +1,75 @@
+{
+  "id": 27,
+  "title": "Time Schedules - Adding and managing time schedules for self-service",
+  "workflow_title": "Adding and managing time schedules for self-service",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to add and manage time schedules for self-service.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Self-service.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click on Time schedules.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Click + Add time schedule.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Enter a name for your time schedule.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Specify the open/close times for each day; use + to add slots and the bin icon to remove them.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Use + Add exception to set alternative or closed times for specific dates or periods.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "Go to Sales channels and edit the sales channel of your choice.",
+      "highlight": ""
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "Open the Opening hours tab and select your time schedule from the dropdown, then Save.",
+      "highlight": ""
+    },
+    {
+      "step": 11,
+      "action": "click",
+      "caption": "Click Save to apply, then transmit the change via General → Send.",
+      "highlight": ""
+    }
+  ]
+}

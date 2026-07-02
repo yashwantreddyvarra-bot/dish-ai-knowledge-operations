@@ -1,0 +1,110 @@
+{
+  "id": 8,
+  "title": "Activating Regime Forfettario",
+  "workflow_title": "Activating Regime Forfettario",
+  "source": "official iorad PDF 2577093 (Activating Regime Forfettario)",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Regime Forfettario is a simplified tax system in Italy designed for small businesses with low revenues. This guide shows how to activate it.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "After logging into the Backoffice, under Articles click on Products.",
+      "highlight": "Products"
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "You are now in the products overview.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Select a product you wish to change by clicking the pencil icon next to it.",
+      "highlight": "pencil icon"
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "In the product form, open the VAT section under Prices.",
+      "highlight": "VAT"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Open the VAT drop-down and select the option 0% - Zero.",
+      "highlight": "0% - Zero"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "After changing all the products you need, remember to click Save.",
+      "highlight": "Save"
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Click on General in the left menu.",
+      "highlight": "General"
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "Open the establishment settings. In the main menu go to General, then open your store/establishment.",
+      "highlight": "General"
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "Click the pencil icon to modify the details of your selected establishment.",
+      "highlight": "pencil icon"
+    },
+    {
+      "step": 11,
+      "action": "click",
+      "caption": "In the establishment settings, locate the Regime Forfettario checkbox in the top right corner and select it. (This option appears only for Italian establishments.)",
+      "highlight": "Regime Forfettario"
+    },
+    {
+      "step": 12,
+      "action": "info",
+      "caption": "A warning message will appear - read and make sure you understand its content before continuing.",
+      "highlight": ""
+    },
+    {
+      "step": 13,
+      "action": "info",
+      "caption": "If you ever decide to deactivate the Regime Forfettario, simply de-select the checkbox.",
+      "highlight": ""
+    },
+    {
+      "step": 14,
+      "action": "info",
+      "caption": "A new warning message will appear, informing you of what the action means.",
+      "highlight": ""
+    },
+    {
+      "step": 15,
+      "action": "click",
+      "caption": "After making this change, click on Save.",
+      "highlight": "Save"
+    },
+    {
+      "step": 16,
+      "action": "click",
+      "caption": "Click on Send to transmit the provisioning so the changes are not lost.",
+      "highlight": "Send"
+    },
+    {
+      "step": 17,
+      "action": "info",
+      "caption": "That's it. You now know how to activate the Regime Forfettario.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "urls": {
+    "login": "https://netherlands.sandbox.myplace.dish.co/cm/login",
+    "products": "https://netherlands.sandbox.myplace.dish.co/cm/products",
+    "menus": "https://netherlands.sandbox.myplace.dish.co/cm/menus"
+  },
+  "credentials": {
+    "email": "booq_en_video@dish.digital",
+    "password": "booq_en_video@dish.digital"
+  },
+  "product": {
+    "name": "Sparkling Water",
+    "price": "3.50",
+    "category_pref": ["Soft Drinks", "Drinks", "Dranken", "Food", "Miscellaneous"],
+    "vat_pref": ["9%", "9% - Laag", "9% - Low", "Laag", "Low", "9"]
+  },
+  "menu": {
+    "name_pref": ["Menukaart", "Menu", "Main"]
+  },
+  "output": {
+    "base": "output",
+    "screenshots": "output/screenshots",
+    "videos": "output/videos",
+    "docs": "output/docs",
+    "vector_db": "output/vector_db",
+    "manifest": "output/manifest.json"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "qid": 17,
+  "title": "Time Periods - Adding time restrictions to menus",
+  "workflow_title": "Time Periods - Adding time restrictions to menus",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "https://netherlands.sandbox.myplace.dish.co/cm/timeperiods",
+      "settle": 2800
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Periods\")",
+        "span:text-is(\"Periods\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:has-text(\"Add period\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Add period\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "input[formcontrolname=\"name\"]"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "app-check-box[formcontrolname=\"isAllDay\"]",
+        "text=Period"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "p-date-picker[formcontrolname=\"startDateTime\"]",
+        "text=Start"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "input[formcontrolname=\"durationInterval\"]",
+        "text=Duration"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "app-check-box[formcontrolname=\"isRepeatable\"]",
+        "text=Calendar"
+      ]
+    },
+    {
+      "snap": 8
+    },
+    {
+      "snap": 9
+    }
+  ]
+}

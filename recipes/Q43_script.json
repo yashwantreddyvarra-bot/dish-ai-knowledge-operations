@@ -1,0 +1,63 @@
+{
+  "id": 43,
+  "title": "Payment Methods - Adding a payment method: On account",
+  "workflow_title": "Adding a payment method: On account",
+  "backoffice": "old",
+  "country": "DE",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to add the On account payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, open the Payment section in the left navigation bar.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Go to Payment methods to see all existing methods.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Click + Add payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Enter a name (for example, \"On account\").",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Set the Payment method type to Non-integrated payment terminal.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Select the appropriate currency.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Set the Fiscal reference to Other transfer, then click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "info",
+      "caption": "Add it to the cashier screen via Payment, then Payment menus, by dragging the new method in.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "qid": 16,
+  "title": "French Menu - Adding a fixed-price menu",
+  "workflow_title": "French Menu - Adding a fixed-price menu",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "https://netherlands.sandbox.myplace.dish.co/cm/frenchmenus",
+      "settle": 2800
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"French menus\")",
+        "span:text-is(\"French menus\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:has-text(\"Add French menu\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Add French menu\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "input[formcontrolname=\"name\"]"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "app-productgroup-tree-input[formcontrolname=\"productGroup\"]",
+        "text=Product group"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "app-turnover-tree-input[formcontrolname=\"turnoverGroup\"]",
+        "text=Turnover categories"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "app-price-input[formcontrolname=\"price\"]",
+        "text=Price"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 8
+    }
+  ]
+}

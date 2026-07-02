@@ -1,0 +1,63 @@
+{
+  "id": 29,
+  "title": "Sales Channels - Adding cross-selling products at checkout",
+  "workflow_title": "Adding cross-selling products at checkout",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to add cross-selling products at checkout.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, open Self-service and click Sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the pencil in front of the kiosk sales channel you want to change.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Open the Cross-selling option.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click the toggle next to \"Enable cross-selling\" to activate it.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Enter the title that shows on the kiosk.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Next to Product, choose the product to cross-sell, then Save.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Optionally add translations via General, then Translations, then Kiosk Cross-selling Text.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "Open the General menu (General → General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

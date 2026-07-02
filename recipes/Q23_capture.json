@@ -1,0 +1,122 @@
+{
+  "qid": 23,
+  "title": "Packaging Profiles - Adding and assigning a packaging profile",
+  "workflow_title": "Packaging Profiles - Adding and assigning a packaging profile",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "https://netherlands.sandbox.myplace.dish.co/cm/recyclingDeposits",
+      "settle": 2800
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:has-text(\"Add profile\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:has-text(\"Add profile\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Add profile\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "input[formcontrolname=\"name\"]",
+        "app-price-input[formcontrolname=\"price\"]"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "input[formcontrolname=\"displayName\"]",
+        "text=Sales name"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "goto": "PRODUCTS",
+      "settle": 2200
+    },
+    {
+      "click": [
+        "button:text-is(\"Product groups\")",
+        "span:has-text(\"Product groups\")"
+      ],
+      "t": 2600
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "button:text-is(\"Product groups\")"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ]
+    },
+    {
+      "click": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ],
+      "t": 3000
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "snap": 8,
+      "highlight": [
+        "text=Package profile",
+        "[role=\"combobox\"]"
+      ]
+    },
+    {
+      "snap": 9,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "goto": "PRODUCTS",
+      "settle": 2200
+    },
+    {
+      "snap": 10,
+      "highlight": [
+        "button:text-is(\"Products\")"
+      ]
+    },
+    {
+      "snap": 11
+    }
+  ]
+}

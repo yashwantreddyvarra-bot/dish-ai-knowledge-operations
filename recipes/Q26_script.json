@@ -1,0 +1,39 @@
+{
+  "id": 26,
+  "title": "Sales Channels - Activating the Pay on pick up functionality",
+  "workflow_title": "Activating the Pay on pick up functionality",
+  "backoffice": "old",
+  "country": "FR",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to activate the Pay on pick up functionality for self-service.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Go to Self-service, then Sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Edit the sales channel for the Webshop (Order2POS).",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "On the General tab, scroll to the Pick-up section and switch on \"Allow pay on pickup\".",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click Save to apply, then transmit the change via General → Send.",
+      "highlight": ""
+    }
+  ]
+}

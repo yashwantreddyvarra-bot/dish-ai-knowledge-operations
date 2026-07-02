@@ -1,0 +1,98 @@
+{
+  "id": 10,
+  "title": "Managing and adding products",
+  "workflow_title": "Managing and adding products",
+  "source": "official iorad PDF 2401595 (Managing and adding products)",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome to the DISH POS dashboard. In this tutorial we show you how to manage and add products.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "First, under Articles click on Products.",
+      "highlight": "Products"
+    },
+    {
+      "step": 3,
+      "action": "info",
+      "caption": "You are now in the overview of all your existing products.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "To edit a product, click on the corresponding edit (pencil) icon.",
+      "highlight": "edit"
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "A new window opens with the settings, which you can adjust. Once done, make sure to click Save.",
+      "highlight": "Save"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "If you want to create a copy of a product, use the corresponding duplicate icon.",
+      "highlight": "duplicate"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "The product is now copied. To change the name, click on the title of the product and type the desired name.",
+      "highlight": "title"
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "To remove a product, simply click on the delete (bin) icon.",
+      "highlight": "delete"
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "To make sure you do not delete it by accident, you are asked to confirm your action by clicking Delete.",
+      "highlight": "Delete"
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "To add a new product, click on + Add product.",
+      "highlight": "Add product"
+    },
+    {
+      "step": 11,
+      "action": "click",
+      "caption": "Fill in the name of the product using the text field.",
+      "highlight": "name"
+    },
+    {
+      "step": 12,
+      "action": "click",
+      "caption": "Assign the product to a product group by selecting a group through the drop-down menu.",
+      "highlight": "product group"
+    },
+    {
+      "step": 13,
+      "action": "click",
+      "caption": "Afterwards, select the turnover group through the drop-down menu.",
+      "highlight": "turnover group"
+    },
+    {
+      "step": 14,
+      "action": "click",
+      "caption": "Then enter a price using the respective field.",
+      "highlight": "price"
+    },
+    {
+      "step": 15,
+      "action": "info",
+      "caption": "Once you set up the product details, click Save. Remember to send the changes to your POS via General > General > Send.",
+      "highlight": "Save"
+    }
+  ]
+}

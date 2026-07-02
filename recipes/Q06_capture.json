@@ -1,0 +1,38 @@
+{
+  "qid": 6,
+  "title": "Assigning allergens and additives to a product",
+  "workflow_title": "Assigning allergens and additives to a product",
+  "vars": {"NAME": "", "ALLERGENS": ""},
+  "actions": [
+    { "goto": "PRODUCTS", "settle": 2600 },
+    { "fill": ["input[type=\"search\"]", "input[placeholder*=\"Search\" i]", "input[placeholder*=\"search\" i]"], "value": "{NAME}" }, { "key": "Enter" }, { "wait": 2200 },
+    { "assert_found": "{NAME}", "rows": "tbody tr", "_note": "if the product isn't in the list, stop and reply smartly instead of editing the wrong (first) row" },
+    { "snap": 1, "highlight": ["button:text-is(\"Products\")"] },
+    { "snap": 2, "highlight": ["tbody tr:has-text(\"{NAME}\") [data-track-button-id=\"edit-item\"]", "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"] },
+
+    { "click": ["tbody tr:has-text(\"{NAME}\") [data-track-button-id=\"edit-item\"]", "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500 },
+    { "wait": 1500 },
+    { "settle": 1800 },
+    { "click": ["text=Product information", "text=Product Information"], "t": 2500 },
+    { "wait": 1200 },
+    { "snap": 3, "highlight": ["app-product-information :text-is(\"Product Information\")", "li:has-text(\"Product Information\")"] },
+    { "dump": "q6_allergens" },
+    { "tick_each": "{ALLERGENS}" },
+    { "wait": 700 },
+    { "snap": 4, "highlight": ["app-product-information :text-is(\"Allergens\")", ":nth-match(:text-is(\"Allergens\"), 2)"] },
+    { "snap": 5, "highlight": ["app-product-information :text-is(\"Additives\")", ":text-is(\"Additives\")"] },
+    { "snap": 6, "highlight": ["app-product-information button:has-text(\"Save\")", "button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"] },
+
+    { "click": ["app-product-information button:has-text(\"Cancel\")", "button:has-text(\"Cancel\")"], "t": 3000 },
+    { "settle": 2200 },
+    { "click": ["a:has-text(\"Allergens\")", ":nth-match(:text-is(\"Allergens\"), 1)", "text=Allergens"], "t": 2500 },
+    { "wait": 1200 },
+    { "settle": 1500 },
+    { "snap": 7, "highlight": ["a:has-text(\"Allergens\")", ":nth-match(:text-is(\"Allergens\"), 1)", "text=Allergens"] },
+
+    { "click": [":nth-match(button:text-is(\"General\"), 1)", "button:has-text(\"General\")"], "t": 2500 },
+    { "wait": 1000 },
+    { "settle": 1500 },
+    { "snap": 8, "highlight": [":nth-match(button:text-is(\"General\"), 2)", ":nth-match(button:text-is(\"General\"), 1)"] }
+  ]
+}

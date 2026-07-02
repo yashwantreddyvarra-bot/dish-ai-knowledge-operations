@@ -1,0 +1,7 @@
+{
+  "_comment": "TEMPLATE. Copy this file to config/intelligence.json and add your key, OR leave api_key blank and set OPENAI_API_KEY (or ANTHROPIC_API_KEY) in your environment. The real intelligence.json is gitignored so your key never goes to GitHub.",
+  "provider": "openai",
+  "api_key": "",
+  "text_model": "gpt-4o",
+  "vision_model": "gpt-4o"
+}

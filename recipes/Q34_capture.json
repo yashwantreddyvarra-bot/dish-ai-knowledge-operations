@@ -1,0 +1,28 @@
+{
+  "qid": 34, "title": "Adjusting and personalising the webshop",
+  "workflow_title": "Adjusting and personalising the webshop",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "target": "sidebar: Sales channels"},
+    {"snap": 3, "highlight": ["tr:has-text(\"Webshop\") [data-track-button-id=\"edit-item\"]"], "target": "edit: Webshop sales channel"},
+    {"click": ["tr:has-text(\"Webshop\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"snap": 4, "highlight": ["text=Language settings", "text=Default language", "input[formcontrolname=\"name\"]"], "target": "General tab: name / default language"},
+    {"click": ["text=Content", ":text(\"Content\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 5, "highlight": ["text=Welcome text", ":text(\"Welcome text\")"], "target": "Content tab: welcome text"},
+    {"click": ["text=Appearance", ":text(\"Appearance\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 6, "highlight": ["text=Primary colour", "text=Layout and format"], "target": "Appearance tab: colours / layout"},
+    {"click": ["text=Legal notice", ":text(\"Legal notice\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 7, "highlight": ["text=Terms & Conditions", ":text(\"Terms\")"], "target": "Legal notice tab: terms & conditions"},
+    {"click": ["text=Company information", ":text(\"Company information\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 8, "highlight": ["text=Company name", "text=Establishment"], "target": "Company information tab: company name"},
+    {"click": ["text=Opening hours", ":text(\"Opening hours\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 9, "highlight": ["text=Pick-up hours", ":text(\"Pick-up hours\")"], "target": "Opening hours tab: pick-up time slots"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 10, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

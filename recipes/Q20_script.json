@@ -1,0 +1,50 @@
+{
+  "id": 20,
+  "title": "General - Assigning price levels to a store",
+  "workflow_title": "General - Assigning price levels to a store",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, go to General, then Stores.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click the pencil icon in front of the store name.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "In the store settings, click App functions.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Find 'Select price level' and make sure the checkmark 'hidden' is unchecked, so the key appears in the app.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "You can also link a price level to a facility (General > Facilities) or to a guest (General > Customers).",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "info",
+      "caption": "Then go to General, the sub-category General, and click Send to push the changes to your POS.",
+      "highlight": ""
+    }
+  ]
+}

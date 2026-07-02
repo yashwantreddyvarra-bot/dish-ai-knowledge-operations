@@ -1,0 +1,144 @@
+{
+  "id": 1,
+  "title": "How do I add a product and add it to a menu?",
+  "workflow_title": "Adding a product and assigning it to a menu",
+  "backoffice": "old",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome to the DISH POS dashboard. In this tutorial, we will show you how to add a product and add it to a menu.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "First, open the Products menu.",
+      "highlight": "Articles",
+      "target": "sidebar: Articles"
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Then click on Products.",
+      "highlight": "Products",
+      "target": "sidebar: Articles > Products"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Once you are in the overview of all your products, click on + Add Product.",
+      "highlight": "+ Add Product",
+      "target": "button: + Add product (top right)"
+    },
+    {
+      "step": 5,
+      "action": "type",
+      "caption": "Then fill in the name of the product by using the corresponding text field.",
+      "highlight": "text field",
+      "target": "field: Name"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "And assign the product to a product group by selecting a group through the drop-down menu.",
+      "highlight": "drop-down menu",
+      "target": "dropdown: Product group"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Afterwards, select the turnover group through the drop-down menu.",
+      "highlight": "drop-down menu",
+      "target": "dropdown: Turnover categories"
+    },
+    {
+      "step": 8,
+      "action": "type",
+      "caption": "Then enter a price by using the respective field.",
+      "highlight": "field",
+      "target": "field: Price"
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "After saving, your new product appears in the Products list.",
+      "highlight": "Save",
+      "target": "button: Save"
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "To verify if the product got added, you can use the search function.",
+      "highlight": "search function",
+      "target": "field: Search (Products overview)"
+    },
+    {
+      "step": 11,
+      "action": "info",
+      "caption": "You will then find your searched product below.",
+      "highlight": ""
+    },
+    {
+      "step": 12,
+      "action": "click",
+      "caption": "To now add this product to a menu, click on Menus.",
+      "highlight": "Menus",
+      "target": "sidebar: Articles > Menus"
+    },
+    {
+      "step": 13,
+      "action": "click",
+      "caption": "Click on the menu you like to add your new product to.",
+      "highlight": "menu",
+      "target": "list: Menu (left column)"
+    },
+    {
+      "step": 14,
+      "action": "click",
+      "caption": "Then open the sub menu via the down-facing arrow in which the product shall be placed.",
+      "highlight": "down-facing arrow",
+      "target": "icon: expand submenu"
+    },
+    {
+      "step": 15,
+      "action": "click",
+      "caption": "Repeat the last step until you arrived at the desired menu.",
+      "highlight": "",
+      "target": "icon: expand submenu"
+    },
+    {
+      "step": 16,
+      "action": "click",
+      "caption": "Once you opened the final category you want to place your product in, go to the Products column and select your product from the drop-down menus.",
+      "highlight": "drop-down menus",
+      "target": "column: Products (right)"
+    },
+    {
+      "step": 17,
+      "action": "click",
+      "caption": "Or search for your product with the search bar.",
+      "highlight": "search bar",
+      "target": "field: Search (Products column)"
+    },
+    {
+      "step": 18,
+      "action": "drag",
+      "caption": "Then drag your product from the right Products column into the chosen menu category in the middle.",
+      "highlight": "product",
+      "target": "drag: product -> middle column category"
+    },
+    {
+      "step": 19,
+      "action": "info",
+      "caption": "Your product got now added to the menu.",
+      "highlight": ""
+    },
+    {
+      "step": 20,
+      "action": "info",
+      "caption": "That's it. You completed the tutorial and now know how to add a product and add it to a menu. Note: since there have been changes made, you need to send those to your system, by directing to the general settings.",
+      "highlight": ""
+    }
+  ]
+}

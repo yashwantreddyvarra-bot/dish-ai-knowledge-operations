@@ -1,0 +1,73 @@
+{
+  "qid": 21,
+  "title": "Facilities - Disabling automated ticket printing",
+  "workflow_title": "Facilities - Disabling automated ticket printing",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "https://netherlands.sandbox.myplace.dish.co/cm/salespoints",
+      "settle": 2800
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "text=Facilities",
+        "h1"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "text=Facilities"
+      ]
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ]
+    },
+    {
+      "click": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ],
+      "t": 3200
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "form",
+        "text=Settings"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "text=Automatic Ticket Printing",
+        "text=ticket printing",
+        "text=Automatic ticket printing"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "text=Automatic Ticket Printing",
+        "[class*=info]"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    }
+  ]
+}

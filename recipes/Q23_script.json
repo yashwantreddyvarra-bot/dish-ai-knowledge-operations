@@ -1,0 +1,74 @@
+{
+  "id": 23,
+  "title": "Packaging Profiles - Adding and assigning a packaging profile",
+  "workflow_title": "Packaging Profiles - Adding and assigning a packaging profile",
+  "source": "support.dish.co official article + live form inspection",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, open General and select Packaging profiles.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click + Add profile.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Give the profile a name and enter the deposit price, e.g. EUR 0.15.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Enter the profile's sales name - this also appears in the DISH POS app and on the receipt.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Open the main menu Articles and select Product groups.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Use the editing icon to open the settings of a product group.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Under the section Package profile, use the drop-down menu and select the profile.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "Click Save - the deposit profile now applies to each article in this product group.",
+      "highlight": ""
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "To assign to a single article, go to Articles > Products, open it with the pencil, set its Package profile and Save.",
+      "highlight": ""
+    },
+    {
+      "step": 11,
+      "action": "info",
+      "caption": "Finally, send provisioning via General, the sub-category General, and Send.",
+      "highlight": ""
+    }
+  ]
+}

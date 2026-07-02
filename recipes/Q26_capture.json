@@ -1,0 +1,17 @@
+{
+  "qid": 26, "title": "Activating the Pay on pick up functionality",
+  "workflow_title": "Activating the Pay on pick up functionality",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["button:has-text(\"Self-service\")", ".navigation-item-text:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "button:has-text(\"Sales channels\")", "text=Sales channels"], "t": 3000}, {"settle": 2600},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "button:has-text(\"Sales channels\")", "text=Sales channels"], "target": "sidebar: Sales channels (sub-item)"},
+    {"click": ["tr:has-text(\"Webshop\") [data-track-button-id=\"edit-item\"]", "tr:has-text(\"Order2POS\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"snap": 3, "highlight": ["text=Edit webshop", "input[formcontrolname=\"name\"]"], "target": "editor: Edit webshop"},
+    {"scrollto": [":text(\"Allow pay on\")", ":text(\"Pick-up facility\")", "text=Pick-up"], "t": 1000},
+    {"snap": 4, "highlight": [":text(\"Allow pay on\")", "text=Allow pay on pickup", "text=Pick-up"], "target": "toggle: Allow pay on pickup"},
+    {"snap": 5, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"}
+  ]
+}

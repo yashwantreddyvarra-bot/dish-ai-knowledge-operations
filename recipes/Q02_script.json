@@ -1,0 +1,14 @@
+{
+  "id": 2,
+  "title": "Adjusting product details in the list view",
+  "workflow_title": "Adjusting product details in the list view",
+  "source": "2157582-en.pdf",
+  "steps": [
+    {"step": 1, "caption": "Open the Products menu (Products, then Products)."},
+    {"step": 2, "caption": "Search for the product whose price you want to change."},
+    {"step": 3, "caption": "The product appears in the list."},
+    {"step": 4, "caption": "Click the product's current price in the list to edit it."},
+    {"step": 5, "caption": "Type the new price into the field."},
+    {"step": 6, "caption": "Press Enter — the product now shows the updated price."}
+  ]
+}

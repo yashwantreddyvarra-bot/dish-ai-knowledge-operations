@@ -1,0 +1,62 @@
+{
+  "id": 17,
+  "title": "Time Periods - Adding time restrictions to menus",
+  "workflow_title": "Time Periods - Adding time restrictions to menus",
+  "source": "support.dish.co official article + live form inspection",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, open Products and select Periods.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click + Add period.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Enter a name for the period that matches when {NAME} should be shown — you'll apply it to the menu that shows {NAME}.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Use the All day option to set whether the period covers the whole day.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Set the start date and time.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Set the duration of the period.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Enable Repeatable if the period should recur.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "info",
+      "caption": "Finally, send the changes via General, the sub-category General, and Send.",
+      "highlight": ""
+    }
+  ]
+}

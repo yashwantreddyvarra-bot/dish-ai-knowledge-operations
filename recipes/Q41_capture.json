@@ -1,0 +1,17 @@
+{
+  "qid": 41, "title": "Managing EFT devices",
+  "workflow_title": "Managing EFT devices",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-payment\"]", "button:has-text(\"Payment\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.EFT_DEVICES\"]", "text=EFT devices"], "t": 3000}, {"settle": 2400},
+    {"dump": "eft_list"},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.EFT_DEVICES\"]", "text=EFT devices"], "target": "sidebar: EFT devices"},
+    {"snap": 3, "highlight": ["table", "tbody", "h1", "text=EFT devices"], "target": "EFT devices list"},
+    {"snap": 4, "highlight": ["table", "tbody", "text=EFT devices"], "target": "EFT devices list (review)"},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 5, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": 33,
+  "title": "Sales Channels - Configuring random spot checks on self-service POS/Grab and Go POS",
+  "workflow_title": "Configuring random spot checks on self-service POS/Grab and Go POS",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to configure random spot checks on self-service POS/Grab and Go POS.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Self-service and click Sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Edit a Self-scan or Self-service checkout by clicking the pencil icon.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Switch on the Enable checks toggle.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Configure the settings: Frequency, Expiration, an 8-digit Pin code, and an explanatory note.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "info",
+      "caption": "Go to General, then General, and click Send to transmit the changes.",
+      "highlight": ""
+    }
+  ]
+}

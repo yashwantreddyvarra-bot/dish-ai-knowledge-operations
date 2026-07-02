@@ -1,0 +1,400 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "title": "Adding a product and assigning it to a menu",
+      "status": "ready",
+      "recipe": "recipes/Q01_add_product_to_menu.md",
+      "pdf": "/files/docs/Q01_branded_20260629_110500.pdf?v=1782723902",
+      "video": "/files/videos/Q01_walkthrough_20260629_110500.mp4?v=1782723907",
+      "section": "Products"
+    },
+    {
+      "id": 2,
+      "title": "Adjusting product details in the list view",
+      "status": "ready",
+      "recipe": "recipes/Q02_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 3,
+      "title": "Assigning sales and restrictions to products and product groups",
+      "status": "ready",
+      "recipe": "recipes/Q03_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 4,
+      "title": "Creating composites of multiple articles",
+      "status": "ready",
+      "recipe": "recipes/Q04_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 5,
+      "title": "Finding products with the search and filter function",
+      "status": "ready",
+      "recipe": "recipes/Q05_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 6,
+      "title": "Assigning allergens and additives to a product",
+      "status": "ready",
+      "recipe": "recipes/Q06_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 7,
+      "title": "Adjusting product details",
+      "status": "ready",
+      "recipe": "recipes/Q07_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 8,
+      "title": "Activating Regime Forfettario",
+      "status": "ready",
+      "recipe": "recipes/Q08_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 9,
+      "title": "Setting up a production order",
+      "status": "ready",
+      "recipe": "recipes/Q09_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 10,
+      "title": "Managing and adding products",
+      "status": "ready",
+      "recipe": "recipes/Q10_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 11,
+      "title": "Assigning a PLU to a product",
+      "status": "ready",
+      "recipe": "recipes/Q11_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 12,
+      "title": "Product groups - Adding a new product group",
+      "status": "ready",
+      "recipe": "recipes/Q12_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 13,
+      "title": "Price Management - Adding and managing price sets",
+      "status": "ready",
+      "recipe": "recipes/Q13_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 14,
+      "title": "Price Management - Adding and managing price levels",
+      "status": "ready",
+      "recipe": "recipes/Q14_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 15,
+      "title": "Menus - Adding and managing derived menus",
+      "status": "ready",
+      "recipe": "recipes/Q15_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 16,
+      "title": "French Menu - Adding a fixed-price menu",
+      "status": "ready",
+      "recipe": "recipes/Q16_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 17,
+      "title": "Time Periods - Adding time restrictions to menus",
+      "status": "ready",
+      "recipe": "recipes/Q17_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 18,
+      "title": "Promotions - Adding and managing promotions on DISH POS",
+      "status": "ready",
+      "recipe": "recipes/Q18_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 19,
+      "title": "Menus - Managing and arranging menus (incl. sub-menus)",
+      "status": "ready",
+      "recipe": "recipes/Q19_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 20,
+      "title": "General - Assigning price levels to a store",
+      "status": "ready",
+      "recipe": "recipes/Q20_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 21,
+      "title": "Facilities - Disabling automated ticket printing",
+      "status": "ready",
+      "recipe": "recipes/Q21_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 22,
+      "title": "Facilities - Assigning menus for specific areas and times",
+      "status": "ready",
+      "recipe": "recipes/Q22_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 23,
+      "title": "Packaging Profiles - Adding and assigning a packaging profile",
+      "status": "ready",
+      "recipe": "recipes/Q23_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 24,
+      "title": "Products - Changing the VAT Level for food products",
+      "status": "ready",
+      "recipe": "recipes/Q24_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 25,
+      "title": "Products - Adding multiple product codes",
+      "status": "ready",
+      "recipe": "recipes/Q25_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Products"
+    },
+    {
+      "id": 26,
+      "title": "Sales Channels - Activating the Pay on pick up functionality",
+      "status": "ready",
+      "recipe": "recipes/Q26_script.json",
+      "pdf": "/files/docs/Q26_branded_20260629_001330.pdf?v=1782684811",
+      "video": "/files/videos/Q26_walkthrough_20260629_001330.mp4?v=1782684813",
+      "section": "Self-service"
+    },
+    {
+      "id": 27,
+      "title": "Time Schedules - Adding and managing time schedules for self-service",
+      "status": "ready",
+      "recipe": "recipes/Q27_script.json",
+      "pdf": "/files/docs/Q27_branded_20260629_003305.pdf?v=1782685986",
+      "video": "/files/videos/Q27_walkthrough_20260629_003305.mp4?v=1782685989",
+      "section": "Self-service"
+    },
+    {
+      "id": 28,
+      "title": "Sales Channels - Adjusting the appearance of the self-service QR shop",
+      "status": "ready",
+      "recipe": "recipes/Q28_script.json",
+      "pdf": "/files/docs/Q28_branded_20260629_105731.pdf?v=1782723452",
+      "video": "/files/videos/Q28_walkthrough_20260629_105731.mp4?v=1782723454",
+      "section": "Self-service"
+    },
+    {
+      "id": 29,
+      "title": "Sales Channels - Adding cross-selling products at checkout",
+      "status": "ready",
+      "recipe": "recipes/Q29_script.json",
+      "pdf": "/files/docs/Q29_branded_20260629_005208.pdf?v=1782687129",
+      "video": "/files/videos/Q29_walkthrough_20260629_005208.mp4?v=1782687131",
+      "section": "Self-service"
+    },
+    {
+      "id": 30,
+      "title": "Sales Channels - Setting up the imprint for web shops and QR sales channels",
+      "status": "ready",
+      "recipe": "recipes/Q30_script.json",
+      "pdf": "/files/docs/Q30_branded_20260629_010302.pdf?v=1782687783",
+      "video": "/files/videos/Q30_walkthrough_20260629_010302.mp4?v=1782687784",
+      "section": "Self-service"
+    },
+    {
+      "id": 31,
+      "title": "Sales Channels - Adjusting the appearance of the kiosk",
+      "status": "ready",
+      "recipe": "recipes/Q31_script.json",
+      "pdf": "/files/docs/Q31_branded_20260629_011118.pdf?v=1782688278",
+      "video": "/files/videos/Q31_walkthrough_20260629_011118.mp4?v=1782688280",
+      "section": "Self-service"
+    },
+    {
+      "id": 32,
+      "title": "Sales Channels - Changing settings for DISH Payment",
+      "status": "ready",
+      "recipe": "recipes/Q32_script.json",
+      "pdf": "/files/docs/Q32_branded_20260629_012524.pdf?v=1782689124",
+      "video": "/files/videos/Q32_walkthrough_20260629_012524.mp4?v=1782689126",
+      "section": "Self-service"
+    },
+    {
+      "id": 33,
+      "title": "Sales Channels - Configuring random spot checks on self-service POS/Grab and Go POS",
+      "status": "ready",
+      "recipe": "recipes/Q33_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Self-service"
+    },
+    {
+      "id": 34,
+      "title": "Webshop - Adjusting and personalising the webshop",
+      "status": "ready",
+      "recipe": "recipes/Q34_script.json",
+      "pdf": "/files/docs/Q34_branded_20260629_015835.pdf?v=1782691116",
+      "video": "/files/videos/Q34_walkthrough_20260629_015835.mp4?v=1782691118",
+      "section": "Self-service"
+    },
+    {
+      "id": 35,
+      "title": "Menus - Linking two different menus in the kiosk (Eat-in or Takeaway)",
+      "status": "ready",
+      "recipe": "recipes/Q35_script.json",
+      "pdf": "/files/docs/Q35_branded_20260629_021302.pdf?v=1782691982",
+      "video": "/files/videos/Q35_walkthrough_20260629_021302.mp4?v=1782691984",
+      "section": "Self-service"
+    },
+    {
+      "id": 36,
+      "title": "QR Codes - Reordering via QR code on the table (customer perspective)",
+      "status": "ready",
+      "recipe": "recipes/Q36_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Self-service"
+    },
+    {
+      "id": 37,
+      "title": "Product - QR Code - Creating QR codes for self-service",
+      "status": "ready",
+      "recipe": "recipes/Q37_script.json",
+      "pdf": "/files/docs/Q37_branded_20260629_032150.pdf?v=1782696111",
+      "video": "/files/videos/Q37_walkthrough_20260629_032150.mp4?v=1782696112",
+      "section": "Self-service"
+    },
+    {
+      "id": 38,
+      "title": "Sales Channels - Configuring Buzzer/Pager support for your kiosk",
+      "status": "ready",
+      "recipe": "recipes/Q38_script.json",
+      "pdf": "/files/docs/Q38_branded_20260629_025336.pdf?v=1782694417",
+      "video": "/files/videos/Q38_walkthrough_20260629_025336.mp4?v=1782694418",
+      "section": "Self-service"
+    },
+    {
+      "id": 39,
+      "title": "Payment Methods - Adding a Pagamento non riscosso",
+      "status": "ready",
+      "recipe": "recipes/Q39_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Payment"
+    },
+    {
+      "id": 40,
+      "title": "Payment Methods - Adding and managing payment methods (incl. payment menus)",
+      "status": "ready",
+      "recipe": "recipes/Q40_script.json",
+      "pdf": "/files/docs/Q40_branded_20260629_100221.pdf?v=1782720142",
+      "video": "/files/videos/Q40_walkthrough_20260629_100221.mp4?v=1782720145",
+      "section": "Payment"
+    },
+    {
+      "id": 41,
+      "title": "EFT Devices - Managing EFT devices",
+      "status": "ready",
+      "recipe": "recipes/Q41_script.json",
+      "pdf": "/files/docs/Q41_branded_20260629_095123.pdf?v=1782719483",
+      "video": "/files/videos/Q41_walkthrough_20260629_095123.mp4?v=1782719485",
+      "section": "Payment"
+    },
+    {
+      "id": 42,
+      "title": "EFT Devices - Setting up a stand-alone EFT terminal",
+      "status": "ready",
+      "recipe": "recipes/Q42_script.json",
+      "pdf": "/files/docs/Q42_branded_20260629_100917.pdf?v=1782720558",
+      "video": "/files/videos/Q42_walkthrough_20260629_100917.mp4?v=1782720560",
+      "section": "Payment"
+    },
+    {
+      "id": 43,
+      "title": "Payment Methods - Adding a payment method: On account",
+      "status": "ready",
+      "recipe": "recipes/Q43_script.json",
+      "pdf": "",
+      "video": "",
+      "section": "Payment"
+    },
+    {
+      "id": 44,
+      "title": "Payment Methods - Configuring the Smart Voucher",
+      "status": "ready",
+      "recipe": "recipes/Q44_script.json",
+      "pdf": "/files/docs/Q44_branded_20260629_094716.pdf?v=1782719237",
+      "video": "/files/videos/Q44_walkthrough_20260629_094716.mp4?v=1782719239",
+      "section": "Payment"
+    }
+  ]
+}

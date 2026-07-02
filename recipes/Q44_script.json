@@ -1,0 +1,57 @@
+{
+  "id": 44,
+  "title": "Payment Methods - Configuring the Smart Voucher",
+  "workflow_title": "Configuring the Smart Voucher",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to configure the Smart Voucher payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Go to Payment → Payment methods, then click + Add payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "In the form, open the Payment method type dropdown.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Select Smart voucher as the Payment method type.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Name the voucher.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Add the maximum value to the voucher.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "If you need to invoice the vouchers, select by User or a pre-selected customer.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Click Save.",
+      "highlight": ""
+    }
+  ]
+}

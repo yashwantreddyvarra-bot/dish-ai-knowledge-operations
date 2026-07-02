@@ -1,0 +1,23 @@
+{
+  "qid": 38, "title": "Configuring Buzzer/Pager support for your kiosk",
+  "workflow_title": "Configuring Buzzer/Pager support for your kiosk",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "target": "sidebar: Sales channels"},
+    {"snap": 3, "highlight": ["tr:has-text(\"Kiosk\") [data-track-button-id=\"edit-item\"]"], "target": "edit: Kiosk sales channel"},
+    {"click": ["tr:has-text(\"Kiosk\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"click": ["text=Buzzers", ":text(\"Buzzers\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 4, "highlight": ["text=Buzzers", ":text(\"Buzzers\")"], "target": "tab: Buzzers"},
+    {"snap": 5, "highlight": ["text=No buzzers", ":text(\"No buzzers\")", "text=Mode"], "target": "Buzzers: Mode (No buzzers / Mandatory / Optional)"},
+    {"snap": 6, "highlight": ["text=Instruction 1", ":text(\"Instruction 1\")", "text=Instruction 2"], "target": "Buzzers: instruction texts"},
+    {"snap": 7, "highlight": [":text-is(\"Image\")", "text=Image"], "target": "Buzzers: image upload"},
+    {"snap": 8, "highlight": ["text=Translation page", "a:has-text(\"Translation\")", ":text(\"Translation\")"], "target": "Buzzers: Translation link"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 9, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

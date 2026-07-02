@@ -1,0 +1,56 @@
+{
+  "id": 15,
+  "title": "Menus - Adding and managing derived menus",
+  "workflow_title": "Menus - Adding and managing derived menus",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, under Articles open Menus.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click + Add menu.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Give the derived menu a name.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Enable the option Is derived menu.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Choose the Base menu and the Store where the derived menu should be placed.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Below, manage the submenus: the trash icon turns a submenu/product off (it becomes a + to turn back on).",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Then go to General, the sub-category General, and click Send to push the changes to your POS.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "id": 35,
+  "title": "Menus - Linking two different menus in the kiosk (Eat-in or Takeaway)",
+  "workflow_title": "Linking two different menus in the kiosk (Eat-in or Takeaway)",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to link two different menus in the kiosk for Eat-in or Takeaway.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, open Products and click Menus, then + Add menu.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Enter a name and tick the Derived menu checkbox.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Choose the base menu and store to derive from (e.g. Kiosk), then Save.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Repeat to create the second derived menu (e.g. Takeaway).",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Open General then Facilities, and click the pencil to edit a facility.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "In the facility's Menu setting, select the created menu as the POS menu, then Save.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Expand the establishment to reach the second facility (Eat-in) and repeat the menu setting.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "Open Self-service then Sales channels, edit the ordering kiosk, and set the fulfilment options to the desired facilities.",
+      "highlight": ""
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "Open the General menu (General then General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "qid": 22,
+  "title": "Facilities - Assigning menus for specific areas and times",
+  "workflow_title": "Facilities - Assigning menus for specific areas and times",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "https://netherlands.sandbox.myplace.dish.co/cm/salespoints",
+      "settle": 2800
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "text=Facilities",
+        "h1"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ]
+    },
+    {
+      "click": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ],
+      "t": 3200
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "click": [
+        "app-aside :text-is(\"Menu\")",
+        ":text-is(\"Menu\")",
+        "span:text-is(\"Menu\")"
+      ],
+      "t": 2000
+    },
+    {
+      "wait": 1000
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "app-aside :text-is(\"Menu\")",
+        ":text-is(\"Menu\")",
+        "span:text-is(\"Menu\")"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "text=POS menu",
+        "text=Self-service menu",
+        "p-select[formcontrolname=\"menuId\"]"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "text=Period"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "p-select[formcontrolname=\"menuId\"]",
+        "text=POS menu"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "text=+ Add",
+        "a:has-text(\"+ Add\")",
+        "a:has-text(\"Add\")",
+        "button:has-text(\"Add\")"
+      ]
+    },
+    {
+      "snap": 8,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 9
+    }
+  ]
+}

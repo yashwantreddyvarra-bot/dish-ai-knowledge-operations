@@ -1,0 +1,83 @@
+{
+  "qid": 15,
+  "title": "Menus - Adding and managing derived menus",
+  "workflow_title": "Menus - Adding and managing derived menus",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "click": [
+        "button:text-is(\"Menus\")",
+        "span:has-text(\"Menus\")",
+        "text=Menus"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "settle": 1600
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Menus\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:has-text(\"Add menu\")",
+        "text=Add menu"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Add menu\")",
+        "text=Add menu"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "input[formcontrolname*=\"name\" i]"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "app-check-box[formcontrolname=\"isDerived\"]",
+        "text=Derived from"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "text=Base menu"
+      ]
+    },
+    {
+      "snap": 6
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 8
+    }
+  ]
+}

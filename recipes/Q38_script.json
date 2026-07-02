@@ -1,0 +1,63 @@
+{
+  "id": 38,
+  "title": "Sales Channels - Configuring Buzzer/Pager support for your kiosk",
+  "workflow_title": "Configuring Buzzer/Pager support for your kiosk",
+  "backoffice": "old",
+  "country": "NL-BE",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to configure Buzzer/Pager support for your kiosk.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Self-service and click Sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the edit icon next to your kiosk.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Open the buzzer configuration tab.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Select the buzzer mode: No Buzzers, Optional, or Mandatory.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Enter the instruction texts (when entering the buzzer number, and after payment).",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Add an image of your buzzer, stand, or number holder.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Optionally translate via the Translation link and the order indicator instructions.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "Open the General menu (General then General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

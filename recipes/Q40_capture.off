@@ -1,0 +1,26 @@
+{
+  "qid": 40, "title": "Adding and managing payment methods",
+  "workflow_title": "Adding and managing payment methods (incl. payment menus)",
+  "vars": {"NAME": "Card"},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"click": ["button:text-is(\"Payment\")", "app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PAYMENT\"]"], "t": 2500}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PAYMENT_METHODS\"]", "button:text-is(\"Payment methods\")"], "t": 2500}, {"settle": 2400},
+    {"dump": "pm_landing"},
+    {"snap": 1, "highlight": ["button:has-text(\"Add payment method\")", "a:has-text(\"Add payment method\")", "text=Add payment method"], "target": "payment methods overview"},
+    {"snap": 2, "highlight": ["button:has-text(\"Add payment method\")", "a:has-text(\"Add payment method\")", "text=Add payment method"], "target": "button: Add payment method"},
+    {"click": ["button:has-text(\"Add payment method\")", "a:has-text(\"Add payment method\")", "text=Add payment method"], "t": 3000}, {"wait": 1500}, {"settle": 1500},
+    {"dump": "pm_form"},
+    {"fill": ["input[formcontrolname=\"name\"]"], "value": "{NAME}"}, {"wait": 400},
+    {"snap": 3, "highlight": ["input[formcontrolname=\"name\"]", "text=Name"], "target": "field: Name"},
+    {"snap": 4, "highlight": ["p-select[formcontrolname=\"type\"]", "[formcontrolname=\"type\"]", "text=Type"], "target": "field: Type"},
+    {"snap": 5, "highlight": ["p-select[formcontrolname=\"currency\"]", "[formcontrolname=\"currencyId\"]", "[formcontrolname=\"currency\"]", "text=Currency"], "target": "field: Currency"},
+    {"snap": 6, "highlight": ["text=Store configuration", "text=cash drawer", "app-store-configuration", "text=Add store configuration"], "target": "store configuration"},
+    {"snap": 7, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"},
+    {"goto": "https://netherlands.sandbox.myplace.dish.co/cm/paymentmenus", "settle": 2600},
+    {"dump": "pm_menus"},
+    {"snap": 8, "highlight": ["button:text-is(\"Payment methods\")", "text=Payment methods", "app-payment-menu"], "target": "payment menus: payment methods"},
+    {"snap": 9, "highlight": ["[data-track-button-id=\"edit-item\"]", ".draggable-row", "tbody tr:nth-child(1)"], "target": "adjust / delete a payment method"},
+    {"snap": 10, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.GENERAL\"]", "button:has-text(\"General\")"], "target": "General > Send"}
+  ]
+}

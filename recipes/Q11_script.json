@@ -1,0 +1,56 @@
+{
+  "id": 11,
+  "title": "Assigning a PLU to a product",
+  "workflow_title": "Assigning a PLU to a product",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, under Articles open Products.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Find the product you want to edit in the overview.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the editing (pencil) icon next to the product.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "In the product settings, select Product codes from the left menu.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Enter the PLU in the Product code field.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "To add another PLU, click + Add product code.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click Save to apply the changes.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Then go to General, the sub-category General, and click Send to push the changes to your POS.",
+      "highlight": ""
+    }
+  ]
+}

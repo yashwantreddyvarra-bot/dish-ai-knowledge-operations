@@ -1,0 +1,114 @@
+{
+  "qid": 5,
+  "title": "Finding products with the search and filter function",
+  "workflow_title": "Finding products with the search and filter function",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Products\")"
+      ]
+    },
+    {
+      "fill": [
+        "input[placeholder*=\"earch\" i]",
+        "[class*=\"search\"] input"
+      ],
+      "value": "Apple"
+    },
+    {
+      "wait": 600
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "input[placeholder*=\"earch\" i]",
+        "[class*=\"search\"] input"
+      ]
+    },
+    {
+      "key": "Enter"
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "snap": 3
+    },
+    {
+      "fill": [
+        "input[placeholder*=\"earch\" i]",
+        "[class*=\"search\"] input"
+      ],
+      "value": ""
+    },
+    {
+      "key": "Enter"
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "[role=\"combobox\"]"
+      ]
+    },
+    {
+      "click": [
+        "[role=\"combobox\"]"
+      ],
+      "t": 2000
+    },
+    {
+      "wait": 1000
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "[role=\"combobox\"]"
+      ]
+    },
+    {
+      "key": "Escape"
+    },
+    {
+      "wait": 600
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "button:has-text(\"Filter\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Filter\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "text=Filter products",
+        "app-filter",
+        ".filter-panel",
+        "input[placeholder*=\"filter\" i]"
+      ]
+    },
+    {
+      "snap": 8
+    }
+  ]
+}

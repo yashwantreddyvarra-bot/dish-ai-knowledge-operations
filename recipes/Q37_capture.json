@@ -1,0 +1,22 @@
+{
+  "qid": 37, "title": "Creating QR codes for self-service",
+  "workflow_title": "Creating QR codes for self-service",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.QR_CODES\"]", "text=QR codes"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.QR_CODES\"]", "text=QR codes"], "target": "sidebar: QR codes"},
+    {"snap": 3, "highlight": ["button:has-text(\"Add QR code\")", "text=Add QR code"], "target": "QR codes: + Add QR code button"},
+    {"click": ["button:has-text(\"Add QR code\")", "text=Add QR code"], "t": 3000}, {"wait": 1500}, {"settle": 1500},
+    {"snap": 4, "highlight": ["text=Sales channel", ":text(\"Sales channel\")", "text=Point of sale"], "target": "Add QR: sales channel + point of sale"},
+    {"snap": 5, "highlight": [".p-dialog button:has-text(\"Add QR code\")", ":nth-match(button:has-text(\"Add QR code\"), 2)", "button:has-text(\"Add QR code\")"], "vhint": "the Add QR code button inside the dialog", "target": "Add QR: Add QR code button"},
+    {"click": ["button:has-text(\"Cancel\")", "[data-track-button-id=\"close-button\"]"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"click": ["tbody tr:nth-child(1) input[type=\"checkbox\"]", "tbody tr:nth-child(1) app-check-box", "tbody tr:nth-child(1) td:first-child input", "tbody tr:nth-child(1) td:first-child"], "t": 2500}, {"wait": 1200},
+    {"snap": 6, "highlight": ["tbody tr:nth-child(1) input[type=\"checkbox\"]", "tbody tr:nth-child(1) app-check-box", "tbody tr:nth-child(1) td:first-child"], "vhint": "the ticked checkbox selecting a QR code row", "target": "QR list: row checkbox (ticked)"},
+    {"snap": 7, "highlight": ["button:has-text(\"Download\")", "text=Download"], "target": "QR list: Download (CSV / PDF)"},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 8, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

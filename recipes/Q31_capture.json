@@ -1,0 +1,20 @@
+{
+  "qid": 31, "title": "Adjusting the appearance of the kiosk",
+  "workflow_title": "Adjusting the appearance of the kiosk",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "target": "sidebar: Sales channels"},
+    {"snap": 3, "highlight": ["tr:has-text(\"Kiosk\") [data-track-button-id=\"edit-item\"]"], "target": "edit: Kiosk sales channel"},
+    {"click": ["tr:has-text(\"Kiosk\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"snap": 4, "highlight": ["text=Fulfillment options", ":text(\"Fulfillment options\")", "text=Fulfilment options"], "target": "General tab: fulfilment / settings"},
+    {"click": ["text=Appearance", ":text(\"Appearance\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 5, "highlight": ["text=Primary colour", "text=Layout and format", "text=Primary color"], "target": "Appearance tab: primary colour / logos"},
+    {"snap": 6, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 7, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

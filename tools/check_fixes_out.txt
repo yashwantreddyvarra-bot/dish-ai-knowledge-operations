@@ -1,0 +1,11 @@
+price-edit patterns: 8 (expect 7)
+has _is_price_change_intent: True
+has _extract_allergens: True
+
+set Baileys to 6.50 euros                        -> guides=[2] name='Baileys' type='other' allergens=[]
+change the price of 7-Up to 2.80                 -> guides=[2] name='7-up' type='other' allergens=[]
+set the flat white to 3.20                       -> guides=[2] name='Flat White' type='other' allergens=[]
+change Bombay Gin to 8                           -> guides=[2] name='Bombay Gin' type='other' allergens=[]
+change the price of Zombie Smoothie to 9         -> guides=[2] name='Zombie Smoothie' type='drink' allergens=[]
+add a halloumi burger containing milk, gluten and sesame -> guides=[1, 6] name='Halloumi Burger' type='food' allergens=['Gluten', 'Milk', 'Sesame']
+add a chai oat latte for 3.90 and put it on the menu -> guides=[1] name='Chai Oat Latte' type='drink' allergens=[]

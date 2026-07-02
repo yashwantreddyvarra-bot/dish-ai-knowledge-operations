@@ -1,0 +1,69 @@
+{
+  "id": 40,
+  "title": "Payment Methods - Adding and managing payment methods (incl. payment menus)",
+  "workflow_title": "Adding and managing payment methods (incl. payment menus)",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to add and manage payment methods, including payment menus.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Go to Payment, then Payment method, and click + Add payment method in the top right corner.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Fill in the name of the payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Choose the type.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Choose the currency (default Euro).",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Add the store configuration: choose the cash drawer and whether to show the amount dialogue box.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click Save, and Save again, to add the payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "To add it to the cashier screen, go to Payment, then Payment menus, click Payment methods, and drag the new method in.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "To adjust a method, click the pencil icon, make changes, and Save; to delete, click the trash icon and confirm.",
+      "highlight": ""
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "Open the General menu (General then General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": 39,
+  "title": "Payment Methods - Adding a Pagamento non riscosso",
+  "workflow_title": "Adding a Pagamento non riscosso",
+  "backoffice": "old",
+  "country": "IT",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to add a Pagamento non riscosso payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Dashboard, select Payment from the left menu.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Select Payment methods.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Click + Add payment method in the top right corner.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Set the Name to \"Pagamento non riscosso\".",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Set the Payment method type to Cash and the Currency to Euro.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Set the Fiscal reference to No payment.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Click Save.",
+      "highlight": ""
+    }
+  ]
+}

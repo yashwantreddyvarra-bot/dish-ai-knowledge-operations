@@ -1,0 +1,17 @@
+{
+  "qid": 36, "title": "Reordering via QR code on the table (customer perspective)",
+  "workflow_title": "Reordering via QR code on the table (customer perspective)",
+  "vars": {},
+  "actions": [
+    {"goto": "http://netherlands.sandbox.booqcloud.com/qr/videoendemo/00edea9a-46ce-4309-b39b-e9828eb81af4", "settle": 4500},
+    {"snap": 1},
+    {"click": ["button:has-text(\"Place the order\")", "text=Place the order"], "t": 4000}, {"wait": 2500}, {"settle": 2500},
+    {"snap": 2},
+    {"click": ["text=Lobster Soup", ":text(\"Lobster Soup\")"], "t": 3000}, {"wait": 2000},
+    {"click": ["text=Add", "button:has-text(\"Add\")", "text=View order"], "t": 2500}, {"wait": 1500},
+    {"snap": 3},
+    {"click": ["text=View order", ":text(\"View order\")"], "t": 3000}, {"wait": 2000}, {"settle": 2000},
+    {"dump": "portal_cart"},
+    {"snap": 4}
+  ]
+}

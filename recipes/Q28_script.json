@@ -1,0 +1,57 @@
+{
+  "id": 28,
+  "title": "Sales Channels - Adjusting the appearance of the self-service QR shop",
+  "workflow_title": "Adjusting the appearance of the self-service QR shop",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to adjust the appearance of the self-service QR shop.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Under Self-service → Sales channels, click the pencil icon of your QR store.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Open the Appearance tab.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Under Colors, set a primary and secondary colour via Hex code or the colour picker.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Under Standard product overview, choose grid view or list view as the default.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Under Logo, add your logo by dragging it in or browsing.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Under Images, customise the welcome, success, and error images.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Open the General menu (General then General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "id": 36,
+  "title": "QR Codes - Reordering via QR code on the table (customer perspective)",
+  "workflow_title": "Reordering via QR code on the table (customer perspective)",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows reordering via a QR code on the table from the customer perspective.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Self-service and click QR codes.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the link of a QR code to open the order portal.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Click Place order and choose a few items.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click View order.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Select the \"Pay later\" option (when reorder via QR on the table is enabled).",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Choose Complete order.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Open the same QR link again and use \"Order more\" or \"Pay order\" to add to or settle the table.",
+      "highlight": ""
+    }
+  ]
+}

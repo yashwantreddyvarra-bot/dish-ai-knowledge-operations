@@ -1,0 +1,62 @@
+{
+  "id": 22,
+  "title": "Facilities - Assigning menus for specific areas and times",
+  "workflow_title": "Facilities - Assigning menus for specific areas and times",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, open General and go to Facilities.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click the pencil icon to open the facility you want to configure.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Select the Menu tab.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Choose whether this applies to the POS or to Self-service (QR, Kiosk).",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "At Period, select the time period you added earlier - you can add multiple time periods.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "At Menu, select the menu that should be enabled.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Press + Add to add the menu assignment.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Press Save to apply.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "info",
+      "caption": "Finally, go to General, then the sub-category General, and click Send to transmit the changes.",
+      "highlight": ""
+    }
+  ]
+}

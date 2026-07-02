@@ -1,0 +1,97 @@
+{
+  "qid": 13,
+  "title": "Price Management - Adding and managing price sets",
+  "workflow_title": "Price Management - Adding and managing price sets",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "click": [
+        "button:text-is(\"Price management\")",
+        "span:has-text(\"Price management\")",
+        "text=Price management"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "settle": 1600
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Price management\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:has-text(\"Add Set\")",
+        "button:has-text(\"Add set\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Add Set\")",
+        "button:has-text(\"Add set\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "input[formcontrolname*=\"name\" i]"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "text=Location"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "text=All"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "text=New price",
+        "text=new price"
+      ]
+    },
+    {
+      "snap": 8,
+      "highlight": [
+        "button:has-text(\"Update Set\")",
+        "button:has-text(\"Update set\")"
+      ]
+    },
+    {
+      "snap": 9,
+      "highlight": [
+        "text=Review price rules",
+        "button:has-text(\"Review\")"
+      ]
+    }
+  ]
+}

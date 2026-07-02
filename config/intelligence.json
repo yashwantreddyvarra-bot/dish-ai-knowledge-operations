@@ -1,0 +1,7 @@
+{
+  "_comment": "provider 'none' = fast built-in brain only, NO external AI calls (can't hang). Set to 'openai' + a VALID key to re-enable AI vision/live-agent features.",
+  "provider": "none",
+  "api_key": "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",
+  "text_model": "gpt-4o",
+  "vision_model": "gpt-4o"
+}

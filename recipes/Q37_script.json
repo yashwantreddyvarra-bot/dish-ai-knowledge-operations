@@ -1,0 +1,57 @@
+{
+  "id": 37,
+  "title": "Product - QR Code - Creating QR codes for self-service",
+  "workflow_title": "Creating QR codes for self-service",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to create QR codes for self-service.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, under Self-service, click QR codes.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click Add QR codes in the top right corner.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Select the correct sales channel and an entire area or specific sales points.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click the Add QR code button.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Tick the checkbox in front of a sales point (e.g. Table 101) to select it for download.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click the download button and choose CSV (for QR printing) or PDF (ready-to-print).",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Open the General menu (General then General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "qid": 33, "title": "Configuring random spot checks on self-service POS/Grab and Go POS",
+  "workflow_title": "Configuring random spot checks on self-service POS/Grab and Go POS",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"click": ["tr:has-text(\"Grab & Go\") [data-track-button-id=\"edit-item\"]", "tr:has-text(\"Grab\") [data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"snap": 2},
+    {"scrollto": [":text(\"Random spot\")", ":text(\"Spot check\")", ":text(\"Enable checks\")", ":text(\"Pin code\")", ":text(\"Frequency\")", ":text(\"Expiration\")", "input[formcontrolname=\"id\"]", ":text(\"Identification\")"], "t": 1200},
+    {"dump": "gg_bottom2"},
+    {"snap": 3},
+    {"scrollto": [":text(\"Random spot\")", ":text(\"Spot check\")", ":text(\"Enable checks\")", ":text(\"Pin code\")", ":text(\"Frequency\")"], "t": 1000},
+    {"snap": 4}
+  ]
+}

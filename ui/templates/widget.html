@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DISH Assistant</title>
+<style>
+  :root{ --orange:#EC6A38; --ink:#1d2027; --muted:#6b7280; --line:#e7e8ec; --panel:#fff; --soft:#f5f6f8; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; background:transparent; font-family:'Segoe UI',system-ui,sans-serif; color:var(--ink); overflow:hidden; }
+
+  /* ---- collapsed launcher bubble (browser/responsive default) ---- */
+  #bubble{ position:fixed; right:20px; bottom:20px; width:60px; height:60px; border:none; border-radius:50%;
+    background:var(--orange); color:#fff; cursor:pointer; display:grid; place-items:center;
+    box-shadow:0 6px 20px rgba(0,0,0,.28); transition:transform .12s; z-index:9; }
+  #bubble:hover{ transform:scale(1.06); }
+  #bubble svg{ width:28px; height:28px; }
+
+  /* ---- expanded panel: corner card on desktop, fits any screen ---- */
+  #panel{ position:fixed; right:20px; bottom:20px; display:none; flex-direction:column; background:var(--panel);
+    width:min(384px, calc(100vw - 32px)); height:min(620px, calc(100vh - 32px));
+    border-radius:16px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.25); z-index:10; }
+  body.open #bubble{ display:none; }
+  body.open #panel{ display:flex; }
+
+  /* ---- mobile / small screens: panel goes full-screen ---- */
+  @media (max-width:520px), (max-height:560px){
+    body:not(.pw) #panel{ right:0; bottom:0; top:0; left:0; width:100vw; height:100vh; height:100dvh; border-radius:0; }
+    body:not(.pw) #bubble{ right:16px; bottom:16px; }
+  }
+
+  /* ---- pywebview desktop bubble: the OS window itself is the frame ---- */
+  body.pw{ background:var(--orange); }              /* collapsed window = solid orange button */
+  body.pw.open{ background:var(--panel); }           /* expanded window = white panel */
+  body.pw #bubble{ inset:0; right:auto; bottom:auto; margin:auto; width:100%; height:100%; border-radius:0; box-shadow:none; }
+  body.pw #bubble svg{ width:34px; height:34px; }
+  body.pw #panel{ position:fixed; top:0; left:0; right:0; bottom:0; width:auto; height:auto; border-radius:0; box-shadow:none; }
+
+  .hd{ background:var(--orange); color:#fff; padding:12px 14px; display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+  .hd .logo{ width:30px; height:30px; border-radius:8px; background:rgba(255,255,255,.22); display:grid; place-items:center; font-weight:700; }
+  .hd .ttl{ flex:1; line-height:1.2; } .hd .ttl b{ font-size:14px; font-weight:600; } .hd .ttl small{ display:block; font-size:11px; opacity:.92; }
+  .hd button{ background:transparent; border:none; color:#fff; cursor:pointer; padding:4px; border-radius:6px; display:grid; place-items:center; }
+  .hd button:hover{ background:rgba(255,255,255,.18); }
+  .hd svg{ width:18px; height:18px; }
+
+  .pick{ padding:10px 12px 4px; flex:0 0 auto; }
+  .chips{ display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; }
+  .chip{ font-size:11px; padding:4px 11px; border-radius:999px; background:#FAECE7; color:#993C1D; border:1px solid transparent; cursor:pointer; }
+  .chip.on{ background:var(--orange); color:#fff; }
+  select{ width:100%; padding:9px 11px; border:1px solid var(--line); border-radius:9px; font-size:13px; background:#fff; color:var(--ink); }
+  select:focus{ outline:2px solid #f0c3ad; border-color:var(--orange); }
+
+  .chat{ flex:1; overflow-y:auto; padding:12px; display:flex; flex-direction:column; gap:11px; }
+  .empty{ margin:auto; text-align:center; color:var(--muted); font-size:13px; line-height:1.6; } .empty .big{ font-size:34px; }
+  .msg{ max-width:88%; padding:10px 13px; border-radius:13px; font-size:13px; line-height:1.55; white-space:pre-wrap; }
+  .msg.user{ align-self:flex-end; background:var(--orange); color:#fff; border-bottom-right-radius:4px; }
+  .msg.bot{ align-self:flex-start; background:var(--soft); border:1px solid var(--line); border-bottom-left-radius:4px; }
+  .msg.bot .src{ margin-top:8px; font-size:10.5px; color:var(--muted); border-top:1px dashed var(--line); padding-top:6px; }
+  .attach{ margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+  .attach a{ font-size:12px; font-weight:600; text-decoration:none; padding:7px 11px; border-radius:8px; background:var(--orange); color:#fff; }
+  .attach a.sec{ background:#fff; color:var(--orange); border:1px solid var(--orange); }
+  .vid{ margin-top:10px; } .vid video{ width:100%; border-radius:9px; border:1px solid var(--line); }
+  .vnote{ font-size:10.5px; color:var(--muted); margin-top:6px; line-height:1.4; }
+  .quality{ margin-top:10px; font-size:11.5px; display:inline-flex; align-items:center; gap:6px; border:1px solid; border-radius:8px; padding:5px 9px; background:#fff; }
+  .quality .qdot{ width:8px; height:8px; border-radius:50%; display:inline-block; } .quality .qhow{ color:var(--muted); font-weight:400; font-size:10.5px; }
+  .activity{ align-self:flex-start; max-width:92%; background:#1d2027; color:#cfe8cf; border-radius:13px; padding:10px 12px; font-size:12px; }
+  .activity .head{ color:#fff; font-weight:600; margin-bottom:7px; font-size:12.5px; display:flex; align-items:center; gap:7px; }
+  .spinner{ width:11px; height:11px; border:2px solid var(--orange); border-top-color:transparent; border-radius:50%; display:inline-block; animation:spin .8s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .activity .lines{ font-family:ui-monospace,Consolas,monospace; white-space:pre-wrap; max-height:150px; overflow:auto; line-height:1.55; }
+  .activity .lines .cur{ color:#ffd9c7; }
+
+  .inputbar{ padding:10px 12px; border-top:1px solid var(--line); display:flex; gap:8px; align-items:center; flex:0 0 auto; }
+  .inputbar input{ flex:1; padding:9px 11px; border:1px solid var(--line); border-radius:9px; font-size:13px; }
+  .inputbar input:focus{ outline:2px solid #f0c3ad; border-color:var(--orange); }
+  .inputbar .go{ width:36px; height:36px; flex:0 0 auto; border:none; border-radius:50%; background:var(--orange); color:#fff; cursor:pointer; display:grid; place-items:center; }
+  .inputbar .go svg{ width:18px; height:18px; }
+</style>
+</head>
+<body>
+  <button id="bubble" title="Open DISH Assistant" aria-label="Open DISH Assistant">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9h8M8 13h6"/><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.6-.8L3 21l1.3-4.4A8.4 8.4 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5Z"/></svg>
+  </button>
+
+  <div id="panel">
+    <div class="hd">
+      <div class="logo">D</div>
+      <div class="ttl"><b>DISH POS Assistant</b><small>Products · Self-service · Payment</small></div>
+      <button id="min" title="Minimise" aria-label="Minimise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+      <button id="cls" title="Close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+
+    <div class="pick">
+      <div class="chips" id="chips">
+        <span class="chip on" data-s="">All</span>
+        <span class="chip" data-s="Products">Products</span>
+        <span class="chip" data-s="Self-service">Self-service</span>
+        <span class="chip" data-s="Payment">Payment</span>
+      </div>
+      <select id="qSelect"><option value="">Choose a question…</option></select>
+    </div>
+
+    <div class="chat" id="chat">
+      <div class="empty" id="empty"><div class="big">&#128172;</div>Pick a question above,<br/>or type your own below.</div>
+    </div>
+
+    <div class="inputbar">
+      <input type="text" id="msg" placeholder="Ask anything…" />
+      <button class="go" id="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    </div>
+  </div>
+
+<script>
+const $ = s => document.querySelector(s);
+let CURRENT_ID=null, CURRENT_TITLE="", ALLQ=[], FILTER="";
+
+/* ---------- bubble <-> panel (and pywebview window resize) ---------- */
+let PW=false;
+window.addEventListener('pywebviewready', ()=>{ PW=true; document.body.classList.add('pw','open'); });
+function expand(){ document.body.classList.add('open'); }
+function collapse(){ if(PW&&window.pywebview){ pywebview.api.minimize(); } else { document.body.classList.remove('open'); } }
+function closeApp(){ if(PW&&window.pywebview) pywebview.api.close(); else collapse(); }
+$('#bubble').addEventListener('click', expand);
+$('#min').addEventListener('click', collapse);
+$('#cls').addEventListener('click', closeApp);
+
+/* ---------- questions ---------- */
+async function loadQuestions(){
+  ALLQ = await fetch('/api/questions').then(r=>r.json());
+  renderOptions();
+}
+function renderOptions(){
+  const sel=$('#qSelect'); const keep=sel.value;
+  sel.innerHTML='<option value="">Choose a question…</option>';
+  const order=['Products','Self-service','Payment']; const groups={};
+  ALLQ.filter(q=>!FILTER||q.section===FILTER).forEach(q=>{ const s=q.section||'Other'; (groups[s]=groups[s]||[]).push(q); });
+  const sections=order.filter(s=>groups[s]).concat(Object.keys(groups).filter(s=>!order.includes(s)));
+  sections.forEach(s=>{ const og=document.createElement('optgroup'); og.label=s+' ('+groups[s].length+')';
+    groups[s].forEach(q=>{ const o=document.createElement('option'); o.value=q.id;
+      o.textContent=q.id+'. '+q.title+(q.pdf?'  ✅':''); og.appendChild(o); }); sel.appendChild(og); });
+  sel.value=keep;
+}
+$('#chips').addEventListener('click', e=>{ const c=e.target.closest('.chip'); if(!c) return;
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on')); c.classList.add('on');
+  FILTER=c.dataset.s; renderOptions(); });
+$('#qSelect').addEventListener('change', e=>{
+  CURRENT_ID=e.target.value||null;
+  CURRENT_TITLE=e.target.selectedOptions[0]?.textContent.replace(/^\d+\.\s/,'').replace(/\s*✅$/,'')||"";
+  if(CURRENT_ID) askAbout();
+});
+
+/* ---------- rendering helpers ---------- */
+function addMsg(t,who){ $('#empty')?.remove(); const m=document.createElement('div'); m.className='msg '+who; m.textContent=t;
+  $('#chat').appendChild(m); $('#chat').scrollTop=$('#chat').scrollHeight; return m; }
+function addActivity(t){ $('#empty')?.remove(); const m=document.createElement('div'); m.className='activity';
+  m.innerHTML='<div class="head"><span class="spinner"></span>'+t+'</div><div class="lines"></div>';
+  $('#chat').appendChild(m); $('#chat').scrollTop=$('#chat').scrollHeight; return m; }
+function renderLog(box,lines){ const el=box.querySelector('.lines');
+  el.innerHTML=lines.map((l,i)=>(i===lines.length-1?'<span class="cur">▶ '+l+'</span>':'✓ '+l)).join('\n');
+  el.scrollTop=el.scrollHeight; $('#chat').scrollTop=$('#chat').scrollHeight; }
+function appendMedia(m,pdf,video,note){
+  if(pdf||video){ const a=document.createElement('div'); a.className='attach';
+    if(pdf){ const l=document.createElement('a'); l.href=pdf; l.target='_blank'; l.textContent='📄 Open PDF'; a.appendChild(l); }
+    if(video){ const l=document.createElement('a'); l.href=video; l.target='_blank'; l.className='sec'; l.textContent='🎬 Video'; a.appendChild(l); }
+    m.appendChild(a); }
+  if(video){ const v=document.createElement('div'); v.className='vid';
+    v.innerHTML='<video controls preload="metadata" src="'+video+'"></video>'+(note?('<div class="vnote">'+note+'</div>'):''); m.appendChild(v); }
+  $('#chat').scrollTop=$('#chat').scrollHeight;
+}
+function addRich(answer,pdf,video,sources,quality){ $('#empty')?.remove();
+  const m=document.createElement('div'); m.className='msg bot'; m.appendChild(document.createTextNode(answer));
+  if(quality&&quality.score!=null){ const s=quality.score, color=s>=85?'#1a7f37':s>=70?'#b7791f':'#c23b3b';
+    const b=document.createElement('div'); b.className='quality'; b.style.borderColor=color; b.style.color=color;
+    const issues=quality.fail?(quality.fail+' step issue'+(quality.fail>1?'s':'')):'verified clean';
+    let parts=''; if(quality.pdf_score!=null) parts=' <span class="qhow">(PDF '+quality.pdf_score+' · Video '+quality.video_score+' · Steps '+quality.steps_score+')</span>';
+    b.innerHTML='<span class="qdot" style="background:'+color+'"></span>Quality <b>'+s+'/100</b> · '+issues+parts; m.appendChild(b); }
+  appendMedia(m,pdf,video);
+  if(sources&&sources.length){ const s=document.createElement('div'); s.className='src';
+    s.textContent='Sources: '+sources.map(x=>x.workflow+(x.steps?(' (steps '+x.steps+')'):'')).join('  -  '); m.appendChild(s); }
+  $('#chat').appendChild(m); $('#chat').scrollTop=$('#chat').scrollHeight; return m;
+}
+const getDetail=id=>fetch('/api/question/'+id).then(r=>r.json());
+function pollBuild(box){ return new Promise(res=>{ const t=setInterval(async()=>{ const st=await fetch('/api/build/status').then(r=>r.json());
+  renderLog(box, st.log&&st.log.length?st.log:['starting…']);
+  if(st.done){ clearInterval(t); box.querySelector('.spinner').style.display='none'; box.querySelector('.head').textContent='✓ Finished'; res(); } },1000); }); }
+function pollDone(){ return new Promise(res=>{ const t=setInterval(async()=>{ try{ const st=await fetch('/api/build/status').then(r=>r.json()); if(st.done){ clearInterval(t); res(); } }catch(e){} },1500); }); }
+
+/* ---------- ask a saved question ---------- */
+async function askAbout(){
+  if(!CURRENT_ID) return;
+  const q='How do I '+CURRENT_TITLE.charAt(0).toLowerCase()+CURRENT_TITLE.slice(1)+'?';
+  addMsg(q,'user'); $('#qSelect').value='';
+  let detail=await getDetail(CURRENT_ID);
+  if(detail.buildable && !detail.pdf_url){
+    const box=addActivity('Building your guide live'); renderLog(box,['starting…']);
+    await fetch('/api/build/'+CURRENT_ID,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({capture:true})});
+    await pollBuild(box); detail=await getDetail(CURRENT_ID);
+  } else {
+    const box=addActivity('Loading saved guide'); renderLog(box,['Found a saved guide','Fetching PDF + video','Done']);
+    setTimeout(()=>{ box.querySelector('.spinner').style.display='none'; box.querySelector('.head').textContent='✓ Ready'; },400);
+  }
+  const ans=await fetch('/api/render/'+CURRENT_ID).then(r=>r.json());
+  addRich(ans.answer, detail.pdf_url, detail.video_url, ans.sources, ans.quality);
+  loadQuestions();
+}
+
+/* ---------- free-text ask ---------- */
+async function send(){
+  const q=$('#msg').value.trim(); if(!q) return;
+  addMsg(q,'user'); $('#msg').value='';
+  const t=addMsg('thinking…','bot');
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q})}).then(r=>r.json());
+  t.remove();
+  const name=r.params&&r.params.product_name;
+  const m=addRich(r.answer,null,null,r.sources,r.quality);
+  const isMerge=r.guides&&r.guides.length>1;
+  if(r.qid&&r.buildable&&r.action!=='clarify'&&r.action!=='none'){
+    const what=name?('"'+name+'"'):(isMerge?'this multi-part request':'this guide');
+    const note=document.createElement('div'); note.className='vnote';
+    note.innerHTML='<span class="spinner"></span> Building '+what+' live in the background…'; m.appendChild(note);
+    fetch('/api/build/'+r.qid,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({capture:true,request:q,guides:r.guides})})
+      .then(()=>pollDone()).then(async()=>{ const st=await fetch('/api/build/status').then(r=>r.json()); const o=(st&&st.output)||{}; note.remove();
+        if(o.not_found){ const w=document.createElement('div'); w.className='vnote'; w.style.color='#b7791f';
+          w.textContent='⚠ '+(o.message||('I couldn’t find “'+o.not_found+'” in your products.')); m.appendChild(w); $('#chat').scrollTop=$('#chat').scrollHeight; }
+        else appendMedia(m,o.pdf,o.video,'Captured live just now as one continuous guide.'); })
+      .catch(()=>{ note.textContent='(preview build failed — please try again)'; });
+  } else if(r.pdf_url||r.video_url){ appendMedia(m,r.pdf_url,r.video_url); }
+  else if(r.qid&&r.action!=='clarify'&&r.action!=='none'){ const n=document.createElement('div'); n.className='vnote';
+    n.textContent='Step-by-step guide above. A live PDF/video for this one is coming soon.'; m.appendChild(n); $('#chat').scrollTop=$('#chat').scrollHeight; }
+}
+$('#send').addEventListener('click', send);
+$('#msg').addEventListener('keydown', e=>{ if(e.key==='Enter') send(); });
+
+loadQuestions();
+</script>
+</body>
+</html>

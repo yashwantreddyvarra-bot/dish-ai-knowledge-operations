@@ -1,0 +1,86 @@
+{
+  "qid": 24,
+  "title": "Products - Changing the VAT Level for food products",
+  "workflow_title": "Products - Changing the VAT Level for food products",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Products\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "[role=\"combobox\"]"
+      ]
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "text=VAT",
+        "th:has-text(\"VAT\")"
+      ]
+    },
+    {
+      "click": [
+        "button:text-is(\"Product groups\")",
+        "span:has-text(\"Product groups\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "button:text-is(\"Product groups\")"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ]
+    },
+    {
+      "click": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ],
+      "t": 3000
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "text=VAT",
+        "text=Default"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 8
+    }
+  ]
+}

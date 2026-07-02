@@ -1,0 +1,69 @@
+{
+  "id": 34,
+  "title": "Webshop - Adjusting and personalising the webshop",
+  "workflow_title": "Adjusting and personalising the webshop",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to adjust and personalise the webshop.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, click Sales channels under Self-service.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the edit button next to your webshop's name.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "In General, set the name, facility, default language, and order comments.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "In Content, edit the welcome text and general information.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "In Appearance, choose colours, product layout, logo, and images.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "In Legal information, add terms and conditions and a privacy statement.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "In Company information, edit company name, address, and contact info.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "On the Opening hours tab, configure the Pick-up hours (time slots) for the webshop, then Save.",
+      "highlight": ""
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "Open the General menu (General → General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

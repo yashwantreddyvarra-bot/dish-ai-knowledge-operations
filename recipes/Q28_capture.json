@@ -1,0 +1,26 @@
+{
+  "qid": 28, "title": "Adjusting the appearance of the self-service QR shop",
+  "workflow_title": "Adjusting the appearance of the self-service QR shop",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["tr:has-text(\"QR Ordening\") [data-track-button-id=\"edit-item\"]"], "target": "edit: QR sales channel"},
+    {"click": ["tr:has-text(\"QR Ordening\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"click": ["text=Appearance", ":text(\"Appearance\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"dump": "qr_appear"},
+    {"snap": 3, "highlight": ["text=Appearance", ":text(\"Appearance\")"], "target": "tab: Appearance"},
+    {"snap": 4, "highlight": [":text(\"Colour\")", ":text(\"Color\")", "text=Primary colour", "text=Colors"], "target": "Colors: primary / secondary"},
+    {"scrollto": [":text(\"product overview\")", "text=Standard product overview"], "t": 900},
+    {"snap": 5, "highlight": [":text(\"product overview\")", "text=Standard product overview", ":text(\"grid\")"], "target": "Standard product overview: grid/list"},
+    {"scrollto": [":text-is(\"Logo\")", "text=Logo"], "t": 900},
+    {"snap": 6, "highlight": [":text-is(\"Logo\")", "text=Logo"], "target": "Logo upload"},
+    {"scrollto": [":text-is(\"Images\")", "text=Images"], "t": 900},
+    {"snap": 7, "highlight": [":text-is(\"Images\")", "text=Images"], "target": "Images: welcome/success/error"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 8, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

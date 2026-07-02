@@ -1,0 +1,50 @@
+{
+  "id": 4,
+  "title": "Creating composites of multiple articles",
+  "workflow_title": "Creating composites of multiple articles",
+  "source": "support.dish.co official article (Creating composites of multiple articles)",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Using product composites you can link multiple products to one main product. This is useful for arrangements or package deals (for example a children's party of bowling plus a bowl of fries).",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the upper right hand corner of the products overview, click Add product to create the package product.",
+      "highlight": "Add product"
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Give the product a name, for example Children's party, and link it to the correct product group such as Arrangements or Package deals.",
+      "highlight": "name"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "You can leave the price at 0. The components you add will determine the total price of the package.",
+      "highlight": "price"
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Scroll down to the Composites section. This is where you add the products that make up the package.",
+      "highlight": "Composites"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Under Composites click Add component and search for each item to add, such as Bowling and a bowl of French fries. The total price updates automatically. You can also tick Prepare composite products separately to print each component at its own production station.",
+      "highlight": "Add component"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click Save. The arrangement is created and will appear in the article list as a single product.",
+      "highlight": "Save"
+    }
+  ]
+}

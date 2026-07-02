@@ -1,0 +1,16 @@
+{
+  "id": 6,
+  "title": "Assigning allergens and additives to a product",
+  "workflow_title": "Assigning allergens and additives to a product",
+  "source": "support.dish.co official article (Assigning allergens and additives)",
+  "steps": [
+    { "step": 1, "action": "click", "caption": "In the main menu of the DISH POS Backoffice, under Articles, click the category Products.", "highlight": "Products" },
+    { "step": 2, "action": "click", "caption": "Click the pencil icon next to the product.", "highlight": "pencil icon" },
+    { "step": 3, "action": "click", "caption": "In the menu that appears, click Product information.", "highlight": "Product information" },
+    { "step": 4, "action": "click", "caption": "Place a checkmark next to the relevant allergens for the product.", "highlight": "allergens" },
+    { "step": 5, "action": "click", "caption": "Do the same for the relevant additives, which are listed on the right.", "highlight": "additives" },
+    { "step": 6, "action": "click", "caption": "Click Save to apply the changes.", "highlight": "Save" },
+    { "step": 7, "action": "click", "caption": "It is also possible to use the Allergens tab on the Products overview, where you can check the relevant allergens next to each item directly.", "highlight": "Allergens" },
+    { "step": 8, "action": "info", "caption": "Then go to General, then the sub-category General, and click Send to implement the changes. When a guest selects allergens on your QR order site, an icon of the relevant allergen is shown next to the product.", "highlight": "Send General" }
+  ]
+}

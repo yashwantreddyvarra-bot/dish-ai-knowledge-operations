@@ -1,0 +1,73 @@
+{
+  "qid": 19,
+  "title": "Menus - Managing and arranging menus (incl. sub-menus)",
+  "workflow_title": "Menus - Managing and arranging menus (incl. sub-menus)",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "click": [
+        "button:text-is(\"Menus\")",
+        "span:has-text(\"Menus\")",
+        "text=Menus"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "settle": 1600
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Menus\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "text=Add submenu",
+        "button:has-text(\"Add submenu\")"
+      ]
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "text=Upload image",
+        "text=Colour",
+        "text=Color"
+      ]
+    },
+    {
+      "snap": 4
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "button:has-text(\"Add menu\")",
+        "text=Add menu"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "text=Location"
+      ]
+    },
+    {
+      "snap": 8
+    }
+  ]
+}

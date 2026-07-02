@@ -1,0 +1,81 @@
+{
+  "qid": 11,
+  "title": "Assigning a PLU to a product",
+  "workflow_title": "Assigning a PLU to a product",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Products\")"
+      ]
+    },
+    {
+      "snap": 2
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ]
+    },
+    {
+      "click": [
+        "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]",
+        "[data-track-button-id=\"edit-item\"]"
+      ],
+      "t": 3500
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "click": [
+        "text=Product codes"
+      ],
+      "t": 2500
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "text=Product codes"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "input[formcontrolname*=\"code\" i]",
+        "text=Product code"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "text=Add product code",
+        "a:has-text(\"Add product code\")"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "app-product-information button:has-text(\"Save\")",
+        "button:has-text(\"Save\"):not(:has-text(\"add\"))",
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 8
+    }
+  ]
+}

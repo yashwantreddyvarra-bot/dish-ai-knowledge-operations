@@ -1,0 +1,182 @@
+{
+  "id": 7,
+  "title": "Adjusting product details",
+  "workflow_title": "Adjusting product details",
+  "source": "official iorad PDF 2157574 (Adjusting product details)",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome to the DISH POS dashboard. In this tutorial, we will show how to adjust product details.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "First, go to Articles.",
+      "highlight": "Articles"
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Then click on Products.",
+      "highlight": "Products"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "To edit or add product information, click on the editing icon. The following steps also apply to a new product, by first clicking + Add product.",
+      "highlight": "editing icon"
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Using the corresponding text field, fill in the name of the product.",
+      "highlight": "name"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Through the drop-down menu, you can assign the product to a product group.",
+      "highlight": "product group"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "At Turnover categories, select the corresponding turnover group using the drop-down menu. If it differs from the default, you can change it.",
+      "highlight": "Turnover categories"
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "At Prices, you can set your price information.",
+      "highlight": "Prices"
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "Enter the price of the product.",
+      "highlight": "price"
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "Click into the respective text field to change the option price of the product.",
+      "highlight": "option price"
+    },
+    {
+      "step": 11,
+      "action": "click",
+      "caption": "Click the drop-down menu to select your desired tax rate. Note: VAT must be different to the default.",
+      "highlight": "tax rate"
+    },
+    {
+      "step": 12,
+      "action": "click",
+      "caption": "If a product has a price per unit, set the quantity and unit with the corresponding text field and drop-down menu.",
+      "highlight": "price per"
+    },
+    {
+      "step": 13,
+      "action": "click",
+      "caption": "Products are displayed with short names in the app. To give your product a short name, use the respective text field.",
+      "highlight": "short name"
+    },
+    {
+      "step": 14,
+      "action": "click",
+      "caption": "To add a barcode or another reference, use the text fields SearchField1 and SearchField2.",
+      "highlight": "SearchField1 SearchField2"
+    },
+    {
+      "step": 15,
+      "action": "click",
+      "caption": "At Production you can adjust the settings of the production flow for this product.",
+      "highlight": "Production"
+    },
+    {
+      "step": 16,
+      "action": "click",
+      "caption": "At Production Order, set the importance by entering a number. Production Order 1 is printed before Production Order 2.",
+      "highlight": "Production Order"
+    },
+    {
+      "step": 17,
+      "action": "click",
+      "caption": "If the default production facility (printer/screen) differs, select another by clicking + Add production attributes.",
+      "highlight": "Add production attributes"
+    },
+    {
+      "step": 18,
+      "action": "click",
+      "caption": "To set up a pop-up for the option menu, click + Add option menu.",
+      "highlight": "Add option menu"
+    },
+    {
+      "step": 19,
+      "action": "click",
+      "caption": "If the product contains composites, set those components by clicking + Add component.",
+      "highlight": "Add component"
+    },
+    {
+      "step": 20,
+      "action": "click",
+      "caption": "To give the product a description, go to Product description.",
+      "highlight": "Product description"
+    },
+    {
+      "step": 21,
+      "action": "click",
+      "caption": "Then use the respective text field to enter a description of the product.",
+      "highlight": "description"
+    },
+    {
+      "step": 22,
+      "action": "click",
+      "caption": "To add images, click on Images.",
+      "highlight": "Images"
+    },
+    {
+      "step": 23,
+      "action": "click",
+      "caption": "Use the + Upload image field to attach a picture to your product.",
+      "highlight": "Upload image"
+    },
+    {
+      "step": 24,
+      "action": "click",
+      "caption": "Upload your image by clicking Select file, or by dragging it into the zone. Only .jpg, .png, .jpeg up to 4 MB are supported.",
+      "highlight": "Select file"
+    },
+    {
+      "step": 25,
+      "action": "click",
+      "caption": "Once you uploaded your image, click on Save.",
+      "highlight": "Save"
+    },
+    {
+      "step": 26,
+      "action": "click",
+      "caption": "Back in the images overview, under the Apply column use the drop-down menu to set where the image is applied.",
+      "highlight": "Apply"
+    },
+    {
+      "step": 27,
+      "action": "click",
+      "caption": "To assign allergens and additives to the product, click on Product Information.",
+      "highlight": "Product Information"
+    },
+    {
+      "step": 28,
+      "action": "click",
+      "caption": "Then check the boxes for allergens and additives that are relevant to your product.",
+      "highlight": "allergens additives"
+    },
+    {
+      "step": 29,
+      "action": "info",
+      "caption": "Once you are done, click on Save to apply your changes. That's it - you now know how to adjust product details.",
+      "highlight": "Save"
+    }
+  ]
+}

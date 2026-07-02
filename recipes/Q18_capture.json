@@ -1,0 +1,82 @@
+{
+  "qid": 18,
+  "title": "Promotions - Adding and managing promotions on DISH POS",
+  "workflow_title": "Promotions - Adding and managing promotions on DISH POS",
+  "vars": {"NAME": ""},
+  "actions": [
+    {
+      "goto": "https://netherlands.sandbox.myplace.dish.co/cm/promotions",
+      "settle": 2800
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:has-text(\"Add promotion\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Add promotion\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1500
+    },
+    {"dump": "promo_form"},
+    {"fill": ["input[formcontrolname=\"name\"]"], "value": "{NAME} promotion"}, {"wait": 400},
+    {
+      "snap": 2,
+      "highlight": [
+        "input[formcontrolname=\"name\"]"
+      ]
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "app-sales-point-multitree-input[formcontrolname=\"salesPoints\"]",
+        "text=Location"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "p-select[formcontrolname=\"timePeriodId\"]",
+        "text=Period"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "text=Add condition",
+        "text=Conditions"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "p-radiobutton[formcontrolname=\"type\"]",
+        "text=Combo deal"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "app-price-input[formcontrolname=\"amount\"]",
+        "text=Effect"
+      ]
+    },
+    {
+      "snap": 8,
+      "highlight": [
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 9
+    }
+  ]
+}

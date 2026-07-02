@@ -1,0 +1,51 @@
+{
+  "id": 30,
+  "title": "Sales Channels - Setting up the imprint for web shops and QR sales channels",
+  "workflow_title": "Setting up the imprint for web shops and QR sales channels",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to set up the imprint for web shops and QR sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Self-service and click Sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the pencil icon of your desired QR sales channel.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Open the Legal notice tab.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Scroll to the Imprint field and insert your imprint text.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Open the General menu (General → General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

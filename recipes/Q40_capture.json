@@ -1,0 +1,28 @@
+{
+  "qid": 40, "title": "Adding and managing payment methods (incl. payment menus)",
+  "workflow_title": "Adding and managing payment methods (incl. payment menus)",
+  "vars": {"NAME": "Voucher"},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-payment\"]", "button:has-text(\"Payment\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PAYMENT_METHODS\"]", "text=Payment methods"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["button:has-text(\"Add payment method\")", "text=Add payment method"], "target": "Payment methods: + Add payment method"},
+    {"click": ["button:has-text(\"Add payment method\")", "text=Add payment method"], "t": 3000}, {"wait": 1500}, {"settle": 1500},
+    {"snap": 3, "highlight": ["input"], "target": "field: Name"},
+    {"snap": 4, "highlight": [":text(\"Payment method type\")", "text=Payment method type"], "target": "field: type"},
+    {"select": "p-select:right-of(:text(\"Payment method type\"))", "pick": ["Cash", "PIN", "External"]}, {"wait": 1500}, {"settle": 1500},
+    {"dump": "pm40_form"},
+    {"snap": 5, "highlight": [":text(\"Currency\")", "text=Currency"], "target": "field: Currency"},
+    {"snap": 6, "highlight": [":text(\"store configuration\")", "text=Store configuration", ":text(\"cash drawer\")", "text=Add store configuration"], "target": "store configuration / cash drawer"},
+    {"snap": 7, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PAYMENT_MENUS\"]", "text=Payment method menu", "text=Payment menus"], "t": 3000}, {"settle": 2400},
+    {"dump": "pm40_menus"},
+    {"snap": 8, "highlight": ["text=Payment methods", ".draggable-row", "tbody tr:nth-child(1)"], "target": "Payment method menu: drag method in"},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PAYMENT_METHODS\"]", "text=Payment methods"], "t": 3000}, {"settle": 2400},
+    {"snap": 9, "highlight": ["tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "target": "adjust (pencil) / delete (trash)"},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 10, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

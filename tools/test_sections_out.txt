@@ -1,0 +1,67 @@
+==============================================================================
+SECTION-SPECIFIC ROUTING  (expected vs. actual, + all-guides-in-one-section)
+==============================================================================
+OK  [Products] guides=[1] -> ['Products'] | want=Products | I need to put a new latte on the menu
+OK  [Products] guides=[2] -> ['Products'] | want=Products | rename a few products quickly in the list view
+OK  [Products] guides=[3] -> ['Products'] | want=Products | restrict when this product can be sold
+OK  [Products] guides=[4] -> ['Products'] | want=Products | make a meal deal that combines a burger and fries
+OK  [Products] guides=[5] -> ['Products'] | want=Products | I can't find a product, how do I search for it
+OK  [Products] guides=[6] -> ['Products'] | want=Products | flag that this dish contains peanuts
+OK  [Products] guides=[7] -> ['Products'] | want=Products | edit the details of an existing dish
+OK  [Products] guides=[9] -> ['Products'] | want=Products | set the kitchen preparation order
+OK  [Products] guides=[11] -> ['Products'] | want=Products | assign a PLU to a drink
+OK  [Products] guides=[12] -> ['Products'] | want=Products | make a new category for desserts
+OK  [Products] guides=[15] -> ['Products'] | want=Products | create a menu derived from another one
+OK  [Products] guides=[16] -> ['Products'] | want=Products | build a fixed price 3 course menu
+OK  [Products] guides=[17] -> ['Products'] | want=Products | only show the lunch items at midday
+OK  [Products] guides=[18] -> ['Products'] | want=Products | run a 20% off happy hour
+OK  [Products] guides=[19] -> ['Products'] | want=Products | rearrange the menu and add a submenu
+OK  [Products] guides=[20] -> ['Products'] | want=Products | link a price level to a specific store
+OK  [Products] guides=[22] -> ['Products'] | want=Products | show a different menu in the terrace area at certain times
+OK  [Products] guides=[23] -> ['Products'] | want=Products | add a deposit packaging profile for takeaway cups
+OK  [Products] guides=[24] -> ['Products'] | want=Products | lower the VAT on food items
+OK  [Products] guides=[21] -> ['Products'] | want=Products | stop the kitchen tickets printing automatically
+OK  [Products] guides=[25] -> ['Products'] | want=Products | let me scan an extra barcode for a product
+OK  [Self-service] guides=[26] -> ['Self-service'] | want=Self-service | customers should be able to pay when they collect their order
+OK  [Self-service] guides=[27] -> ['Self-service'] | want=Self-service | set the hours my self-service is open
+OK  [Self-service] guides=[28] -> ['Self-service'] | want=Self-service | restyle the self-service QR shop
+OK  [Self-service] guides=[29] -> ['Self-service'] | want=Self-service | suggest extra items at the kiosk checkout
+OK  [Self-service] guides=[34] -> ['Self-service'] | want=Self-service | add the legal imprint to my web shop
+OK  [Self-service] guides=[31] -> ['Self-service'] | want=Self-service | change the look of the kiosk screen
+OK  [Self-service] guides=[32] -> ['Self-service'] | want=Self-service | adjust my DISH Payment settings
+OK  [Self-service] guides=[34] -> ['Self-service'] | want=Self-service | make the webshop my own
+OK  [Self-service] guides=[35] -> ['Self-service'] | want=Self-service | show separate eat-in and takeaway menus on the kiosk
+OK  [Self-service] guides=[37] -> ['Self-service'] | want=Self-service | generate QR codes for table ordering
+OK  [Self-service] guides=[38] -> ['Self-service'] | want=Self-service | support buzzers so guests know their food is ready
+OK  [Payment] guides=[40] -> ['Payment'] | want=Payment | add a cash payment method
+OK  [Payment] guides=[41] -> ['Payment'] | want=Payment | manage the card machines and EFT devices
+OK  [Payment] guides=[42] -> ['Payment'] | want=Payment | set up a stand-alone EFT terminal
+OK  [Payment] guides=[43] -> ['Payment'] | want=Payment | let regulars pay on account
+OK  [Payment] guides=[44] -> ['Payment'] | want=Payment | set up a smart voucher as a payment option
+------------------------------------------------------------------------------
+NO-INTERSECTION CHECK on cross-section requests:
+OK  section=Self-service guides=[29] -> ['Self-service'] | add a cheeseburger to the menu and turn on cross-selling at the kiosk
+OK  section=Payment guides=[40] -> ['Payment'] | create QR codes and also add a payment method
+OK  section=Products guides=[18] -> ['Products'] | set up a happy hour discount and configure a smart voucher
+------------------------------------------------------------------------------
+WITHIN-SECTION MERGE still works (>=2 guides, all in one section):
+OK  [Products] guides=[1, 17] -> ['Products'] | want>=2 in Products | add a mojito as a drink and only show it during happy hour
+OK  [Products] guides=[1, 6] -> ['Products'] | want>=2 in Products | add a cheeseburger and mark its allergens
+OK  [Products] guides=[13, 14] -> ['Products'] | want>=2 in Products | create a price set and a price level
+------------------------------------------------------------------------------
+SINGLE-PRODUCT PRICE CHANGE -> list-view edit (Q2), product+amount extracted:
+OK  action=single guides=[2] name='Water' price='20.00'(auto=False) | want Q2 'Water'/'20.00' | change the price of water to 20 euros
+OK  action=single guides=[2] name='Cola' price='3.50'(auto=False) | want Q2 'Cola'/'3.50' | set the price of cola to 3.50
+OK  action=single guides=[2] name='Burger' price='12.00'(auto=False) | want Q2 'Burger'/'12.00' | update the price of the burger to 12
+OK  action=single guides=[2] name='Cappuccino' price='4.00'(auto=False) | want Q2 'Cappuccino'/'4.00' | make the cappuccino cost 4 euros
+OK  action=single guides=[2] name='Water' price='20.00'(auto=False) | want Q2 'Water'/'20.00' | change water's price to 20
+OK  action=single guides=[2] name='Fries' price='2.50'(auto=False) | want Q2 'Fries'/'2.50' | lower the price of fries to 2.50
+OK  action=single guides=[2] name='Beer' price='6.00'(auto=False) | want Q2 'Beer'/'6.00' | raise the beer price to 6
+OK  action=single guides=[2] name='Espresso' price='2.20'(auto=False) | want Q2 'Espresso'/'2.20' | edit the price of espresso to 2.20
+OK  action=single guides=[2] name='Latte' price='3.50'(auto=True) | want Q2 'Latte'/None | change the price of the latte
+------------------------------------------------------------------------------
+VAGUE price requests -> still CLARIFY (don't guess):
+OK  action=clarify | want=clarify | I want to change prices
+OK  action=clarify | want=clarify | how do I change the price
+==============================================================================
+PASSED 54 / 54

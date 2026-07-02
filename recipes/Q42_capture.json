@@ -1,0 +1,26 @@
+{
+  "qid": 42, "title": "Setting up a stand-alone EFT terminal",
+  "workflow_title": "Setting up a stand-alone EFT terminal",
+  "vars": {"NAME": "EFT terminal"},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-payment\"]", "button:has-text(\"Payment\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.EFT_DEVICES\"]", "text=EFT devices"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["table", "tbody", "text=EFT devices"], "target": "EFT devices: check compatibility"},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PAYMENT_METHODS\"]", "text=Payment methods"], "t": 3000}, {"settle": 2400},
+    {"snap": 3, "highlight": ["button:has-text(\"Add payment method\")", "text=Add payment method"], "target": "Payment methods: + Add payment method"},
+    {"click": ["button:has-text(\"Add payment method\")", "text=Add payment method"], "t": 3000}, {"wait": 1500}, {"settle": 1500},
+    {"select": "p-select:right-of(:text(\"Payment method type\"))", "pick": ["Payment terminal"]}, {"wait": 1500}, {"settle": 1500},
+    {"dump": "q42_form"},
+    {"snap": 4},
+    {"snap": 5, "highlight": [":text(\"store configuration\")", "text=Store configuration", "text=Add store configuration", ":text(\"Currency\")"], "target": "Currency EUR + Add store configuration"},
+    {"snap": 6, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PAYMENT_MENUS\"]", "text=Payment method menu"], "t": 3000}, {"settle": 2400},
+    {"snap": 7, "highlight": ["text=Payment Methods", "tbody tr:nth-child(1)"], "target": "Payment method menu: swap the EFT method"},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 8, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"},
+    {"snap": 9, "highlight": ["text=Dish Support", ":text(\"Support\")"], "target": "Create a support ticket (reopen function)"}
+  ]
+}

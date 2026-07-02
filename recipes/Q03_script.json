@@ -1,0 +1,92 @@
+{
+  "id": 3,
+  "title": "Assigning sales and restrictions to products and product groups",
+  "workflow_title": "Assigning sales and restrictions to products and product groups",
+  "source": "official iorad PDF 2157582 (Assigning sales restrictions)",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "Welcome to the DISH POS dashboard. In this tutorial, we show you how to assign sales restrictions to products and product groups. First, click on Articles.",
+      "highlight": "Articles"
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Then go to Products.",
+      "highlight": "Products"
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "You are now in the overview of your products. Look for a product you want to assign sales restrictions to through the search function.",
+      "highlight": "search function"
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Then use the edit icon of the corresponding product to open the settings of the product.",
+      "highlight": "edit icon"
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "A new window will open, where you can adjust the information of the product. Go to Product Information to assign a sales restriction.",
+      "highlight": "Product Information"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Under Sales restriction, you will see the option of only selling this product to people above the age of 18. To activate this sales restriction, set the corresponding checkmark.",
+      "highlight": "checkmark"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Once you assigned a sales restriction, click on Save to apply the changes.",
+      "highlight": "Save"
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "To do the same to a whole product group, go to the sub-menu Product groups.",
+      "highlight": "Product groups"
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "You are now in the overview of your product groups. To expand a product group, use the corresponding down-facing arrow.",
+      "highlight": "down-facing arrow"
+    },
+    {
+      "step": 10,
+      "action": "click",
+      "caption": "Then use the edit icon to open the settings of the corresponding product group.",
+      "highlight": "edit icon"
+    },
+    {
+      "step": 11,
+      "action": "click",
+      "caption": "A new window will open, where you can adjust the information of the product group. Go to Product Information to assign a sales restriction.",
+      "highlight": "Product Information"
+    },
+    {
+      "step": 12,
+      "action": "click",
+      "caption": "Under Sales restriction, you will see the option of only selling this product group to people above the age of 18. To activate this sales restriction, set the corresponding checkmark.",
+      "highlight": "checkmark"
+    },
+    {
+      "step": 13,
+      "action": "click",
+      "caption": "Once you assigned a sales restriction, click on Save to apply the changes.",
+      "highlight": "Save"
+    },
+    {
+      "step": 14,
+      "action": "info",
+      "caption": "That's it. You completed the tutorial and now know how to assign sales restrictions to products and product groups.",
+      "highlight": ""
+    }
+  ]
+}

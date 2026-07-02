@@ -1,0 +1,13 @@
+# DISH doc-automation pipeline
+playwright>=1.40        # Layer 1 capture  (then: playwright install chromium)
+reportlab>=4.0          # Layer 2 PDF
+pillow>=10.0            # Layer 2 video frames + captions
+imageio>=2.31           # Layer 2 MP4/GIF
+imageio-ffmpeg>=0.4     # MP4 encoder (bundles ffmpeg)
+numpy>=1.24
+openai>=1.0            # optional: LLM captions + RAG answers
+chromadb>=0.4          # Layer 3 vector store
+sentence-transformers>=2.2  # local embeddings (no API key)
+python-dotenv>=1.0     # optional: load .env
+flask>=3.0            # chatbot UI (app.py)
+pywebview>=5.3

@@ -1,0 +1,19 @@
+=== ACTIVE NETWORK CATEGORY (Public blocks inbound) ===
+
+
+Name             : FRITZ!Box 7530 XB
+InterfaceAlias   : WLAN
+IPv4Connectivity : Internet
+NetworkCategory  : Public
+
+
+
+
+
+=== python.exe INBOUND rules: name | action | enabled | profile | program ===
+python.exe | Allow | True | Public | C:\users\yashw\appdata\local\python\pythoncore-3.14-64\python.exe
+python.exe | Allow | True | Public | C:\users\yashw\appdata\local\python\pythoncore-3.14-64\python.exe
+
+
+=== ANY enabled inbound ALLOW rule on port 5000 ===
+

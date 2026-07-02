@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DISH Docs Assistant</title>
+<style>
+  :root{ --orange:#e65c26; --bg:#f5f6f8; --panel:#fff; --ink:#1d2027; --muted:#6b7280; --line:#e5e7eb; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--ink); height:100vh; display:flex; }
+  .sidebar{ width:300px; background:var(--panel); border-right:1px solid var(--line); display:flex; flex-direction:column; padding:20px; gap:18px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:18px; }
+  .brand .dot{ width:26px; height:26px; border-radius:7px; background:var(--orange); color:#fff; display:grid; place-items:center; font-size:14px; }
+  .label{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:600; margin-bottom:6px; }
+  select,input[type=text]{ width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:9px; font-size:14px; background:#fff; color:var(--ink); }
+  select:focus,input:focus{ outline:2px solid #f0c3ad; border-color:var(--orange); }
+  .addrow{ display:flex; gap:8px; }
+  .btn{ background:var(--orange); color:#fff; border:none; border-radius:9px; padding:11px 14px; font-size:14px; font-weight:600; cursor:pointer; }
+  .btn:hover{ filter:brightness(.95); } .btn:disabled{ opacity:.5; cursor:default; }
+  .btn-block{ width:100%; font-size:15px; padding:13px; }
+  .hint{ font-size:12px; color:var(--muted); line-height:1.5; }
+  .main{ flex:1; display:flex; flex-direction:column; }
+  .topbar{ padding:16px 24px; border-bottom:1px solid var(--line); background:var(--panel); font-weight:600; }
+  .topbar small{ display:block; color:var(--muted); font-weight:400; font-size:12px; margin-top:2px; }
+  .chat{ flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:14px; }
+  .msg{ max-width:78%; padding:13px 16px; border-radius:14px; font-size:14px; line-height:1.55; white-space:pre-wrap; }
+  .msg.user{ align-self:flex-end; background:var(--orange); color:#fff; border-bottom-right-radius:4px; }
+  .msg.bot{ align-self:flex-start; background:#fff; border:1px solid var(--line); border-bottom-left-radius:4px; max-width:82%; }
+  .msg.bot .src{ margin-top:8px; font-size:11px; color:var(--muted); border-top:1px dashed var(--line); padding-top:6px; }
+  .attach{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+  .attach a{ font-size:13px; font-weight:600; text-decoration:none; padding:9px 13px; border-radius:9px; background:var(--orange); color:#fff; }
+  .attach a.sec{ background:#fff; color:var(--orange); border:1px solid var(--orange); }
+  .vid{ margin-top:12px; } .vid video{ width:100%; border-radius:10px; border:1px solid var(--line); }
+  .vnote{ font-size:11px; color:var(--muted); margin-top:6px; line-height:1.4; }
+  .msg.bot .quality{ margin-top:11px; font-size:12px; display:inline-flex; align-items:center; gap:7px; border:1px solid; border-radius:8px; padding:6px 11px; background:#fff; }
+  .quality .qdot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+  .quality .qhow{ color:var(--muted); font-weight:400; font-size:11px; }
+  .empty{ margin:auto; text-align:center; color:var(--muted); } .empty .big{ font-size:42px; }
+  .inputbar{ padding:16px 24px; border-top:1px solid var(--line); background:var(--panel); display:flex; gap:10px; }
+  .inputbar input{ flex:1; }
+  /* live activity log */
+  .activity{ align-self:flex-start; max-width:82%; background:#1d2027; color:#cfe8cf; border-radius:14px; padding:12px 14px; font-size:12.5px; }
+  .activity .head{ color:#fff; font-weight:600; margin-bottom:8px; font-size:13px; display:flex; align-items:center; gap:8px; }
+  .spinner{ width:12px; height:12px; border:2px solid #e65c26; border-top-color:transparent; border-radius:50%; display:inline-block; animation:spin .8s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .activity .lines{ font-family:ui-monospace,Consolas,monospace; white-space:pre-wrap; max-height:200px; overflow:auto; line-height:1.6; }
+  .activity .lines .cur{ color:#ffd9c7; }
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="dot">D</span> DISH Docs Assistant</div>
+    <div>
+      <div class="label">Choose a question</div>
+      <select id="qSelect"><option value="">- select a question -</option></select>
+    </div>
+    <button class="btn btn-block" id="askBtn" disabled>Ask about this</button>
+    <div class="hint">Pick a question and hit <b>Ask about this</b>. You'll see each step run live, then the PDF + video appear in the chat.</div>
+    <div style="margin-top:auto">
+      <div class="label">Add a question</div>
+      <div class="addrow">
+        <input type="text" id="qNew" placeholder="e.g. Assigning a PLU" />
+        <button class="btn" id="qAdd">Add</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">DISH POS - Knowledge Assistant
+      <small>Products · Self-service · Payment — ask a question and get the step-by-step guide, PDF, and video.</small>
+    </div>
+    <div class="chat" id="chat">
+      <div class="empty" id="empty"><div class="big">&#128172;</div>Pick a question on the left,<br/>or type your own below.</div>
+    </div>
+    <div class="inputbar">
+      <input type="text" id="msg" placeholder="How do I add a product to a menu?" />
+      <button class="btn" id="send">Send</button>
+    </div>
+  </main>
+
+<script>
+const $ = s => document.querySelector(s);
+let CURRENT_ID = null, CURRENT_TITLE = "";
+
+async function loadQuestions(){
+  const qs = await fetch('/api/questions').then(r=>r.json());
+  const sel = $('#qSelect');
+  const keep = sel.value;
+  sel.innerHTML = '<option value="">- select a question -</option>';
+  // Group questions into sections (Products / Self-service / Payment) using <optgroup>.
+  const order = ['Products','Self-service','Payment'];
+  const groups = {};
+  qs.forEach(q=>{ const s = q.section || 'Other'; (groups[s] = groups[s] || []).push(q); });
+  const sections = order.filter(s=>groups[s]).concat(Object.keys(groups).filter(s=>!order.includes(s)));
+  sections.forEach(s=>{
+    const og = document.createElement('optgroup'); og.label = s + ' ('+groups[s].length+')';
+    groups[s].forEach(q=>{ const o=document.createElement('option');
+      o.value=q.id; o.textContent=q.id+'. '+q.title+(q.status==='ready'?'  ✅':''); og.appendChild(o); });
+    sel.appendChild(og);
+  });
+  sel.value = keep;
+}
+
+$('#qSelect').addEventListener('change', e=>{
+  CURRENT_ID = e.target.value || null;
+  CURRENT_TITLE = e.target.selectedOptions[0]?.textContent.replace(/^\d+\.\s/,'').replace(/\s*✅$/,'') || "";
+  $('#askBtn').disabled = !CURRENT_ID;
+});
+
+function addMsg(text, who){
+  $('#empty')?.remove();
+  const m=document.createElement('div'); m.className='msg '+who; m.textContent=text;
+  $('#chat').appendChild(m); $('#chat').scrollTop=$('#chat').scrollHeight; return m;
+}
+
+function addActivity(title){
+  $('#empty')?.remove();
+  const m=document.createElement('div'); m.className='activity';
+  m.innerHTML='<div class="head"><span class="spinner"></span>'+title+'</div><div class="lines"></div>';
+  $('#chat').appendChild(m); $('#chat').scrollTop=$('#chat').scrollHeight; return m;
+}
+
+function appendMedia(m, pdf, video, note){
+  if(pdf||video){
+    const a=document.createElement('div'); a.className='attach';
+    if(pdf){ const l=document.createElement('a'); l.href=pdf; l.target='_blank'; l.textContent='📄 Open PDF guide'; a.appendChild(l); }
+    if(video){ const l=document.createElement('a'); l.href=video; l.target='_blank'; l.className='sec'; l.textContent='🎬 Open video'; a.appendChild(l); }
+    m.appendChild(a);
+  }
+  if(video){ const v=document.createElement('div'); v.className='vid';
+    v.innerHTML='<video controls preload="metadata" src="'+video+'"></video>'
+      +(note?('<div class="vnote">'+note+'</div>'):''); m.appendChild(v); }
+  $('#chat').scrollTop=$('#chat').scrollHeight;
+}
+function pollBuildDone(){
+  return new Promise(res=>{ const t=setInterval(async()=>{
+    try{ const st=await fetch('/api/build/status').then(r=>r.json()); if(st.done){ clearInterval(t); res(); } }catch(e){}
+  }, 1500); });
+}
+
+function addRich(answer, pdf, video, sources, quality){
+  $('#empty')?.remove();
+  const m=document.createElement('div'); m.className='msg bot';
+  m.appendChild(document.createTextNode(answer));
+  if(quality && quality.score!=null){
+    const s=quality.score, color = s>=85?'#1a7f37' : s>=70?'#b7791f' : '#c23b3b';
+    const b=document.createElement('div'); b.className='quality';
+    b.style.borderColor=color; b.style.color=color;
+    const issues = quality.fail ? (quality.fail+' step issue'+(quality.fail>1?'s':'')) : 'verified clean';
+    let parts = '';
+    if(quality.pdf_score!=null) parts = ' <span class="qhow">(PDF '+quality.pdf_score
+      +' · Video '+quality.video_score+' · Steps '+quality.steps_score+')</span>';
+    b.innerHTML='<span class="qdot" style="background:'+color+'"></span>Document quality: <b>'+s+'/100</b> · '
+      + issues + parts;
+    m.appendChild(b);
+  }
+  appendMedia(m, pdf, video);
+  if(sources&&sources.length){ const s=document.createElement('div'); s.className='src';
+    s.textContent='Sources: '+sources.map(x=>x.workflow+(x.steps?(' (steps '+x.steps+')'):'')).join('  -  '); m.appendChild(s); }
+  $('#chat').appendChild(m); $('#chat').scrollTop=$('#chat').scrollHeight; return m;
+}
+
+const getDetail = id => fetch('/api/question/'+id).then(r=>r.json());
+const getAnswer = q => fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q})}).then(r=>r.json());
+
+function renderLog(box, lines){
+  const el = box.querySelector('.lines');
+  el.innerHTML = lines.map((l,i)=> (i===lines.length-1 ? '<span class="cur">▶ '+l+'</span>' : '✓ '+l)).join('\n');
+  el.scrollTop = el.scrollHeight; $('#chat').scrollTop=$('#chat').scrollHeight;
+}
+
+function pollBuild(box){
+  return new Promise(resolve=>{
+    const t=setInterval(async ()=>{
+      const st=await fetch('/api/build/status').then(r=>r.json());
+      renderLog(box, st.log && st.log.length ? st.log : ['starting...']);
+      if(st.done){ clearInterval(t);
+        box.querySelector('.spinner').style.display='none';
+        box.querySelector('.head').firstChild?.remove?.();
+        box.querySelector('.head').textContent='✓ Finished';
+        resolve(); }
+    }, 1000);
+  });
+}
+
+async function askAbout(){
+  if(!CURRENT_ID) return;
+  $('#askBtn').disabled=true;
+  const q='How do I '+CURRENT_TITLE.charAt(0).toLowerCase()+CURRENT_TITLE.slice(1)+'?';
+  addMsg(q,'user');
+  let detail=await getDetail(CURRENT_ID);
+  if(detail.buildable && !detail.pdf_url){
+    const box=addActivity('Building your guide live');
+    renderLog(box,['starting...']);
+    await fetch('/api/build/'+CURRENT_ID,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({capture:true})});
+    await pollBuild(box);
+    detail=await getDetail(CURRENT_ID);
+  } else {
+    const box=addActivity('Loading saved guide');
+    renderLog(box,['Found a saved guide for this question','Fetching PDF + video','Done']);
+    setTimeout(()=>{ box.querySelector('.spinner').style.display='none'; box.querySelector('.head').textContent='✓ Ready'; }, 400);
+  }
+  const ans=await fetch('/api/render/'+CURRENT_ID).then(r=>r.json());
+  addRich(ans.answer, detail.pdf_url, detail.video_url, ans.sources, ans.quality);
+  $('#askBtn').disabled=false;
+  await loadQuestions();
+}
+$('#askBtn').addEventListener('click', askAbout);
+
+async function send(){
+  const q=$('#msg').value.trim(); if(!q) return;
+  addMsg(q,'user'); $('#msg').value='';
+  const t=addMsg('thinking...','bot');
+  const r=await getAnswer(q); t.remove();
+  const name = r.params && r.params.product_name;
+  // Show the answer + steps INSTANTLY.
+  const m = addRich(r.answer, null, null, r.sources, r.quality);
+  const isMerge = r.guides && r.guides.length > 1;
+  // Random (free-text) questions are ALWAYS built FRESH on the backend — never reuse a
+  // previously-saved video. Single, product-tailored, or multi-part: all capture live now.
+  if(r.qid && r.buildable && r.action!=='clarify' && r.action!=='none'){
+    const what = name ? ('"'+name+'"') : (isMerge ? 'this multi-part request' : 'this guide');
+    const mins = isMerge ? '~3–5' : '~2';
+    const note=document.createElement('div'); note.className='vnote';
+    note.innerHTML='<span class="spinner"></span> Building '+what+' as one continuous guide in the background ('+mins+' min)…';
+    m.appendChild(note); $('#chat').scrollTop=$('#chat').scrollHeight;
+    fetch('/api/build/'+r.qid,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({capture:true, request:q, guides:r.guides})})
+      .then(()=>pollBuildDone()).then(async ()=>{
+        const st=await fetch('/api/build/status').then(r=>r.json());
+        const o=(st&&st.output)||{}; note.remove();
+        appendMedia(m, o.pdf, o.video, 'Captured live just now as one continuous guide. This is a one-off preview; your saved guides 1–25 are untouched.');
+      }).catch(()=>{ note.textContent='(preview build failed — please try again)'; });
+  } else if(r.pdf_url||r.video_url){
+    appendMedia(m, r.pdf_url, r.video_url);
+  } else if(r.qid && r.action!=='clarify' && r.action!=='none'){
+    const note2=document.createElement('div'); note2.className='vnote';
+    note2.textContent='Step-by-step guide above. A live PDF/video walkthrough for this one is coming soon.';
+    m.appendChild(note2); $('#chat').scrollTop=$('#chat').scrollHeight;
+  }
+}
+$('#send').addEventListener('click', send);
+$('#msg').addEventListener('keydown', e=>{ if(e.key==='Enter') send(); });
+
+$('#qAdd').addEventListener('click', async ()=>{
+  const title=$('#qNew').value.trim(); if(!title) return;
+  await fetch('/api/questions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title})});
+  $('#qNew').value=''; await loadQuestions();
+});
+
+loadQuestions();
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+{
+  "qid": 9,
+  "title": "Setting up a production order",
+  "workflow_title": "Setting up a production order",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "snap": 1
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:text-is(\"Products\")"
+      ]
+    },
+    {
+      "snap": 3
+    },
+    {
+      "click": [
+        "button:has-text(\"Columns\")",
+        "text=Columns",
+        "[aria-label*=\"column\" i]"
+      ],
+      "t": 2500
+    },
+    {
+      "wait": 1000
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "text=Production Order",
+        "button:has-text(\"Columns\")"
+      ]
+    },
+    {
+      "click": [
+        "text=Production Order"
+      ],
+      "t": 2000
+    },
+    {
+      "wait": 900
+    },
+    {
+      "click": [
+        "button:has-text(\"Columns\")",
+        "text=Columns",
+        "[aria-label*=\"column\" i]"
+      ],
+      "t": 1500
+    },
+    {
+      "wait": 700
+    },
+    {
+      "scrollto": [
+        "th:has-text(\"Production Order\")",
+        "text=Production Order",
+        "th:has-text(\"Production\")"
+      ],
+      "t": 800
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "th:has-text(\"Production Order\")",
+        "text=Production Order",
+        "th:has-text(\"Production\")"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "button:has-text(\"Filter\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Filter\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "text=Product groups",
+        ":text(\"Product groups\")"
+      ]
+    },
+    {
+      "snap": 8,
+      "highlight": [
+        "button:has-text(\"Apply filters\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Apply filters\")"
+      ],
+      "t": 2500
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1800
+    },
+    {
+      "scrollto": [
+        "th:has-text(\"Production Order\")",
+        "text=Production Order",
+        "th:has-text(\"Production\")"
+      ],
+      "t": 800
+    },
+    {
+      "snap": 9,
+      "highlight": [
+        "th:has-text(\"Production Order\")",
+        "text=Production Order",
+        "th:has-text(\"Production\")"
+      ]
+    },
+    {
+      "scrollto": [
+        "th:has-text(\"Production Order\")",
+        "text=Production Order",
+        "th:has-text(\"Production\")"
+      ],
+      "t": 600
+    },
+    {
+      "snap": 10,
+      "highlight": [
+        "input[formcontrolname=\"productionOrder\"]",
+        "text=Production Order"
+      ]
+    }
+  ]
+}

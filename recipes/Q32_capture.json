@@ -1,0 +1,22 @@
+{
+  "qid": 32, "title": "Changing settings for DISH Payment",
+  "workflow_title": "Changing settings for DISH Payment",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "target": "sidebar: Sales channels"},
+    {"snap": 3, "highlight": ["tr:has-text(\"QR Ordening\") [data-track-button-id=\"edit-item\"]"], "target": "edit: Payment site (QR) sales channel"},
+    {"click": ["tr:has-text(\"QR Ordening\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"click": ["text=Content", ":text(\"Content\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"scrollto": [":text-is(\"Payment text\")", "text=Payment text"], "t": 1000},
+    {"snap": 4, "highlight": ["p-editor:below(:text-is(\"Payment text\"))", ":text-is(\"Payment text\")", "text=Payment text"], "target": "Content tab: Payment text"},
+    {"click": ["text=Tipping", ":text(\"Tipping\")"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"snap": 5, "highlight": [":text-is(\"Tipping active\")", "text=Tipping active", "text=Tipping options"], "target": "Tipping tab: tipping options"},
+    {"snap": 6, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 7, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

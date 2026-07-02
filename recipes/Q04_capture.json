@@ -1,0 +1,77 @@
+{
+  "qid": 4,
+  "title": "Creating composites of multiple articles",
+  "workflow_title": "Creating composites of multiple articles",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "snap": 1
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:has-text(\"Add product\")"
+      ]
+    },
+    {
+      "goto": "CREATE",
+      "settle": 3200
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "input[formcontrolname*=\"name\" i]",
+        "input[name*=\"name\" i]"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "app-price-input[formcontrolname=\"price\"]",
+        "text=Price"
+      ]
+    },
+    {
+      "scrollto": [
+        "text=Composites",
+        ":text(\"Composites\")"
+      ],
+      "t": 900
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "text=Composites",
+        ":text(\"Composites\")"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "a:has-text(\"Add component\")",
+        "text=Add component",
+        ":text(\"+ Add component\")",
+        "button:has-text(\"Add component\")",
+        ":text(\"Add component\")"
+      ]
+    },
+    {
+      "scrollto": [
+        "button:has-text(\"Save\"):not(:has-text(\"add new\"))",
+        "button:has-text(\"Save\")"
+      ],
+      "t": 900
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "button:has-text(\"Save\"):not(:has-text(\"add new\"))",
+        "button:has-text(\"Save\")"
+      ]
+    }
+  ]
+}

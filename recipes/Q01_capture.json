@@ -1,0 +1,32 @@
+{
+  "qid": 1, "title": "Add a product and assign it to a menu",
+  "workflow_title": "Adding a product and assigning it to a menu",
+  "vars": {"NAME": "Sparkling Water", "PRICE": "3.50", "MENUGROUP": "Drinks", "PRODUCTGROUP": "Soft Drinks"},
+  "actions": [
+    {"snap": 1},
+    {"goto": "PRODUCTS", "settle": 2600}, {"snap": 2, "highlight": ["button:text-is(\"Products\")", "span:text-is(\"Products\")"], "target": "sidebar: Products (section)"},
+    {"snap": 3, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PRODUCTS\"]", ":nth-match(app-nav-link:has-text(\"Products\"), 2)", "app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PRODUCTS\"] button"], "target": "sidebar: Products (sub-item)"},
+    {"snap": 4, "highlight": ["button:has-text(\"Add product\")", "a:has-text(\"Add product\")", "text=Add product"]},
+    {"goto": "CREATE", "settle": 2600},
+    {"fill": ["input[formcontrolname=\"name\"]"], "value": "{NAME}"}, {"wait": 500}, {"snap": 5, "highlight": ["input[formcontrolname=\"name\"]"]},
+    {"select": "app-productgroup-tree-input[formcontrolname=\"productGroup\"]", "pick": ["{PRODUCTGROUP}", "Food", "Drinks", "Soft Drinks", "Miscellaneous"]}, {"wait": 600}, {"snap": 6, "highlight": ["app-productgroup-tree-input[formcontrolname=\"productGroup\"]", "text=Product group"]},
+    {"select": "app-turnover-tree-input[formcontrolname=\"turnoverGroup\"]", "pick": ["Drinks", "Low", "High", "Food"]}, {"wait": 600}, {"snap": 7, "highlight": ["app-turnover-tree-input[formcontrolname=\"turnoverGroup\"]", "text=Turnover categories"]},
+    {"fill": ["app-price-input[formcontrolname=\"price\"] input", "input[placeholder=\"0.00\"]"], "value": "{PRICE}"}, {"wait": 400},
+    {"select": "p-select[formcontrolname=\"vatId\"]", "pick": ["9%", "21%", "0%", "Low", "High"]}, {"wait": 500}, {"snap": 8, "highlight": ["app-price-input[formcontrolname=\"price\"]", "text=Price"]},
+    {"click": ["button:has-text(\"Save\"):not(:has-text(\"add new\"))", "button:has-text(\"Save\")"]}, {"settle": 2800}, {"snap": 9, "highlight": ["button:has-text(\"Save\")"]},
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"fill": ["input[type=\"search\"]", "input[placeholder*=\"Search\" i]", "input[placeholder*=\"search\" i]"], "value": "{NAME}"}, {"key": "Enter"}, {"wait": 2400}, {"snap": 10, "highlight": ["input[type=\"search\"]", "input[placeholder*=\"Search\" i]"]},
+    {"snap": 11, "highlight": ["tbody tr:nth-child(1)", "tbody tr", "table tr:nth-child(2)"]},
+    {"goto": "MENUS", "settle": 2600}, {"snap": 12, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.MENUS\"]", ":nth-match(app-nav-link:has-text(\"Menus\"), 1)", "button:text-is(\"Menus\")"]},
+    {"click": ["text=Menukaart", "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3000}, {"wait": 1600},
+    {"dump": "menus_q01"},
+    {"snap": 13, "highlight": ["text=Menukaart", "[data-track-button-id=\"edit-item\"]"]},
+    {"click": ["app-menu-item-tree .p-tree-node:has-text(\"{MENUGROUP}\") .p-tree-node-toggle-button", ":nth-match(app-menu-item-tree .p-tree-node-toggle-button, 1)", "app-menu-item-tree .p-tree-node-toggle-button"], "t": 2000}, {"wait": 1300}, {"snap": 14},
+    {"click": [":nth-match(app-menu-item-tree .p-tree-node-toggle-button, 2)", "app-menu-item-tree .p-tree-node-toggle-button"], "t": 2000}, {"wait": 1300}, {"snap": 15},
+    {"snap": 16, "highlight": ["app-product-tree", ":nth-match(.p-tree, 2)", "aside"], "target": "column: Products (right)"},
+    {"fill": ["app-product-tree input", ":nth-match(input[type=\"search\"], 2)", ":nth-match(input[placeholder*=\"earch\"], 2)", "input[type=\"search\"]"], "value": "{NAME}"}, {"key": "Enter"}, {"wait": 2400}, {"snap": 17, "highlight": ["app-product-tree input", ":nth-match(input[type=\"search\"], 2)", "app-product-tree"], "target": "field: Search (Products column)"},
+    {"drag": ["app-product-tree .draggable-row:has-text(\"{NAME}\")", ".draggable-row:has-text(\"{NAME}\")", "app-product-tree .p-tree-node:has-text(\"{NAME}\")", "app-product-tree .draggable-row", ":nth-match(.draggable-row, 1)"], "to": ["app-menu-item-tree .p-tree-node:has-text(\"{MENUGROUP}\")", "app-menu-item-tree .p-tree-node-droppoint", ":nth-match(app-menu-item-tree .p-tree-node, 1)", "app-menu-item-tree"], "t": 3500}, {"wait": 1400}, {"snap": 18},
+    {"snap": 19},
+    {"goto": "DASHBOARD", "settle": 1800}, {"snap": 20}
+  ]
+}

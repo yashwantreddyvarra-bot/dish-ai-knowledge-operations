@@ -1,0 +1,56 @@
+{
+  "id": 25,
+  "title": "Products - Adding multiple product codes",
+  "workflow_title": "Products - Adding multiple product codes",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, under Articles open Products and find the product.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click the editing (pencil) icon next to the product.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Open the Product codes tab in the left-hand menu.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Enter your codes in the fields - barcodes (EAN), PLU numbers, or other unique identifiers.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Click + Add product code to create additional fields as needed.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Review the Product code alias section below to see where a code is already used and avoid duplicates.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click Save to apply the changes.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Then send provisioning via General, the sub-category General, and Send.",
+      "highlight": ""
+    }
+  ]
+}

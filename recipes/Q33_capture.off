@@ -1,0 +1,17 @@
+{
+  "qid": 33, "title": "Configuring random spot checks on self-service POS/Grab and Go POS",
+  "workflow_title": "Configuring random spot checks on self-service POS/Grab and Go POS",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"click": ["tr:has-text(\"Self-Service\") [data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"dump": "ss_top"},
+    {"snap": 2},
+    {"scrollto": [":text(\"Enable checks\")", ":text(\"Random spot\")", ":text(\"Identification\")"], "t": 1200},
+    {"dump": "ss_scrolled"},
+    {"snap": 3}
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": 9,
+  "title": "Setting up a production order",
+  "workflow_title": "Setting up a production order",
+  "source": "official iorad PDF 2401614 (Setting up a production order)",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome to the DISH POS dashboard. In this tutorial we show you how to set up a production order.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "First, under Articles click on Products.",
+      "highlight": "Products"
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "You are now in the products overview.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "To get a better overview of the production order of your articles, click on Columns and select Production Order.",
+      "highlight": "Columns"
+    },
+    {
+      "step": 5,
+      "action": "info",
+      "caption": "You now see the Production Order column with the order number of each product. The product with the lowest number is listed first on the production ticket/screen.",
+      "highlight": "Production Order"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "If you want to adjust the production order for a specific product group, click on Filter.",
+      "highlight": "Filter"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Then select the product group(s) you want to adjust.",
+      "highlight": "product group"
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Click on Apply filters.",
+      "highlight": "Apply filters"
+    },
+    {
+      "step": 9,
+      "action": "click",
+      "caption": "To add a production order, click into the field under the Production Order column of the respective product.",
+      "highlight": "Production Order"
+    },
+    {
+      "step": 10,
+      "action": "info",
+      "caption": "Enter the order number in the text field. That's it - you now know how to set up a production order.",
+      "highlight": "Production Order"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "qid": 27, "title": "Adding and managing time schedules for self-service",
+  "workflow_title": "Adding and managing time schedules for self-service",
+  "vars": {"NAME": "Self-service hours"},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"snap": 2, "highlight": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")", ".navigation-item-text:has-text(\"Self-service\")"], "target": "sidebar: Self-service"},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"snap": 3, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.TIME_SCHEDULES\"]", "text=Time schedules"], "target": "sidebar: Time schedules"},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.TIME_SCHEDULES\"]", "text=Time schedules"], "t": 3000}, {"settle": 2400},
+    {"snap": 4, "highlight": ["button:has-text(\"Add time schedule\")", "text=Add time schedule"], "target": "button: Add time schedule"},
+    {"click": ["button:has-text(\"Add time schedule\")", "text=Add time schedule"], "t": 3000}, {"wait": 1500}, {"settle": 1500},
+    {"fill": ["input[formcontrolname=\"name\"]"], "value": "{NAME}"}, {"wait": 500},
+    {"snap": 5, "highlight": ["input[formcontrolname=\"name\"]", "text=Name"], "target": "field: Name"},
+    {"snap": 6, "highlight": ["text=Monday", ":text(\"From\")", "text=Time schedule"], "target": "grid: open/close times per day"},
+    {"scrollto": [".add-exception-button", "text=Add exception"], "t": 800},
+    {"snap": 7, "highlight": [".add-exception-button", "text=Add exception"], "target": "button: Add exception"},
+    {"snap": 8, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save"},
+    {"click": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "t": 3000}, {"settle": 2600},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 9, "highlight": ["tr:has-text(\"Webshop\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "target": "edit: Webshop sales channel"},
+    {"click": ["tr:has-text(\"Webshop\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"click": ["text=Opening hours"], "t": 3000}, {"wait": 1500}, {"settle": 1200},
+    {"scrollto": ["p-select:has(.p-select-clear-icon)", ":nth-match(:text-is(\"Pick-up hours\"), 2)", "text=Pick-up hours"], "t": 800},
+    {"snap": 10, "highlight": ["p-select:has(.p-select-clear-icon)", ":nth-match(:text-is(\"Pick-up hours\"), 2)", "text=Pick-up hours"], "vhint": "the Pick-up hours dropdown that selects a time schedule", "target": "dropdown: Pick-up hours (time schedule)"},
+    {"snap": 11, "highlight": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "target": "button: Save (then General > Send)"}
+  ]
+}

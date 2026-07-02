@@ -1,0 +1,39 @@
+{
+  "id": 41,
+  "title": "EFT Devices - Managing EFT devices",
+  "workflow_title": "Managing EFT devices",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to manage EFT devices.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Payment and open EFT devices to view all configured payment terminals.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Review the listed EFT devices.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "To make changes to EFT devices, contact the DISH POS service desk for advice on the impact.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "info",
+      "caption": "Go to General, then General, and click Send to transmit the changes.",
+      "highlight": ""
+    }
+  ]
+}

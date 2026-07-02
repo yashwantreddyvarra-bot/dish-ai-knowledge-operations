@@ -1,0 +1,56 @@
+{
+  "id": 5,
+  "title": "Finding products with the search and filter function",
+  "workflow_title": "Finding products with the search and filter function",
+  "source": "support.dish.co official article (Finding products with search and filter)",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In DISH POS you can search for an article by going to Articles, then Products to open the product overview.",
+      "highlight": "Products"
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "To search for an article, enter the name or part of the name in the Type to search field, followed by Enter.",
+      "highlight": "search"
+    },
+    {
+      "step": 3,
+      "action": "info",
+      "caption": "This displays all products that meet the search criteria.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "You can also search within a product group. At Product group, click the dropdown menu, where the default is All.",
+      "highlight": "Product group"
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Select the groups that you want to filter. Only the items in that product group will then be displayed.",
+      "highlight": "Product group"
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "To filter on a particular price, tax, name, article group and/or turnover group, click on Filter at the top right.",
+      "highlight": "Filter"
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Enter the criteria you want to filter on. You can use several filters simultaneously, then click Apply filters at the bottom right.",
+      "highlight": "Apply filters"
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "All articles that meet the criteria are then displayed. To delete filters, click the cross next to a filter, or open Filter and choose Delete all filters.",
+      "highlight": "Delete all filters"
+    }
+  ]
+}

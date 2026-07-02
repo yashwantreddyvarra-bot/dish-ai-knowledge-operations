@@ -1,0 +1,30 @@
+{
+  "qid": 35, "title": "Linking two different menus in the kiosk (Eat-in or Takeaway)",
+  "workflow_title": "Linking two different menus in the kiosk (Eat-in or Takeaway)",
+  "vars": {},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.MENUS\"]", "button:text-is(\"Menus\")", "text=Menus"], "t": 3000}, {"wait": 1200}, {"settle": 1600},
+    {"snap": 2, "highlight": ["button:has-text(\"Add menu\")", "text=Add menu"], "target": "Menus: + Add menu"},
+    {"click": ["button:has-text(\"Add menu\")", "text=Add menu"], "t": 2800}, {"wait": 1500}, {"settle": 1500},
+    {"snap": 3, "highlight": ["app-check-box[formcontrolname=\"isDerived\"]", "text=Derived menu", "text=Derived"], "target": "Add menu: Derived menu checkbox"},
+    {"snap": 4, "highlight": ["text=Base menu", "text=Derived from", "p-select"], "target": "Add menu: derive-from (base menu + store)"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"snap": 5, "highlight": ["button:has-text(\"Add menu\")", "text=Add menu"], "target": "Menus list: repeat for second menu"},
+    {"goto": "https://netherlands.sandbox.myplace.dish.co/cm/salespoints", "settle": 2800},
+    {"snap": 6, "highlight": ["tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "target": "Facilities: edit a facility"},
+    {"click": ["tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3200}, {"wait": 1500}, {"settle": 1800},
+    {"click": ["app-aside :text-is(\"Menu\")", ":text-is(\"Menu\")", "span:text-is(\"Menu\")"], "t": 2000}, {"wait": 1000},
+    {"snap": 7, "highlight": ["p-select[formcontrolname=\"menuId\"]", "text=POS menu", "text=Self-service menu"], "target": "Facility: POS menu select"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"snap": 8, "highlight": ["tbody tr:nth-child(2) [data-track-button-id=\"edit-item\"]", "tbody tr:nth-child(1) [data-track-button-id=\"edit-item\"]"], "target": "Facilities: repeat for second facility"},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"click": ["tr:has-text(\"Kiosk\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"snap": 9, "highlight": ["text=Fulfillment options", ":text(\"Fulfillment options\")", "text=Fulfilment options"], "target": "Kiosk: fulfilment options"},
+    {"click": ["[data-track-button-id=\"close-button\"]", "button:has-text(\"Cancel\")"], "t": 2500}, {"wait": 1200}, {"settle": 1500},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"snap": 10, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": 42,
+  "title": "EFT Devices - Setting up a stand-alone EFT terminal",
+  "workflow_title": "Setting up a stand-alone EFT terminal",
+  "backoffice": "old",
+  "country": "DE",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to set up a stand-alone EFT terminal.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Payment, then EFT devices, to check the configured payment terminals.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Go to Payment methods and click + Add payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Enter a Name and set the Method type to Payment terminal.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Set the Currency to EUR and click + Add store configuration.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Click Save, then Save again.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Open the Payment methods menu, remove the old EFT type, and add the new EFT payment method.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "click",
+      "caption": "Open the General menu (General then General) and click Send to transmit your changes, then verify it in the POS app.",
+      "highlight": ""
+    },
+    {
+      "step": 9,
+      "action": "info",
+      "caption": "Create a support ticket to enable the reopen function for stand-alone terminals.",
+      "highlight": ""
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": 31,
+  "title": "Sales Channels - Adjusting the appearance of the kiosk",
+  "workflow_title": "Adjusting the appearance of the kiosk",
+  "backoffice": "old",
+  "country": "",
+  "steps": [
+    {
+      "step": 1,
+      "action": "info",
+      "caption": "Welcome. This guide shows how to adjust the appearance of the kiosk.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "In the Backoffice, go to Self-service and click Sales channels.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Click the edit icon of your kiosk.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "On the General tab, adjust the fulfilment options, languages and content.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Open the Appearance tab to set the primary colour, logos and media.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Open the General menu (General → General) and click Send to transmit your changes.",
+      "highlight": ""
+    }
+  ]
+}

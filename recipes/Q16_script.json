@@ -1,0 +1,56 @@
+{
+  "id": 16,
+  "title": "French Menu - Adding a fixed-price menu",
+  "workflow_title": "French Menu - Adding a fixed-price menu",
+  "source": "support.dish.co official article + live form inspection",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, open Products and select French menus.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click + Add French menu.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Enter a name for the French (fixed-price) menu.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Assign the menu to a product group.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Select the turnover category.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Enter the price for the menu.",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click Save.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Finally, send the changes via General, the sub-category General, and Send.",
+      "highlight": ""
+    }
+  ]
+}

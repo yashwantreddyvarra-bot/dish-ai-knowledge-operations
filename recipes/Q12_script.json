@@ -1,0 +1,56 @@
+{
+  "id": 12,
+  "title": "Product groups - Adding a new product group",
+  "workflow_title": "Product groups - Adding a new product group",
+  "source": "support.dish.co official article",
+  "steps": [
+    {
+      "step": 1,
+      "action": "click",
+      "caption": "In the DISH POS Backoffice, under Articles open Product groups.",
+      "highlight": ""
+    },
+    {
+      "step": 2,
+      "action": "click",
+      "caption": "Click Add product group in the upper right corner.",
+      "highlight": ""
+    },
+    {
+      "step": 3,
+      "action": "click",
+      "caption": "Give the product group a name.",
+      "highlight": ""
+    },
+    {
+      "step": 4,
+      "action": "click",
+      "caption": "Choose a logical Parent product group to keep the structure clear.",
+      "highlight": ""
+    },
+    {
+      "step": 5,
+      "action": "click",
+      "caption": "Set the correct Turnover group and VAT rate for reporting.",
+      "highlight": ""
+    },
+    {
+      "step": 6,
+      "action": "click",
+      "caption": "Optionally set the Course and Production attributes (printer/kitchen screen).",
+      "highlight": ""
+    },
+    {
+      "step": 7,
+      "action": "click",
+      "caption": "Click Save to create the product group.",
+      "highlight": ""
+    },
+    {
+      "step": 8,
+      "action": "info",
+      "caption": "Then go to General, the sub-category General, and click Send to push the changes to your POS.",
+      "highlight": ""
+    }
+  ]
+}

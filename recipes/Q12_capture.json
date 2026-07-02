@@ -1,0 +1,87 @@
+{
+  "qid": 12,
+  "title": "Product groups - Adding a new product group",
+  "workflow_title": "Product groups - Adding a new product group",
+  "vars": {},
+  "actions": [
+    {
+      "goto": "PRODUCTS",
+      "settle": 2600
+    },
+    {
+      "click": [
+        "button:text-is(\"Product groups\")",
+        "span:has-text(\"Product groups\")",
+        "text=Product groups"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1200
+    },
+    {
+      "settle": 1600
+    },
+    {
+      "snap": 1,
+      "highlight": [
+        "button:text-is(\"Product groups\")"
+      ]
+    },
+    {
+      "snap": 2,
+      "highlight": [
+        "button:has-text(\"Add product group\")",
+        "button:has-text(\"Add productgroup\")"
+      ]
+    },
+    {
+      "click": [
+        "button:has-text(\"Add product group\")",
+        "button:has-text(\"Add productgroup\")"
+      ],
+      "t": 2800
+    },
+    {
+      "wait": 1500
+    },
+    {
+      "settle": 1500
+    },
+    {
+      "snap": 3,
+      "highlight": [
+        "input[formcontrolname*=\"name\" i]"
+      ]
+    },
+    {
+      "snap": 4,
+      "highlight": [
+        "text=Parent"
+      ]
+    },
+    {
+      "snap": 5,
+      "highlight": [
+        "text=Turnover",
+        "text=Turnover group"
+      ]
+    },
+    {
+      "snap": 6,
+      "highlight": [
+        "text=Course"
+      ]
+    },
+    {
+      "snap": 7,
+      "highlight": [
+        "button:has-text(\"Save\"):not(:has-text(\"add\"))",
+        "button:has-text(\"Save\")"
+      ]
+    },
+    {
+      "snap": 8
+    }
+  ]
+}

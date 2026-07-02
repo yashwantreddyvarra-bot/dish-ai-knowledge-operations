@@ -1,0 +1,27 @@
+{
+  "qid": 29, "title": "Adding cross-selling products at checkout",
+  "workflow_title": "Adding cross-selling products at checkout",
+  "vars": {"TITLE": "You might also like", "PRODUCT": "Coca-Cola"},
+  "actions": [
+    {"goto": "PRODUCTS", "settle": 2600},
+    {"snap": 1},
+    {"click": ["[data-track-button-id=\"nav-menu-self-service\"]", "button:has-text(\"Self-service\")"], "t": 3000}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "t": 3000}, {"settle": 2400},
+    {"snap": 2, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.ONLINE_CONFIGS\"]", "text=Sales channels"], "target": "sidebar: Sales channels"},
+    {"snap": 3, "highlight": ["tr:has-text(\"Kiosk\") [data-track-button-id=\"edit-item\"]"], "target": "edit: Kiosk sales channel"},
+    {"click": ["tr:has-text(\"Kiosk\") [data-track-button-id=\"edit-item\"]", "[data-track-button-id=\"edit-item\"]"], "t": 3500}, {"wait": 1800}, {"settle": 1500},
+    {"click": ["text=Cross selling", ":text(\"Cross selling\")"], "t": 3000}, {"wait": 1500}, {"settle": 1500},
+    {"snap": 4, "highlight": ["text=Cross selling", ":text(\"Cross selling\")"], "target": "tab: Cross selling"},
+    {"click": [".p-toggleswitch-input:right-of(:text(\"Enable Cross selling\"))", ".p-toggleswitch-slider:right-of(:text(\"Enable Cross selling\"))", "p-toggleswitch:right-of(:text(\"Enable Cross selling\"))"], "t": 2500}, {"wait": 1200},
+    {"snap": 5, "highlight": [":text(\"Enable Cross selling\")", "text=Enable Cross selling", ".p-toggleswitch:right-of(:text(\"Enable Cross selling\"))"], "target": "toggle: Enable Cross selling"},
+    {"fill": ["input[placeholder*=\"show above\" i]", "input[placeholder*=\"cross sell\" i]"], "value": "{TITLE}"}, {"wait": 500},
+    {"snap": 6, "highlight": ["input[placeholder*=\"show above\" i]", ":text-is(\"Title\")"], "target": "field: Title"},
+    {"select": "p-select:right-of(:text-is(\"Product 1\"))", "pick": ["{PRODUCT}", "Coca-Cola", "Cola", "Sparkling Water", "Fanta", "Bitterballen"]}, {"wait": 800},
+    {"snap": 7, "highlight": ["p-select:right-of(:text-is(\"Product 1\"))", ":text-is(\"Product 1\")"], "target": "dropdown: Product 1"},
+    {"click": ["button:has-text(\"Save\"):not(:has-text(\"add\"))", "button:has-text(\"Save\")"], "t": 3000}, {"settle": 2800},
+    {"click": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")"], "t": 2500}, {"wait": 1000},
+    {"click": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.TRANSLATIONS\"]", "text=Translations"], "t": 3000}, {"settle": 2400},
+    {"snap": 8, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.TRANSLATIONS\"]", "text=Translations"], "target": "nav: General > Translations"},
+    {"snap": 9, "highlight": ["[data-track-button-id=\"nav-menu-general\"]", "button:has-text(\"General\")", "text=General"], "target": "General menu (transmit via Send)"}
+  ]
+}
