@@ -17,7 +17,7 @@ for _key in ("OPENAI_API_KEY", "DISH_EMAIL", "DISH_PASSWORD", "LLM_MODEL"):
         pass
 
 from config.settings import DOCS_DIR, VIDEO_DIR
-from server import handle_chat, load_questions, _has_capture, _quality
+from server import handle_chat, load_questions, _has_capture, _quality, _pdf_url, _video_url
 
 st.set_page_config(
     page_title="DISH POS Assistant",
@@ -79,12 +79,16 @@ def _inject_css():
         }
         .src-line { margin-top: 8px; font-size: 10.5px; color: #6b7280;
             border-top: 1px dashed #e7e8ec; padding-top: 6px; }
-        div[data-testid="stHorizontalBlock"] button[kind="secondary"] {
-            border-radius: 999px; font-size: 11px; padding: 4px 11px;
+        .attach-row { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .attach-row a {
+            font-size: 12px; font-weight: 600; text-decoration: none; padding: 7px 11px;
+            border-radius: 8px; background: %s; color: #fff; display: inline-block;
         }
+        .attach-row a.sec { background: #fff; color: %s; border: 1px solid %s; }
+        .vnote { font-size: 10.5px; color: #6b7280; margin-top: 6px; line-height: 1.4; }
         </style>
         """
-        % (ORANGE, ORANGE, ORANGE, ORANGE),
+        % (ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE),
         unsafe_allow_html=True,
     )
 
@@ -130,18 +134,63 @@ def _quality_badge(quality):
     )
 
 
+def _fname_from_media_url(url):
+    if not url:
+        return ""
+    return url.split("/")[-1].split("?")[0]
+
+
+def _resolve_media(qid=None, pdf_url=None, video_url=None):
+    """Same file lookup as server.py _pdf_url / _video_url, resolved to disk paths."""
+    if qid:
+        pdf_url = pdf_url or _pdf_url(int(qid))
+        video_url = video_url or _video_url(int(qid))
+    pdf_path = vid_path = None
+    if pdf_url:
+        p = Path(DOCS_DIR) / _fname_from_media_url(pdf_url)
+        if p.exists():
+            pdf_path = p
+    if video_url:
+        v = Path(VIDEO_DIR) / _fname_from_media_url(video_url)
+        if v.exists():
+            vid_path = v
+    if qid and not pdf_path:
+        pdf_path = _latest_file(DOCS_DIR, "Q%02d_branded_*.pdf" % int(qid))
+    if qid and not vid_path:
+        vid_path = _latest_file(VIDEO_DIR, "Q%02d_walkthrough*.mp4" % int(qid))
+    return pdf_url, video_url, pdf_path, vid_path
+
+
+def _show_media(pdf_url, video_url, pdf_path, vid_path, note=""):
+    """Mirror widget.html appendMedia: PDF link + inline video player."""
+    if not pdf_path and not vid_path:
+        return
+    links = []
+    if pdf_path and pdf_path.exists():
+        links.append(
+            '<a href="data:application/pdf;base64,%s" target="_blank" download="%s">📄 Open PDF</a>'
+            % (__import__("base64").b64encode(pdf_path.read_bytes()).decode(), pdf_path.name)
+        )
+    if vid_path and vid_path.exists():
+        links.append('<span class="sec" style="padding:7px 11px;border-radius:8px;border:1px solid %s;color:%s;font-size:12px;font-weight:600">🎬 Video below</span>' % (ORANGE, ORANGE))
+    if links:
+        st.markdown('<div class="attach-row">%s</div>' % "".join(links), unsafe_allow_html=True)
+    if vid_path and vid_path.exists():
+        st.video(str(vid_path))
+        if note:
+            st.markdown('<div class="vnote">%s</div>' % note, unsafe_allow_html=True)
+
+
 def _show_bot_extras(resp):
     qid = resp.get("qid")
     if resp.get("title"):
         st.caption(resp["title"])
     _quality_badge(resp.get("quality") or (_quality(int(qid)) if qid else None))
-    if qid:
-        pdf = _latest_file(DOCS_DIR, "Q%02d_branded_*.pdf" % int(qid))
-        if pdf and pdf.exists():
-            st.download_button("📄 Open PDF", pdf.read_bytes(), file_name=pdf.name, mime="application/pdf")
-        vid = _latest_file(VIDEO_DIR, "Q%02d_walkthrough*.mp4" % int(qid))
-        if vid and vid.exists():
-            st.video(str(vid))
+    pdf_url, video_url, pdf_path, vid_path = _resolve_media(
+        qid=qid, pdf_url=resp.get("pdf_url"), video_url=resp.get("video_url"))
+    _show_media(pdf_url, video_url, pdf_path, vid_path)
+    if qid and not pdf_path and not vid_path and resp.get("buildable"):
+        st.caption("PDF and video will appear here after a guide is built on the desktop app.")
     sources = resp.get("sources") or []
     if sources:
         parts = []
@@ -176,6 +225,8 @@ def _render_guide(qid, title, polish=True):
         "sources": full.get("sources", []),
         "buildable": _has_capture(qid),
         "quality": _quality(qid),
+        "pdf_url": _pdf_url(qid),
+        "video_url": _video_url(qid),
     }
 
 

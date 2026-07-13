@@ -1,0 +1,2 @@
+# PDF guides appear here after running a build (e.g. run_q1_wm.bat).
+# Commit *.pdf files so Streamlit Cloud can serve them like server.py /files/docs/
