@@ -23,6 +23,9 @@ from server import (
     handle_chat, load_questions, _has_capture, _quality, _pdf_url, _video_url,
     auto_build_for_response, prepare_guide_response, _run_build, BUILD,
 )
+import streamlit_remote as remote
+
+APP_VERSION = "v3.0"
 
 st.set_page_config(
     page_title="DISH POS Assistant",
@@ -34,6 +37,16 @@ st.set_page_config(
 ORANGE = "#EC6A38"
 SECTIONS = ["", "Products", "Self-service", "Payment"]
 SECTION_LABELS = {"": "All", "Products": "Products", "Self-service": "Self-service", "Payment": "Payment"}
+
+
+def _backend_url():
+    try:
+        u = str(st.secrets.get("BACKEND_URL", "") or "").strip()
+        if u:
+            return u.rstrip("/")
+    except Exception:
+        pass
+    return os.getenv("BACKEND_URL", "").strip().rstrip("/")
 
 
 def _inject_css():
@@ -170,8 +183,19 @@ def _resolve_media(qid=None, pdf_url=None, video_url=None):
     return pdf_url, video_url, pdf_path, vid_path
 
 
-def _show_media(pdf_url, video_url, pdf_path, vid_path, note=""):
+def _show_media(pdf_url, video_url, pdf_path, vid_path, note="", backend_base=""):
     """Mirror widget.html appendMedia: PDF link + inline video player."""
+    if backend_base:
+        if pdf_url:
+            full = remote.abs_media_url(backend_base, pdf_url)
+            st.markdown(
+                '<div class="attach-row"><a href="%s" target="_blank">📄 Open PDF</a></div>'
+                % __import__("html").escape(full), unsafe_allow_html=True)
+        if video_url:
+            st.video(remote.abs_media_url(backend_base, video_url))
+            if note:
+                st.markdown('<div class="vnote">%s</div>' % note, unsafe_allow_html=True)
+        return
     if not pdf_path and not vid_path:
         return
     links = []
@@ -192,14 +216,27 @@ def _show_media(pdf_url, video_url, pdf_path, vid_path, note=""):
 
 def _show_bot_extras(resp):
     qid = resp.get("qid")
+    base = _backend_url()
+    if resp.get("build_error"):
+        st.error(resp["build_error"])
+    if resp.get("build_log"):
+        with st.expander("Build log", expanded=False):
+            st.code("\n".join(resp["build_log"][-20:]))
     if resp.get("title"):
         st.caption(resp["title"])
     _quality_badge(resp.get("quality") or (_quality(int(qid)) if qid else None))
     pdf_url, video_url, pdf_path, vid_path = _resolve_media(
         qid=qid, pdf_url=resp.get("pdf_url"), video_url=resp.get("video_url"))
-    _show_media(pdf_url, video_url, pdf_path, vid_path)
-    if qid and not pdf_path and not vid_path and resp.get("buildable"):
-        st.caption("Guide steps are ready. PDF/video appear after a successful live capture build.")
+    _show_media(pdf_url, video_url, pdf_path, vid_path, backend_base=base)
+    if qid and not pdf_url and not vid_path and not pdf_path and not vid_path:
+        if base:
+            st.warning("Backend did not return PDF/video yet. Check that server.py is running.")
+        elif resp.get("buildable"):
+            st.warning(
+                "Live capture cannot run on Streamlit Cloud alone. "
+                "Add BACKEND_URL in Secrets (your desktop server.py + tunnel) "
+                "or run: streamlit run streamlit_app.py on your Mac/PC."
+            )
     sources = resp.get("sources") or []
     if sources:
         parts = []
@@ -216,6 +253,10 @@ def _show_bot_extras(resp):
             )
     if resp.get("live_buildable"):
         st.caption("Brand-new tasks without a saved recipe need the desktop live-agent lane.")
+
+
+def _log_runner(log_lines):
+    st.session_state._last_build_log = list(log_lines)
 
 
 def _build_runner(qid, do_capture, extra_vars, guides):
@@ -247,12 +288,35 @@ def _build_runner(qid, do_capture, extra_vars, guides):
             unsafe_allow_html=True,
         )
         out = BUILD.get("output") or {}
+        if not out.get("pdf") and not out.get("video"):
+            err = "\n".join(BUILD.get("log", [])[-8:])
+            if err:
+                st.warning("Build finished but no PDF/video. Log:\n" + err)
         box.update(label="✓ Guide ready" if out and not out.get("not_found") else "Build finished",
                    state="complete")
     return BUILD.get("output") or {}
 
 
 def _ask(msg, polish=True):
+    base = _backend_url()
+    if base:
+        with st.status("Connecting to backend…", expanded=True) as box:
+            log_ph = st.empty()
+
+            def on_log(lines):
+                log_ph.markdown(
+                    '<div class="activity-box">%s</div>'
+                    % __import__("html").escape("\n".join(lines[-16:])),
+                    unsafe_allow_html=True,
+                )
+
+            try:
+                resp = remote.chat_with_build(base, msg, polish=polish, on_log=on_log)
+                box.update(label="✓ Backend ready", state="complete")
+                return resp
+            except Exception as e:
+                box.update(label="Backend error", state="error")
+                return {"answer": "Cannot reach backend at %s\n\n%s" % (base, e)}
     with st.spinner("Thinking…"):
         resp = handle_chat(msg, polish=polish, chat_memory=st.session_state.chat_memory)
     return auto_build_for_response(resp, msg, build_runner=_build_runner)
@@ -260,6 +324,25 @@ def _ask(msg, polish=True):
 
 def _render_guide(qid, title, polish=True):
     q = "How do I %s%s?" % (title[0].lower(), title[1:]) if title else "Show me this guide"
+    base = _backend_url()
+    if base:
+        with st.status("Loading guide from backend…", expanded=True) as box:
+            log_ph = st.empty()
+
+            def on_log(lines):
+                log_ph.markdown(
+                    '<div class="activity-box">%s</div>'
+                    % __import__("html").escape("\n".join(lines[-16:])),
+                    unsafe_allow_html=True,
+                )
+
+            try:
+                resp = remote.guide_with_build(base, qid, polish=polish, on_log=on_log)
+                box.update(label="✓ Guide ready", state="complete")
+                return q, resp
+            except Exception as e:
+                box.update(label="Backend error", state="error")
+                return q, {"answer": "Backend error: %s" % e}
     resp = prepare_guide_response(qid, polish=polish, build_runner=_build_runner)
     return q, resp
 
@@ -307,6 +390,11 @@ def main():
     _init_state()
     _inject_css()
     _render_header()
+    base = _backend_url()
+    st.caption(
+        "**%s** · %s"
+        % (APP_VERSION, "Backend: %s ✓" % base if base else "No BACKEND_URL — text-only on cloud")
+    )
 
     with st.container():
         st.markdown('<div class="dish-pick">', unsafe_allow_html=True)
@@ -359,7 +447,9 @@ def main():
             st.session_state.chat_memory = deque(maxlen=6)
             st.rerun()
         key = os.getenv("OPENAI_API_KEY", "")
-        st.caption("OpenAI key: %s" % ("set ✓" if key else "not set — add in Streamlit Secrets"))
+        st.caption("OpenAI key: %s" % ("set ✓" if key else "not set"))
+        st.caption("BACKEND_URL: %s" % (base or "not set — add for live PDF/video"))
+        st.caption("After code updates: Streamlit menu → **Reboot app**")
 
     prompt = st.chat_input("Ask anything…")
     if prompt:
