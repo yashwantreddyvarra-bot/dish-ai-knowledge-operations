@@ -10,4 +10,4 @@ chromadb>=0.4          # Layer 3 vector store
 sentence-transformers>=2.2  # local embeddings (no API key)
 python-dotenv>=1.0     # optional: load .env
 flask>=3.0            # chatbot UI (app.py)
-pywebview>=5.3
+streamlit>=1.32       # cloud-deployable chat UI (streamlit_app.py)

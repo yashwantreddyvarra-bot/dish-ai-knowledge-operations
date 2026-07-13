@@ -1,8 +1,8 @@
 venv/
-_pycache_/
+.venv/
+__pycache__/
 *.pyc
-output/
-*.mp4
-*.mov
 .env
+.streamlit/secrets.toml
+output/
 .DS_Store

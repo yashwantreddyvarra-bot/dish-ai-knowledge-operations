@@ -103,12 +103,23 @@ def _quality(qid):
 
 CHAT_MEMORY = __import__("collections").deque(maxlen=6)   # recent user messages (memory)
 
-@app.route("/api/chat", methods=["POST"])
-def api_chat():
-    body = request.get_json(force=True); msg = (body.get("message") or "").strip()
-    if not msg: return jsonify({"answer": "Ask me something about the Products section."})
-    history = list(CHAT_MEMORY)
-    CHAT_MEMORY.append(msg)
+def handle_chat(msg, polish=True, chat_memory=None):
+    """Core chat logic shared by Flask /api/chat and the Streamlit app. Returns a dict."""
+    msg = (msg or "").strip()
+    if not msg:
+        return {"answer": "Ask me something about the Products section."}
+    if chat_memory is None:
+        chat_memory = CHAT_MEMORY
+    # LONG-TERM CHAT MEMORY: remembered user facts ride along with the recent messages so
+    # every answer tier can personalise; new lasting facts are extracted in the background
+    # (consolidated ADD/UPDATE/DELETE - never just appended) so the chat is never slowed.
+    try:
+        from intelligence import memory as _mem
+        history = _mem.chat_context() + list(chat_memory)
+        threading.Thread(target=_mem.remember_chat, args=(msg,), daemon=True).start()
+    except Exception:
+        history = list(chat_memory)
+    chat_memory.append(msg)
 
     # Classify the question's section ONCE so every routing tier stays inside it
     # (no cross-section answers). None = couldn't tell -> tiers stay unconstrained.
@@ -148,12 +159,17 @@ def api_chat():
                 qid = int(sm["qid"]) if sm and sm.get("qid") else None
             if qid:
                 from intelligence import agent
-                full = agent.render(qid, msg, polish=bool(body.get("polish", True)))
-                return jsonify({"answer": full["answer"], "action": "single", "qid": qid,
-                                "title": full["title"], "params": full["params"], "guides": [qid],
-                                "pdf_url": _pdf_url(qid), "video_url": _video_url(qid),
-                                "quality": _quality(qid), "buildable": _has_capture(qid),
-                                "sources": full["sources"]})
+                # A follow-up ("now make IT only at lunch") carries no product details on
+                # its own - enrich the query with the recent raw messages so parameter
+                # extraction still finds the product from earlier in the conversation.
+                recent = [m for m in history if not m.startswith("(remembered")][-2:]
+                q_ctx = " . ".join(recent + [msg]) if recent else msg
+                full = agent.render(qid, q_ctx, polish=bool(polish))
+                return {"answer": full["answer"], "action": "single", "qid": qid,
+                        "title": full["title"], "params": full["params"], "guides": [qid],
+                        "pdf_url": _pdf_url(qid), "video_url": _video_url(qid),
+                        "quality": _quality(qid), "buildable": _has_capture(qid),
+                        "sources": full["sources"]}
         except Exception as e:
             print("followup tier failed:", e)
     # Tier 0a: deterministic agent brain - extracts the user's product details,
@@ -161,7 +177,7 @@ def api_chat():
     # says when there's no guide. Always available (no network needed).
     try:
         from intelligence import agent
-        ag = agent.answer(msg, polish=bool(body.get("polish", True)))
+        ag = agent.answer(msg, polish=bool(polish))
         if ag and ag.get("answer") and ag.get("action") != "none":
             resp = {"answer": ag["answer"], "action": ag.get("action"),
                     "params": ag.get("params"), "guides": ag.get("guides", [])}
@@ -175,7 +191,7 @@ def api_chat():
             resp["buildable"] = bool(qid) and all(_has_capture(g) for g in (ag.get("guides") or ([qid] if qid else [])))
             resp["sources"] = ag.get("sources", [])
             resp["section"] = ag.get("section") or section
-            return jsonify(resp)
+            return resp
     except Exception as e:
         print("agent tier failed:", e)
     # Tier 0b: GPT brain understands the free-form question and routes to the right guide.
@@ -188,7 +204,7 @@ def api_chat():
                 # GPT did the routing; render the COMPLETE grounded steps (not a prose
                 # summary) so the answer always has every step.
                 from intelligence import agent
-                full = agent.render(int(qid), msg, polish=bool(body.get("polish", True)))
+                full = agent.render(int(qid), msg, polish=bool(polish))
                 resp = {"answer": full["answer"], "action": "single",
                         "qid": qid, "title": full["title"], "params": full["params"],
                         "guides": [qid], "pdf_url": _pdf_url(qid),
@@ -196,7 +212,7 @@ def api_chat():
                         "buildable": _has_capture(qid), "sources": full["sources"]}
             else:
                 resp = {"answer": sm["answer"]}
-            return jsonify(resp)
+            return resp
     except Exception as e:
         print("smart tier failed:", e)
     if _rag_ready():
@@ -211,7 +227,7 @@ def api_chat():
                 sources = [{"workflow": h["metadata"].get("workflow", ""),
                             "steps": f"{h['metadata'].get('step_start','')}-{h['metadata'].get('step_end','')}",
                             "similarity": h["similarity"]} for h in hits]
-                return jsonify({"answer": answer, "sources": sources})
+                return {"answer": answer, "sources": sources}
         except Exception as e:
             print("RAG tier failed:", e)
     from rag.simple_index import answer as simple_answer
@@ -221,7 +237,13 @@ def api_chat():
     if isinstance(resp, dict):
         resp.setdefault("live_buildable", True)
         resp.setdefault("task", msg)
-    return jsonify(resp)
+    return resp
+
+@app.route("/api/chat", methods=["POST"])
+def api_chat():
+    body = request.get_json(force=True)
+    return jsonify(handle_chat(body.get("message"), polish=bool(body.get("polish", True)),
+                                   chat_memory=CHAT_MEMORY))
 
 # ---- intelligence layer (self-healing / verify / feedback / health) ----
 @app.route("/api/feedback", methods=["POST"])
@@ -249,6 +271,40 @@ def api_verify(qid):
     try:
         from intelligence import verify
         return jsonify(verify.question(qid))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/admin/restart", methods=["POST"])
+def api_admin_restart():
+    """LOCAL-ONLY maintenance: stop this server process (the background keep-alive too)
+    so the Desktop icon can relaunch it with freshly edited code."""
+    if request.remote_addr not in ("127.0.0.1", "::1"):
+        return jsonify({"error": "local only"}), 403
+    def _die():
+        import time as _t, os as _os
+        _t.sleep(0.6)
+        _os._exit(0)
+    threading.Thread(target=_die, daemon=True).start()
+    return jsonify({"ok": True, "message": "Server stopping - double-click the DISH "
+                                           "Assistant icon to start it fresh."})
+
+@app.route("/api/memory/status")
+def api_memory_status():
+    """RIM at a glance: diary size, outcomes, lessons, heals, chat facts."""
+    try:
+        from intelligence import memory, distill, resolver
+        return jsonify({"experience": memory.stats(), "lessons": distill.stats(),
+                        "resolver": resolver.stats()})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/distill", methods=["POST"])
+def api_distill():
+    """Compress the experience diary into output/lessons.md (rules every agent reads)."""
+    try:
+        from intelligence import distill
+        text = distill.run()
+        return jsonify({"ok": True, "lessons": text, **distill.stats()})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -307,6 +363,41 @@ class _Tee:
         try: sys.__stdout__.flush()
         except Exception: pass
 
+def _backup_canonical(qid):
+    """An adhoc preview reuses the canonical qid's manifest/screenshot/vframe paths.
+    Snapshot them first so a random-question demo can never corrupt the canonical
+    guide's data (the cause of 'my saved guides show the wrong product')."""
+    import tempfile, shutil
+    d = Path(tempfile.mkdtemp(prefix="canon_q%02d_" % qid))
+    for name in ("manifest_q%02d.json" % qid, "manifest_q%02d_enriched.json" % qid):
+        p = ROOT / "output" / name
+        if p.exists():
+            shutil.copy2(p, d / name)
+    for sub in ("vframes", "screenshots"):
+        src = ROOT / "output" / sub / ("q%02d" % qid)
+        if src.exists():
+            shutil.copytree(src, d / sub)
+    return d
+
+
+def _restore_canonical(qid, d):
+    import shutil
+    try:
+        for name in ("manifest_q%02d.json" % qid, "manifest_q%02d_enriched.json" % qid):
+            if (d / name).exists():
+                shutil.copy2(d / name, ROOT / "output" / name)
+        for sub in ("vframes", "screenshots"):
+            bak = d / sub
+            dst = ROOT / "output" / sub / ("q%02d" % qid)
+            if bak.exists():
+                shutil.rmtree(dst, ignore_errors=True)
+                shutil.copytree(bak, dst)
+        shutil.rmtree(d, ignore_errors=True)
+        print("Canonical Q%02d data restored after the adhoc preview." % qid)
+    except Exception as e:
+        print("canonical restore warn:", e)
+
+
 def _run_build(qid, do_capture, extra_vars=None, guides=None):
     # A build is an ADHOC preview when it carries a custom product (random/free-text ask).
     # Adhoc previews must never overwrite the canonical Q01-25 files or questions.json.
@@ -316,6 +407,12 @@ def _run_build(qid, do_capture, extra_vars=None, guides=None):
     composite = len(guides) > 1
     adhoc = bool(extra_vars)
     out = None
+    snap = None
+    if adhoc and not composite:
+        try:
+            snap = _backup_canonical(qid)
+        except Exception as e:
+            print("canonical backup warn:", e)
     try:
         BUILD.update(running=True, qid=qid, log=[], done=False, output=None)
         with contextlib.redirect_stdout(_Tee()):
@@ -346,7 +443,7 @@ def _run_build(qid, do_capture, extra_vars=None, guides=None):
             from generate import doc_generator
             out = (doc_generator.build_combined(guides, vars=extra_vars, adhoc=adhoc) if composite
                    else doc_generator.build(qid, vars=extra_vars, adhoc=adhoc))
-            score = None; gate_result = None
+            score = None; gate_result = None; vr = None
             try:    # self-check: score the build, then run the CONFIDENCE GATE
                 from intelligence import verify
                 vr = verify.combined(guides) if composite else verify.question(qid)
@@ -354,6 +451,15 @@ def _run_build(qid, do_capture, extra_vars=None, guides=None):
                 gate_result = verify.gate(vr)
             except Exception as e:
                 print("verify/gate skipped (%s)" % str(e)[:80])
+            try:    # RIM: write this attempt (success OR failure) into the experience diary
+                from intelligence import memory as _mem
+                title = next((q["title"] for q in load_questions() if q["id"] == qid), "Q%02d" % qid)
+                task_desc = title + ((" [adhoc: %s]" % ", ".join("%s=%s" % kv for kv in extra_vars.items()))
+                                     if extra_vars else "")
+                _mem.record_build(qid, task_desc, None, vr, gate_result,
+                                  kind="adhoc" if adhoc else "build")
+            except Exception as e:
+                print("experience memory skipped (%s)" % str(e)[:80])
             # Only the canonical 25 are indexed into the chat knowledge base; random
             # previews are never persisted into it.
             if not adhoc and not composite and _rag_ready():
@@ -379,6 +485,8 @@ def _run_build(qid, do_capture, extra_vars=None, guides=None):
     except Exception as e:
         BUILD["log"].append("Build failed: %s" % e)
     finally:
+        if snap:
+            _restore_canonical(qid, snap)
         BUILD.update(running=False, done=True)
 
 @app.route("/api/build/<int:qid>", methods=["POST"])
@@ -402,6 +510,21 @@ def api_build(qid):
             extra_vars = agent.recipe_vars(qid, params) or None
     except Exception as e:
         print("build params parse failed:", e)
+    # UNDERSTANDING GUARD: when the request clearly ADDS a product but no concrete
+    # product name could be understood, DO NOT build - the demo would silently create
+    # the default sample ("Sparkling Water") and the PDF/video would not match what the
+    # user asked. Ask for the product instead.
+    if b.get("request"):
+        try:
+            from intelligence import agent
+            prm = agent.extract_params(b["request"])
+            if prm.get("is_add") and not (extra_vars or {}).get("NAME"):
+                return jsonify({"started": False, "needs_product": True,
+                                "message": "I couldn't tell which product you mean. Tell me "
+                                           "its exact name (e.g. \"add a Cappuccino for 5 "
+                                           "euro\") and I'll build the guide for it."})
+        except Exception as e:
+            print("build guard failed:", e)
     # For a merged answer the chat sends the full guide list so the build can stitch every
     # part into ONE continuous walkthrough. Sanitize to ints; default to just this qid.
     guides = None
@@ -488,12 +611,19 @@ def _run_live_build(task, section=None):
                 BUILD["output"] = {"error": "build produced no pages (no screenshots resolved)", "live": True}
                 return
             from intelligence import verify
-            gate_result = verify.gate(verify.question(LIVE_TMP_QID))
+            vr = verify.question(LIVE_TMP_QID)
+            gate_result = verify.gate(vr)
             if gate_result.get("decision") == "publish":
                 from intelligence import promote
                 promoted = promote.promote(task, section, man.get("actions", []), caps, gate_result)
                 if promoted:
                     _relabel_artifacts(LIVE_TMP_QID, promoted)
+            try:    # RIM: live attempts (pass OR fail) are the richest experiences of all
+                from intelligence import memory as _mem
+                _mem.record_build(promoted or LIVE_TMP_QID, task, section, vr, gate_result,
+                                  kind="live", details={"promoted": bool(promoted)})
+            except Exception as e:
+                print("experience memory skipped (%s)" % str(e)[:80])
             print("Live build complete. gate=%s  promoted=%s" %
                   (gate_result.get("decision"), promoted))
         if promoted:
