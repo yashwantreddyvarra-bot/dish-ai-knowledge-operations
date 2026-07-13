@@ -1,6 +1,8 @@
-# streamlit_app.py — DISH chatbot UI (same brain as server.py, styled like widget.html).
+# streamlit_app.py — DISH chatbot UI (same brain + automation as server.py / widget.html).
 import os
 import sys
+import threading
+import time
 from collections import deque
 from pathlib import Path
 
@@ -17,7 +19,10 @@ for _key in ("OPENAI_API_KEY", "DISH_EMAIL", "DISH_PASSWORD", "LLM_MODEL"):
         pass
 
 from config.settings import DOCS_DIR, VIDEO_DIR
-from server import handle_chat, load_questions, _has_capture, _quality, _pdf_url, _video_url
+from server import (
+    handle_chat, load_questions, _has_capture, _quality, _pdf_url, _video_url,
+    auto_build_for_response, prepare_guide_response, _run_build, BUILD,
+)
 
 st.set_page_config(
     page_title="DISH POS Assistant",
@@ -85,7 +90,11 @@ def _inject_css():
             border-radius: 8px; background: %s; color: #fff; display: inline-block;
         }
         .attach-row a.sec { background: #fff; color: %s; border: 1px solid %s; }
-        .vnote { font-size: 10.5px; color: #6b7280; margin-top: 6px; line-height: 1.4; }
+        .activity-box {
+            background: #1d2027; color: #cfe8cf; border-radius: 13px; padding: 10px 12px;
+            font-size: 12px; font-family: ui-monospace, Consolas, monospace; margin: 8px 0;
+            max-height: 160px; overflow: auto; white-space: pre-wrap; line-height: 1.55;
+        }
         </style>
         """
         % (ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE, ORANGE),
@@ -190,7 +199,7 @@ def _show_bot_extras(resp):
         qid=qid, pdf_url=resp.get("pdf_url"), video_url=resp.get("video_url"))
     _show_media(pdf_url, video_url, pdf_path, vid_path)
     if qid and not pdf_path and not vid_path and resp.get("buildable"):
-        st.caption("PDF and video will appear here after a guide is built on the desktop app.")
+        st.caption("Guide steps are ready. PDF/video appear after a successful live capture build.")
     sources = resp.get("sources") or []
     if sources:
         parts = []
@@ -206,28 +215,53 @@ def _show_bot_extras(resp):
                 unsafe_allow_html=True,
             )
     if resp.get("live_buildable"):
-        st.caption("Live PDF/video builds run on the desktop Flask app (Playwright).")
+        st.caption("Brand-new tasks without a saved recipe need the desktop live-agent lane.")
+
+
+def _build_runner(qid, do_capture, extra_vars, guides):
+    """Live build log panel — mirrors widget.html activity box."""
+    if BUILD["running"]:
+        return BUILD.get("output") or {}
+    label = "Building your guide live…"
+    with st.status(label, expanded=True) as box:
+        log_ph = st.empty()
+
+        def _work():
+            _run_build(qid, do_capture, extra_vars, guides)
+
+        t = threading.Thread(target=_work, daemon=True)
+        t.start()
+        while t.is_alive():
+            lines = BUILD.get("log", [])
+            log_ph.markdown(
+                '<div class="activity-box">%s</div>'
+                % (__import__("html").escape("\n".join(lines[-16:]) if lines else "Starting…")),
+                unsafe_allow_html=True,
+            )
+            time.sleep(0.35)
+        t.join()
+        lines = BUILD.get("log", [])
+        log_ph.markdown(
+            '<div class="activity-box">%s</div>'
+            % (__import__("html").escape("\n".join(lines[-16:]) if lines else "Done.")),
+            unsafe_allow_html=True,
+        )
+        out = BUILD.get("output") or {}
+        box.update(label="✓ Guide ready" if out and not out.get("not_found") else "Build finished",
+                   state="complete")
+    return BUILD.get("output") or {}
 
 
 def _ask(msg, polish=True):
     with st.spinner("Thinking…"):
-        return handle_chat(msg, polish=polish, chat_memory=st.session_state.chat_memory)
+        resp = handle_chat(msg, polish=polish, chat_memory=st.session_state.chat_memory)
+    return auto_build_for_response(resp, msg, build_runner=_build_runner)
 
 
 def _render_guide(qid, title, polish=True):
-    from intelligence import agent
-    full = agent.render(int(qid), "", polish=polish)
     q = "How do I %s%s?" % (title[0].lower(), title[1:]) if title else "Show me this guide"
-    return q, {
-        "answer": full["answer"],
-        "qid": qid,
-        "title": full.get("title", title),
-        "sources": full.get("sources", []),
-        "buildable": _has_capture(qid),
-        "quality": _quality(qid),
-        "pdf_url": _pdf_url(qid),
-        "video_url": _video_url(qid),
-    }
+    resp = prepare_guide_response(qid, polish=polish, build_runner=_build_runner)
+    return q, resp
 
 
 def _filtered_questions():

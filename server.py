@@ -1,5 +1,5 @@
 # server.py - DISH Docs chatbot backend (question-aware). Run this.
-import sys, json, re, importlib.util, threading, contextlib
+import os, sys, json, re, importlib.util, threading, contextlib
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
@@ -310,6 +310,88 @@ def api_distill():
 
 BUILD = {"running": False, "qid": None, "log": [], "done": False, "output": None}
 
+
+def _capture_headless():
+    """Streamlit Cloud has no display — Playwright must run headless."""
+    return bool(os.environ.get("STREAMLIT_SERVER_PORT"))
+
+
+def _build_extra_vars(qid, request_text):
+    """Parse product vars from a free-text ask (same rules as /api/build)."""
+    if not request_text:
+        return None, None
+    try:
+        from intelligence import agent
+        params = agent.extract_params(request_text)
+        extra_vars = agent.recipe_vars(int(qid), params) or None
+        if params.get("is_add") and not (extra_vars or {}).get("NAME"):
+            return None, ("I couldn't tell which product you mean. Tell me its exact name "
+                          "(e.g. \"add a Cappuccino for 5 euro\") and I'll build the guide for it.")
+        return extra_vars, None
+    except Exception as e:
+        print("build params parse failed:", e)
+        return None, None
+
+
+def run_build_sync(qid, do_capture=True, extra_vars=None, guides=None, headless=None, build_runner=None):
+    """Blocking build for Streamlit (same pipeline as /api/build). Returns BUILD output dict."""
+    if BUILD["running"]:
+        return BUILD.get("output") or {}
+    if build_runner:
+        return build_runner(int(qid), bool(do_capture), extra_vars, guides) or {}
+    _run_build(int(qid), bool(do_capture), extra_vars, guides, headless=headless)
+    return BUILD.get("output") or {}
+
+
+def auto_build_for_response(resp, request_text="", build_runner=None):
+    """After /api/chat: auto-run capture + PDF/video when the widget would (widget.html send())."""
+    qid = resp.get("qid")
+    guides = resp.get("guides") or ([qid] if qid else [])
+    buildable = resp.get("buildable")
+    if qid and buildable is None:
+        buildable = all(_has_capture(int(g)) for g in guides)
+    if not qid or resp.get("action") in ("clarify", "none") or not buildable:
+        return resp
+    if _pdf_url(int(qid)) or _video_url(int(qid)):
+        resp["pdf_url"] = resp.get("pdf_url") or _pdf_url(int(qid))
+        resp["video_url"] = resp.get("video_url") or _video_url(int(qid))
+        return resp
+    g_list = None
+    if isinstance(guides, list) and len(guides) > 1:
+        g_list = [int(x) for x in guides]
+    extra_vars, guard_msg = _build_extra_vars(qid, request_text)
+    if guard_msg:
+        resp["answer"] = resp.get("answer", "") + "\n\n⚠ " + guard_msg
+        return resp
+    out = run_build_sync(int(qid), do_capture=True, extra_vars=extra_vars, guides=g_list,
+                         build_runner=build_runner)
+    if out.get("not_found"):
+        resp["answer"] = resp.get("answer", "") + "\n\n⚠ " + out.get("message", "")
+    else:
+        resp["pdf_url"] = out.get("pdf") or _pdf_url(int(qid))
+        resp["video_url"] = out.get("video") or _video_url(int(qid))
+    return resp
+
+
+def prepare_guide_response(qid, polish=True, do_build=True, build_runner=None):
+    """Pick-a-question flow (widget.html askAbout): build if needed, then render steps."""
+    qid = int(qid)
+    if do_build and _has_capture(qid) and not _pdf_url(qid):
+        run_build_sync(qid, do_capture=True, build_runner=build_runner)
+    from intelligence import agent
+    full = agent.render(qid, "", polish=bool(polish))
+    return {
+        "answer": full["answer"],
+        "qid": qid,
+        "title": full.get("title", ""),
+        "params": full.get("params", {}),
+        "sources": full.get("sources", []),
+        "buildable": _has_capture(qid),
+        "quality": _quality(qid),
+        "pdf_url": _pdf_url(qid),
+        "video_url": _video_url(qid),
+    }
+
 def _adhoc_urls(qid, pdf_path):
     """URLs for a random-question PREVIEW build (separate from the canonical 25)."""
     pdf_url = ""
@@ -398,7 +480,7 @@ def _restore_canonical(qid, d):
         print("canonical restore warn:", e)
 
 
-def _run_build(qid, do_capture, extra_vars=None, guides=None):
+def _run_build(qid, do_capture, extra_vars=None, guides=None, headless=None):
     # A build is an ADHOC preview when it carries a custom product (random/free-text ask).
     # Adhoc previews must never overwrite the canonical Q01-25 files or questions.json.
     # When `guides` lists more than one guide (a merged answer), the capture runs them in
@@ -406,6 +488,8 @@ def _run_build(qid, do_capture, extra_vars=None, guides=None):
     guides = guides or [qid]
     composite = len(guides) > 1
     adhoc = bool(extra_vars)
+    if headless is None:
+        headless = _capture_headless()
     out = None
     snap = None
     if adhoc and not composite:
@@ -426,7 +510,7 @@ def _run_build(qid, do_capture, extra_vars=None, guides=None):
                 try:
                     print("Logging into DISH POS and capturing every step (one session)...")
                     from capture import engine
-                    res = engine.main(qid=qid, headless=False, extra_vars=extra_vars, guides=guides)
+                    res = engine.main(qid=qid, headless=headless, extra_vars=extra_vars, guides=guides)
                     if isinstance(res, dict) and res.get("name"):
                         nf = res["name"]
                 except Exception as e:
