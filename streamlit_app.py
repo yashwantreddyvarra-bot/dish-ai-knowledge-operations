@@ -25,7 +25,7 @@ from server import (
 )
 import streamlit_remote as remote
 
-APP_VERSION = "v3.0"
+APP_VERSION = "v3.1"
 
 st.set_page_config(
     page_title="DISH POS Assistant",
@@ -386,15 +386,54 @@ def _render_header():
     )
 
 
+def _show_setup_help():
+    st.error("**Live PDF, video, and automation need your PC running as backend.** Streamlit Cloud alone cannot do this.")
+    st.markdown("""
+### Fix in 3 steps (one time, ~5 minutes)
+
+**On your Windows PC** (where DISH works):
+
+1. **Double-click** `start_backend.bat` in the project folder  
+   *(starts `server.py` + internet tunnel)*
+
+2. **Copy** the `https://....trycloudflare.com` URL from that window
+
+3. **Streamlit Cloud** → your app → **Settings** → **Secrets** → add:
+```toml
+OPENAI_API_KEY = "sk-your-key"
+BACKEND_URL = "https://paste-your-tunnel-url-here"
+DISH_EMAIL = "your-dish-login"
+DISH_PASSWORD = "your-dish-password"
+```
+Then **Reboot app**. This page will load the **full server.py chatbot** with PDF + video.
+
+**Keep `start_backend.bat` running** on your PC while people use the link.
+""")
+
+
 def main():
     _init_state()
     _inject_css()
-    _render_header()
     base = _backend_url()
-    st.caption(
-        "**%s** · %s"
-        % (APP_VERSION, "Backend: %s ✓" % base if base else "No BACKEND_URL — text-only on cloud")
-    )
+
+    # When backend is connected → embed the exact Flask widget (PDF, video, live build).
+    if base:
+        _render_header()
+        st.caption("**%s** · Full server.py widget via %s" % (APP_VERSION, base))
+        try:
+            import urllib.request
+            urllib.request.urlopen(base + "/widget", timeout=8)
+            st.components.v1.iframe(base + "/widget", height=720, scrolling=True)
+        except Exception as e:
+            st.warning("Backend not reachable: %s" % e)
+            st.caption("Make sure `start_backend.bat` is running on your PC and BACKEND_URL is correct.")
+        with st.expander("Settings"):
+            st.session_state.polish = st.checkbox("Polish answers (LLM)", value=st.session_state.polish)
+        return
+
+    _render_header()
+    st.caption("**%s** · No BACKEND_URL — text-only on cloud" % APP_VERSION)
+    _show_setup_help()
 
     with st.container():
         st.markdown('<div class="dish-pick">', unsafe_allow_html=True)
