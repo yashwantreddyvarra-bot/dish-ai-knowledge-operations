@@ -25,7 +25,7 @@ from server import (
 )
 import streamlit_remote as remote
 
-APP_VERSION = "v3.1"
+APP_VERSION = "v3.2"
 
 st.set_page_config(
     page_title="DISH POS Assistant",
@@ -387,25 +387,36 @@ def _render_header():
 
 
 def _show_setup_help():
-    st.error("**Live PDF, video, and automation need your PC running as backend.** Streamlit Cloud alone cannot do this.")
+    st.error("**PDF + video need BACKEND_URL** — Streamlit Cloud cannot run browser automation alone.")
     st.markdown("""
-### Fix in 3 steps (one time, ~5 minutes)
+### Do this on your Windows PC (first time only)
 
-**On your Windows PC** (where DISH works):
+**A.** Get latest files — in your project folder, open Command Prompt and run:
+```
+git pull
+```
+*(Or re-download the project from GitHub if you don't use git)*
 
-1. **Double-click** `start_backend.bat` in the project folder  
-   *(starts `server.py` + internet tunnel)*
+**B.** Double-click **`setup_windows.bat`** (installs packages — wait until it says done)
 
-2. **Copy** the `https://....trycloudflare.com` URL from that window
+**C.** Double-click **`start_backend.bat`**  
+Copy the **`https://....trycloudflare.com`** URL from the window
 
-3. **Streamlit Cloud** → your app → **Settings** → **Secrets** → add:
+---
+
+### Then in Streamlit (share.streamlit.io)
+
+1. Your app → **Settings** → **Secrets**
+2. Paste:
 ```toml
 OPENAI_API_KEY = "sk-your-key"
-BACKEND_URL = "https://paste-your-tunnel-url-here"
+BACKEND_URL = "https://paste-tunnel-url-here"
 DISH_EMAIL = "your-dish-login"
 DISH_PASSWORD = "your-dish-password"
 ```
-Then **Reboot app**. This page will load the **full server.py chatbot** with PDF + video.
+3. **Save** → **Reboot app**
+
+You will see **v3.2** and the full orange chatbot with PDF + video.
 
 **Keep `start_backend.bat` running** on your PC while people use the link.
 """)

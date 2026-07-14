@@ -10,6 +10,17 @@ QUESTIONS_FILE = ROOT / "questions.json"
 app = Flask(__name__, template_folder=str(ROOT / "ui" / "templates"),
             static_folder=str(ROOT / "ui" / "static"))
 
+
+@app.after_request
+def _allow_streamlit_embed(response):
+    """Let Streamlit Cloud iframe /widget from any origin."""
+    response.headers.pop("X-Frame-Options", None)
+    response.headers["Content-Security-Policy"] = "frame-ancestors *"
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
+
 def _rag_ready():
     return all(importlib.util.find_spec(m) for m in ("chromadb", "sentence_transformers"))
 
@@ -766,12 +777,12 @@ def _lan_ip():
         s.close()
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", "5000"))
     ip = _lan_ip()
     print("=" * 60)
     print(" DISH Docs chatbot is running")
-    print("   Local  (this PC):        http://127.0.0.1:5000")
-    print("   Network (same Wi-Fi):    http://%s:5000" % ip)
-    print("   ^ share the Network link with colleagues on the same Wi-Fi.")
+    print("   Local  (this PC):        http://127.0.0.1:%d" % port)
+    print("   Network (same Wi-Fi):    http://%s:%d" % (ip, port))
+    print("   Widget URL:              http://127.0.0.1:%d/widget" % port)
     print("=" * 60)
-    # host=0.0.0.0 exposes it on the local network (not the public internet).
-    app.run(host="0.0.0.0", port=5000, threaded=True, use_reloader=False)
+    app.run(host="0.0.0.0", port=port, threaded=True, use_reloader=False)

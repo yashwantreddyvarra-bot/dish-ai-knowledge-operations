@@ -1,0 +1,6 @@
+@echo off
+title DISH server.py only
+cd /d "%~dp0"
+call venv\Scripts\activate
+python server.py
+pause

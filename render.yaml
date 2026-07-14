@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: dish-backend
+    runtime: docker
+    plan: free
+    branch: feature/dish-doc-automation
+    healthCheckPath: /
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: DISH_EMAIL
+        sync: false
+      - key: DISH_PASSWORD
+        sync: false
