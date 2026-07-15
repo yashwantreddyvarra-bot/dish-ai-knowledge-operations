@@ -2,7 +2,7 @@
 # Reads recipes/Q{NN}_capture.json (an ordered action plan), logs into DISH POS,
 # executes the actions, and writes output/manifest_q{NN}.json with screenshots
 # tagged to their script step number. One engine for all 25 questions.
-import sys, json, argparse, re, os, time
+import sys, json, argparse, re, os, time, base64
 from pathlib import Path
 from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parent.parent
@@ -38,7 +38,7 @@ def launch_chromium(playwright, headless=False, slow_mo=250):
     args = ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
             "--disable-blink-features=AutomationControlled"] if headless else []
     if headless:
-        slow_mo = min(slow_mo, 50)
+        slow_mo = 0
     print("ENGINE: chromium headless=%s" % headless, flush=True)
     return playwright.chromium.launch(headless=headless, slow_mo=slow_mo, args=args)
 
@@ -53,8 +53,17 @@ def new_browser_page(browser, viewport=None):
     ctx.add_init_script(
         "try{localStorage.setItem('uxp',JSON.stringify({lasthit:Date.now(),event:'consent_status'}));}catch(e){}"
     )
+    # Skip slow webfont downloads on cloud — speeds capture and avoids screenshot timeouts.
+    if cloud_headless():
+        def _route(route):
+            url = route.request.url.lower()
+            if route.request.resource_type == "font" or any(url.endswith(x) for x in (".woff", ".woff2", ".ttf", ".otf")):
+                route.abort()
+            else:
+                route.continue_()
+        ctx.route("**/*", _route)
     page = ctx.new_page()
-    page.set_default_timeout(8000)
+    page.set_default_timeout(12000 if cloud_headless() else 8000)
     return page
 
 
@@ -102,12 +111,39 @@ def _vars(s, V):
     return s
 
 def settle(page, ms=2400):
-    try: page.wait_for_load_state("load", timeout=8000)
+    if cloud_headless():
+        ms = min(ms, 900)
+    try: page.wait_for_load_state("load", timeout=6000)
     except Exception: pass
     for sel in ("mat-spinner", ".mat-spinner", "[class*=spinner]"):
-        try: page.wait_for_selector(sel, state="detached", timeout=2200)
+        try: page.wait_for_selector(sel, state="detached", timeout=1200)
         except Exception: pass
     page.wait_for_timeout(ms)
+
+
+def capture_screenshot(page, path):
+    """Screenshot without hanging on webfont loading (common on Render)."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    opts = {"timeout": 15000, "animations": "disabled", "caret": "hide"}
+    try:
+        page.screenshot(path=str(path), **opts)
+        return True
+    except Exception as e1:
+        try:
+            cdp = page.context.new_cdp_session(page)
+            data = cdp.send("Page.captureScreenshot", {"format": "png", "fromSurface": True})
+            path.write_bytes(base64.b64decode(data["data"]))
+            if "font" in str(e1).lower() or "Timeout" in str(e1):
+                print("  snap: used fast CDP capture (skipped font wait)")
+            return True
+        except Exception as e2:
+            try:
+                page.screenshot(path=str(path), timeout=8000, animations="disabled")
+                return True
+            except Exception as e3:
+                print("  snap fail:", str(e3)[:120])
+                return False
 
 def try_each(page, op, sels, t=3000, **kw):
     for s in sels:
@@ -420,26 +456,16 @@ def login(page):
         raise RuntimeError("DISH login failed — could not fill password field")
 
     # DISH uses the same Continue button for both steps (not "Log in").
-    submitted = False
-    for method in ("continue", "enter"):
-        try:
-            if method == "continue":
-                _click_continue(page)
-            else:
-                page.locator('#password').first.press("Enter")
-            page.wait_for_load_state("domcontentloaded", timeout=20000)
-            page.wait_for_timeout(1500)
-            if _wait_logged_in(page, timeout_ms=25000):
-                submitted = True
-                break
-        except Exception as e:
-            print("  login: submit via %s: %s" % (method, str(e)[:90]))
-
-    if not submitted:
-        err = _login_error_text(page)
-        _login_debug_shot(page, "fail")
-        hint = (" — %s" % err) if err else " — check DISH_EMAIL and DISH_PASSWORD on Render (no extra quotes)"
-        raise RuntimeError("DISH login failed%s" % hint)
+    _click_continue(page)
+    page.wait_for_load_state("domcontentloaded", timeout=15000)
+    if not _wait_logged_in(page, timeout_ms=18000):
+        page.locator('#password').first.press("Enter")
+        page.wait_for_timeout(1000)
+        if not _wait_logged_in(page, timeout_ms=12000):
+            err = _login_error_text(page)
+            _login_debug_shot(page, "fail")
+            hint = (" — %s" % err) if err else " — check DISH_EMAIL and DISH_PASSWORD on Render"
+            raise RuntimeError("DISH login failed%s" % hint)
 
 
 def run_actions(page, actions, V, shots):
@@ -523,8 +549,7 @@ def run_actions(page, actions, V, shots):
                 settle(page, a.get("settle", 2400))
             elif "snap" in a:
                 step = a["snap"]; path = a["_ssdir"] / ("step_%02d.png" % step)
-                try: page.screenshot(path=str(path))
-                except Exception as e: print("  snap fail", step, e)
+                capture_screenshot(page, path)
                 try: rel = str(path.relative_to(ROOT)).replace("\\", "/")
                 except Exception: rel = "output/screenshots/%s/%s" % (path.parent.name, path.name)
                 shot = {"step": step, "screenshot": rel, "url": page.url}
@@ -623,6 +648,10 @@ def _load_composed(guides, extra_vars):
 
 def main(qid=1, headless=False, slowmo=250, extra_vars=None, guides=None):
     _NOT_FOUND.clear()
+    if headless is None:
+        headless = cloud_headless(default=False)
+    if cloud_headless(default=headless):
+        slowmo = 0
     guides = guides or [qid]
     actions, V, caps, primary, wf_title, composite = _load_composed(guides, extra_vars)
     if extra_vars:

@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # ── URLs ──────────────────────────────────────────────────────────
 LOGIN_URL    = os.getenv("LOGIN_URL",    "https://netherlands.sandbox.myplace.dish.co/cm/login")
+# Optional Silo URL: set LOGIN_URL=https://sandbox.booqcloud.com/ on Render if needed.
 PRODUCTS_URL = os.getenv("PRODUCTS_URL", "https://netherlands.sandbox.myplace.dish.co/cm/products")
 MENUS_URL    = os.getenv("MENUS_URL",    "https://netherlands.sandbox.myplace.dish.co/cm/menus")
 
