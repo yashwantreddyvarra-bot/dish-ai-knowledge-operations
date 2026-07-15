@@ -4,7 +4,8 @@ import time
 import urllib.error
 import urllib.request
 
-TIMEOUT = 180
+TIMEOUT = 600
+BUILD_WAIT = 900
 
 
 def _url(base, path):
@@ -52,7 +53,7 @@ def build_status(base):
     return _get(base, "/api/build/status")
 
 
-def poll_build(base, on_log=None, max_wait=600):
+def poll_build(base, on_log=None, max_wait=BUILD_WAIT):
     """Wait for /api/build/status done=True. Yields status dicts."""
     deadline = time.time() + max_wait
     last = []

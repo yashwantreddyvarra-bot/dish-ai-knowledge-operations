@@ -7,8 +7,10 @@ RUN pip install --no-cache-dir -r requirements.txt \
     && playwright install chromium
 
 COPY . .
+RUN mkdir -p output/docs output/videos output/screenshots output/vframes output/vector_db
 
 ENV PYTHONUNBUFFERED=1
+ENV PORT=5000
 EXPOSE 5000
 
 CMD ["python", "server.py"]

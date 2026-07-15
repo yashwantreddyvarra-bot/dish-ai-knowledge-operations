@@ -25,7 +25,9 @@ from server import (
 )
 import streamlit_remote as remote
 
-APP_VERSION = "v3.2"
+APP_VERSION = "v3.3"
+RENDER_DEPLOY = "https://dashboard.render.com/select-repo?type=web"
+GITHUB_REPO = "yashwantreddyvarra-bot/dish-ai-knowledge-operations"
 
 st.set_page_config(
     page_title="DISH POS Assistant",
@@ -387,39 +389,38 @@ def _render_header():
 
 
 def _show_setup_help():
-    st.error("**PDF + video need BACKEND_URL** — Streamlit Cloud cannot run browser automation alone.")
+    st.error("**To get PDF + video + live builds for everyone worldwide, connect a 24/7 backend (5 min setup).**")
     st.markdown("""
-### Do this on your Windows PC (first time only)
+### Option 1 — Cloud backend (recommended: no PC needed)
 
-**A.** Get latest files — in your project folder, open Command Prompt and run:
-```
-git pull
-```
-*(Or re-download the project from GitHub if you don't use git)*
+1. **Deploy backend** → [Open Render.com](%s)  
+   - Connect GitHub → repo **`%s`** → branch **`feature/dish-doc-automation`**  
+   - Runtime: **Docker**  
+   - Add env vars: `OPENAI_API_KEY`, `DISH_EMAIL`, `DISH_PASSWORD`  
+   - Wait for deploy → copy URL like `https://dish-backend-xxxx.onrender.com`
 
-**B.** Double-click **`setup_windows.bat`** (installs packages — wait until it says done)
+2. **Test backend** — open `https://YOUR-RENDER-URL/widget` (orange chatbot should appear)
 
-**C.** Double-click **`start_backend.bat`**  
-Copy the **`https://....trycloudflare.com`** URL from the window
-
----
-
-### Then in Streamlit (share.streamlit.io)
-
-1. Your app → **Settings** → **Secrets**
-2. Paste:
+3. **Streamlit Secrets** (Settings → Secrets):
 ```toml
 OPENAI_API_KEY = "sk-your-key"
-BACKEND_URL = "https://paste-tunnel-url-here"
+BACKEND_URL = "https://YOUR-RENDER-URL.onrender.com"
 DISH_EMAIL = "your-dish-login"
 DISH_PASSWORD = "your-dish-password"
 ```
-3. **Save** → **Reboot app**
 
-You will see **v3.2** and the full orange chatbot with PDF + video.
+4. **Save → Reboot app** → share your `.streamlit.app` link with anyone
 
-**Keep `start_backend.bat` running** on your PC while people use the link.
-""")
+---
+
+### Option 2 — Your Windows PC (if Render fails)
+
+1. Run **`setup_windows.bat`** then **`start_backend.bat`**
+2. Copy the `https://....trycloudflare.com` URL into `BACKEND_URL` in Secrets
+3. Keep your PC on while people use the app
+
+See **`START_HERE.txt`** in the GitHub repo for full instructions.
+""" % (RENDER_DEPLOY, GITHUB_REPO))
 
 
 def main():

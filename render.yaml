@@ -4,7 +4,7 @@ services:
     runtime: docker
     plan: free
     branch: feature/dish-doc-automation
-    healthCheckPath: /
+    healthCheckPath: /health
     envVars:
       - key: OPENAI_API_KEY
         sync: false
@@ -12,3 +12,5 @@ services:
         sync: false
       - key: DISH_PASSWORD
         sync: false
+      - key: LLM_MODEL
+        value: gpt-4o

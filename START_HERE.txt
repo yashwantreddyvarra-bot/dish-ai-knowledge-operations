@@ -1,0 +1,87 @@
+================================================================================
+  DISH Assistant — FINAL SETUP (share link worldwide + PDF + video on each ask)
+================================================================================
+
+WHAT YOU GET
+  • Public Streamlit link — anyone anywhere can open it
+  • Ask a question → steps + PDF + video (same as server.py on desktop)
+  • No need to keep your PC on (uses cloud backend on Render)
+
+YOU NEED (one time, ~15 minutes)
+  1. GitHub account (you have: yashwantreddyvarra-bot)
+  2. Streamlit Cloud (you have: share.streamlit.io)
+  3. Render.com account (free signup) — runs server.py 24/7 in the cloud
+
+================================================================================
+STEP 1 — Deploy backend on Render (runs automation 24/7)
+================================================================================
+
+  A. Open in browser:
+     https://dashboard.render.com/select-repo?type=web
+
+  B. Connect GitHub → pick repo:
+     yashwantreddyvarra-bot / dish-ai-knowledge-operations
+
+  C. Settings:
+     Branch:     feature/dish-doc-automation
+     Runtime:    Docker
+     Name:       dish-backend
+
+  D. Add Environment Variables (click Add Environment Variable):
+     OPENAI_API_KEY   = your OpenAI key (sk-...)
+     DISH_EMAIL       = your DISH sandbox login email
+     DISH_PASSWORD    = your DISH sandbox password
+
+  E. Click Create Web Service → wait 10–20 min for first deploy
+
+  F. When live, copy your Render URL, e.g.:
+     https://dish-backend-xxxx.onrender.com
+
+  G. Test in browser:
+     https://dish-backend-xxxx.onrender.com/widget
+     (you should see the orange DISH chatbot)
+
+================================================================================
+STEP 2 — Connect Streamlit to backend
+================================================================================
+
+  A. Go to: https://share.streamlit.io → your app → Settings → Secrets
+
+  B. Paste (use YOUR Render URL):
+
+     OPENAI_API_KEY = "sk-your-key"
+     BACKEND_URL = "https://dish-backend-xxxx.onrender.com"
+     DISH_EMAIL = "your-dish-email"
+     DISH_PASSWORD = "your-dish-password"
+
+  C. Save → Reboot app (⋮ menu → Reboot app)
+
+  D. Open your Streamlit link — you should see v3.3 and the full widget inside
+
+================================================================================
+STEP 3 — Share with anyone
+================================================================================
+
+  Send your Streamlit link, e.g.:
+  https://dish-ai-knowledge-operations-xxxxx.streamlit.app
+
+  Friends in Hannover, India, anywhere — no Wi-Fi, no login needed.
+
+================================================================================
+HOW TO USE
+================================================================================
+
+  1. Pick a question from dropdown OR type your own
+  2. Wait 1–5 minutes (first build takes longer)
+  3. Answer appears with steps + PDF button + video player
+
+================================================================================
+IF SOMETHING FAILS
+================================================================================
+
+  • Still says "No BACKEND_URL" → fix Secrets, Reboot Streamlit
+  • Backend error → check Render logs (Render dashboard → Logs)
+  • Build timeout → Render free/starter may need upgrade for long captures
+  • PC alternative → double-click start_backend.bat, use tunnel URL as BACKEND_URL
+
+================================================================================

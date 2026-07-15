@@ -34,6 +34,10 @@ def save_questions(qs):
 def index():
     return render_template("index.html")
 
+@app.route("/health")
+def health():
+    return jsonify({"ok": True, "service": "dish-backend", "build_running": BUILD.get("running", False)})
+
 @app.route("/widget")
 def widget():
     # Compact, responsive floating chat widget (Style A). Same-origin with the APIs,
