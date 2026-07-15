@@ -78,8 +78,7 @@ def solve(task, qid=99, max_steps=12, headless=False):
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
         b = engine.launch_chromium(p, headless=headless, slow_mo=250)
-        page = b.new_context(viewport={"width": 1440, "height": 900}).new_page()
-        page.set_default_timeout(8000)
+        page = engine.new_browser_page(b)
         try:
             engine.login(page)
             for step in range(1, max_steps + 1):

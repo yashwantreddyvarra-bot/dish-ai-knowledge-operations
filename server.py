@@ -784,6 +784,11 @@ def _lan_ip():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "5000"))
+    _em = (os.environ.get("DISH_EMAIL") or "").strip()
+    print("DISH credentials: email=%s password=%s" % (
+        _em or "(missing — set DISH_EMAIL on Render)",
+        "set" if (os.environ.get("DISH_PASSWORD") or "").strip() else "(missing — set DISH_PASSWORD)",
+    ))
     ip = _lan_ip()
     print("=" * 60)
     print(" DISH Docs chatbot is running")

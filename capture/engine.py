@@ -42,6 +42,17 @@ def launch_chromium(playwright, headless=False, slow_mo=250):
     return playwright.chromium.launch(headless=headless, slow_mo=slow_mo, args=args)
 
 
+def new_browser_page(browser, viewport=None):
+    """New page with consent pre-accepted so the login form is not blocked."""
+    ctx = browser.new_context(viewport=viewport or {"width": 1440, "height": 900})
+    ctx.add_init_script(
+        "try{localStorage.setItem('uxp',JSON.stringify({lasthit:Date.now(),event:'consent_status'}));}catch(e){}"
+    )
+    page = ctx.new_page()
+    page.set_default_timeout(8000)
+    return page
+
+
 def _vhint(sels):
     """Turn a selector list into a human description for the model,
     e.g. text=Product group / :text-is("Allergens") / button:has-text("Save") -> the label."""
@@ -212,10 +223,89 @@ def select_field(page, trigger, prefs):
     except Exception: pass
     return None
 
+def _login_creds():
+    """Read credentials at call time (Render env vars may load after import)."""
+    email = (os.getenv("DISH_EMAIL") or EMAIL or "").strip()
+    password = (os.getenv("DISH_PASSWORD") or PASSWORD or "").strip()
+    return email, password
+
+
+def _fill_login_field(page, selectors, value, label="field"):
+    if not value:
+        print("  login: missing %s (set DISH_EMAIL / DISH_PASSWORD)" % label)
+        return False
+    for s in selectors:
+        try:
+            loc = page.locator(s).first
+            loc.wait_for(state="visible", timeout=5000)
+            loc.click(timeout=2000)
+            loc.fill("")
+            loc.fill(value)
+            try:
+                loc.dispatch_event("input")
+                loc.dispatch_event("change")
+            except Exception:
+                pass
+            got = (loc.input_value(timeout=1500) or "").strip()
+            if got and (got == value or got.endswith(value.split("@")[-1])):
+                print("  login: filled %s" % label)
+                return True
+        except Exception:
+            continue
+    for text in (("Email address", "Email") if label == "email" else ("Password",)):
+        try:
+            loc = page.get_by_label(text, exact=False).first
+            loc.wait_for(state="visible", timeout=3000)
+            loc.click()
+            loc.fill(value)
+            print("  login: filled %s via label" % label)
+            return True
+        except Exception:
+            pass
+    try:
+        ph = "Your email address" if label == "email" else "Your password"
+        loc = page.get_by_placeholder(ph).first
+        loc.wait_for(state="visible", timeout=3000)
+        loc.click()
+        loc.fill(value)
+        print("  login: filled %s via placeholder" % label)
+        return True
+    except Exception:
+        pass
+    print("  login: FAILED to fill %s" % label)
+    return False
+
+
+def _click_login_button(page, labels=("Continue", "Log in", "Login")):
+    for text in labels:
+        for sel in ('[data-testid="continueButton"]', 'button[type="submit"]',
+                    'button:has-text("%s")' % text):
+            try:
+                loc = page.locator(sel).first
+                loc.wait_for(state="visible", timeout=3000)
+                loc.click(timeout=3000)
+                print("  login: clicked %s" % text)
+                return True
+            except Exception:
+                continue
+    return False
+
+
 def _dismiss_consent(page):
-    """The DISH login page shows a Usercentrics cookie-consent banner that overlays the form
-    and blocks typing. Dismiss it (decline non-essential; fall back to accept) before login,
-    otherwise the email field never gets filled and every screenshot is just the login page."""
+    """Dismiss Usercentrics cookie banner — it blocks the login form."""
+    try:
+        page.evaluate("""() => {
+            if (window.UC_UI && UC_UI.acceptAllConsents) {
+                UC_UI.acceptAllConsents();
+                return true;
+            }
+            return false;
+        }""")
+        page.wait_for_timeout(500)
+        print("  login: dismissed consent via UC_UI")
+        return True
+    except Exception:
+        pass
     for sel in ('button:has-text("Deny")', 'button:has-text("Decline")',
                 'button:has-text("Reject all")', 'button:has-text("Accept All")',
                 'button:has-text("Accept all")', 'button:has-text("Agree")',
@@ -231,14 +321,42 @@ def _dismiss_consent(page):
             continue
     return False
 
+
+def _logged_in(page):
+    if "/login" not in (page.url or "").lower():
+        return True
+    try:
+        page.locator('span:has-text("Products"), app-nav-link').first.wait_for(state="visible", timeout=4000)
+        return True
+    except Exception:
+        return False
+
+
 def login(page):
-    page.goto(LOGIN_URL, wait_until="domcontentloaded"); settle(page, 1200)
-    _dismiss_consent(page)                        # clear the cookie banner FIRST — it blocks the form
-    try_each(page, "fill", ['input[type="email"]', 'input'], value=EMAIL)
-    try_each(page, "click", ['button:has-text("Continue")', 'button[type="submit"]']); page.wait_for_timeout(1500)
-    _dismiss_consent(page)                        # in case it reappears on the password step
-    try_each(page, "fill", ['input[type="password"]'], value=PASSWORD)
-    try_each(page, "click", ['button:has-text("Log in")', 'button[type="submit"]']); settle(page, 3000)
+    email, password = _login_creds()
+    print("  login: using %s" % (email or "(no email configured)"))
+    page.goto(LOGIN_URL, wait_until="domcontentloaded"); settle(page, 1500)
+    _dismiss_consent(page)
+    _fill_login_field(page, [
+        '#username', 'input#username', '[formcontrolname="username"]',
+        'input[placeholder="Your email address"]', 'input[type="email"]',
+    ], email, label="email")
+    _click_login_button(page, labels=("Continue",))
+    page.wait_for_timeout(2000)
+    _dismiss_consent(page)
+    try:
+        page.locator('#password, [formcontrolname="password"]').first.wait_for(state="visible", timeout=8000)
+    except Exception:
+        print("  login: password field did not appear")
+    _fill_login_field(page, [
+        '#password', 'input#password', '[formcontrolname="password"]',
+        'input[type="password"]', 'input[placeholder="Your password"]',
+    ], password, label="password")
+    _click_login_button(page, labels=("Log in", "Login", "Continue"))
+    settle(page, 4000)
+    if not _logged_in(page):
+        raise RuntimeError("DISH login failed — check DISH_EMAIL and DISH_PASSWORD on Render")
+
 
 def run_actions(page, actions, V, shots):
     for a in actions:
@@ -440,8 +558,7 @@ def main(qid=1, headless=False, slowmo=250, extra_vars=None, guides=None):
           " [one continuous session]" if composite else "")); sys.stdout.flush()
     with sync_playwright() as p:
         b = launch_chromium(p, headless=headless, slow_mo=slowmo)
-        page = b.new_context(viewport={"width": 1440, "height": 900}).new_page()
-        page.set_default_timeout(8000)
+        page = new_browser_page(b)
         try:
             login(page)
             run_actions(page, actions, V, shots)
