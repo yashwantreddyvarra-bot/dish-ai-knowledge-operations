@@ -16,3 +16,5 @@ services:
         value: gpt-4o
       - key: CAPTURE_HEADLESS
         value: "true"
+      - key: DEMO_PRODUCT_NAME
+        value: Sparkling Water

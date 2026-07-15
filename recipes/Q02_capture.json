@@ -1,7 +1,7 @@
 {
   "qid": 2, "title": "Adjusting product details in the list view",
   "workflow_title": "Adjusting product details in the list view",
-  "vars": {"NAME": "Bombay Gin", "PRICE": "20.00"},
+  "vars": {"NAME": "Sparkling Water", "PRICE": "3.50"},
   "actions": [
     {"goto": "PRODUCTS", "settle": 2600}, {"snap": 1, "highlight": ["app-nav-link[l10n=\"LAYOUT.LEFT_MENU.PRODUCTS\"]", ":nth-match(app-nav-link:has-text(\"Products\"), 2)", "span:text-is(\"Products\")"], "target": "sidebar: Products (sub-item)"},
     {"fill": ["input[type=\"search\"]", "input[placeholder*=\"Search\" i]", "input[placeholder*=\"search\" i]"], "value": "{NAME}"}, {"key": "Enter"}, {"wait": 2400}, {"snap": 2, "highlight": ["input[type=\"search\"]", "input[placeholder*=\"Search\" i]"]},

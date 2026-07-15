@@ -7,7 +7,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from config.settings import LOGIN_URL, PRODUCTS_URL, MENUS_URL, EMAIL, PASSWORD
+from config.settings import LOGIN_URL, PRODUCTS_URL, MENUS_URL, EMAIL, PASSWORD, CATALOG_FALLBACKS
 from playwright.sync_api import sync_playwright
 
 URLS = {"LOGIN": LOGIN_URL, "PRODUCTS": PRODUCTS_URL, "MENUS": MENUS_URL,
@@ -57,7 +57,10 @@ def new_browser_page(browser, viewport=None):
     if cloud_headless():
         def _route(route):
             url = route.request.url.lower()
-            if route.request.resource_type == "font" or any(url.endswith(x) for x in (".woff", ".woff2", ".ttf", ".otf")):
+            rtype = route.request.resource_type
+            if rtype == "font" or any(url.endswith(x) for x in (".woff", ".woff2", ".ttf", ".otf")):
+                route.abort()
+            elif rtype in ("media",) or url.endswith((".mp4", ".webm", ".avi")):
                 route.abort()
             else:
                 route.continue_()
@@ -99,7 +102,93 @@ _CANDS_JS = """() => {
   return out.slice(0,60);
 }"""
 
-def ss_dir(qid): d = ROOT / "output" / "screenshots" / ("q%02d" % qid); d.mkdir(parents=True, exist_ok=True); return d
+SEARCH_SELS = [
+    'input[type="search"]', 'input[placeholder*="Search" i]', 'input[placeholder*="search" i]',
+    'input[placeholder*="earch" i]', '[class*="search"] input',
+]
+
+
+def _row_has_name(page, name, rowsel):
+    if not name:
+        return False
+    try:
+        rows = page.locator(rowsel)
+        cnt = min(rows.count(), 15)
+        needle = name.lower()
+        for i in range(cnt):
+            if needle in (rows.nth(i).inner_text(timeout=1500) or "").lower():
+                return True
+    except Exception:
+        pass
+    return False
+
+
+def _search_catalog(page, term):
+    if not term:
+        return False
+    for s in SEARCH_SELS:
+        try:
+            loc = page.locator(s).first
+            loc.wait_for(state="visible", timeout=2000)
+            loc.click()
+            loc.fill("")
+            loc.fill(term)
+            page.keyboard.press("Enter")
+            page.wait_for_timeout(1200 if cloud_headless() else 1800)
+            return True
+        except Exception:
+            continue
+    return False
+
+
+def _first_catalog_row_name(page, rowsel):
+    try:
+        rows = page.locator(rowsel)
+        cnt = min(rows.count(), 15)
+        for i in range(cnt):
+            text = (rows.nth(i).inner_text(timeout=1500) or "").strip()
+            if text and len(text) > 2 and "no results" not in text.lower():
+                return text.split("\n")[0].strip()[:60]
+    except Exception:
+        pass
+    return ""
+
+
+def _resolve_catalog_product(page, preferred, rowsel, V):
+    """Pick a real sandbox product when the recipe name is missing from the catalogue."""
+    preferred = (preferred or "").strip()
+    if not preferred:
+        first = _first_catalog_row_name(page, rowsel)
+        if first:
+            V["NAME"] = first
+            print("  catalog: auto-picked '%s'" % first)
+            return True
+        return False
+
+    if _row_has_name(page, preferred, rowsel):
+        return True
+
+    seen = set()
+    for term in [preferred] + list(CATALOG_FALLBACKS):
+        term = (term or "").strip()
+        if not term or term.lower() in seen:
+            continue
+        seen.add(term.lower())
+        if term != preferred:
+            _search_catalog(page, term)
+        if _row_has_name(page, term, rowsel):
+            if term != preferred:
+                print("  catalog: '%s' not in sandbox — using '%s'" % (preferred, term))
+            V["NAME"] = term
+            return True
+
+    first = _first_catalog_row_name(page, rowsel)
+    if first:
+        V["NAME"] = first
+        print("  catalog: '%s' not found — using first row '%s'" % (preferred or "?", first))
+        return True
+    return False
+
 def manifest_path(qid): return ROOT / "output" / ("manifest_q%02d.json" % qid)
 
 # Set by a run when a product the user named isn't in the catalogue (so the build can
@@ -499,21 +588,10 @@ def run_actions(page, actions, V, shots):
                     try_each(page, "click", sels, t=1500)
                     page.wait_for_timeout(300)
             elif "assert_found" in a:
-                # After a search, confirm a row actually matches the product. If not, the
-                # product isn't in the catalogue, so we stop and let the build reply smartly
-                # instead of silently editing the wrong (first) row.
                 name = _vars(a["assert_found"], V)
                 rowsel = a.get("rows", "tbody tr")
-                found = False
-                try:
-                    rows = page.locator(rowsel); cnt = min(rows.count(), 12)
-                    for i in range(cnt):
-                        if name.lower() in (rows.nth(i).inner_text(timeout=1500) or "").lower():
-                            found = True; break
-                except Exception:
-                    found = True   # never block the build on a checker error
-                if not found:
-                    raise RuntimeError("PRODUCT_NOT_FOUND:%s" % name)
+                if not _resolve_catalog_product(page, name, rowsel, V):
+                    raise RuntimeError("PRODUCT_NOT_FOUND:%s" % (name or "catalogue empty"))
             elif "tick_each" in a:
                 # Tick a checkbox for each item in a comma list (e.g. {ALLERGENS}="Milk, Gluten").
                 # Best-effort: tries several selector shapes per item, never fails the build.

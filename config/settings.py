@@ -27,6 +27,11 @@ PASSWORD = os.getenv("DISH_PASSWORD", "booq_en_video@dish.digital")
 # ── Product to create ─────────────────────────────────────────────
 PRODUCT_NAME  = os.getenv("PRODUCT_NAME",  "Sparkling Water")
 PRODUCT_PRICE = os.getenv("PRODUCT_PRICE", "3.50")
+# Product used when a recipe names something missing from the sandbox catalogue.
+DEMO_PRODUCT_NAME = os.getenv("DEMO_PRODUCT_NAME", PRODUCT_NAME)
+CATALOG_FALLBACKS = [
+    DEMO_PRODUCT_NAME, "Sparkling Water", "Apple", "Coca-Cola", "Water", "Cola", "Fanta",
+]
 
 # ── Current UI selection preferences (verified from front-end) ─────
 PRODUCT_CATEGORY_PREF = ["Soft Drinks", "Drinks", "Dranken", "Food", "Miscellaneous"]
