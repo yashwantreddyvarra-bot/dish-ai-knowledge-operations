@@ -77,7 +77,7 @@ def solve(task, qid=99, max_steps=12, headless=False):
     shots, captions, history, actions = [], [], [], []
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
-        b = p.chromium.launch(headless=headless, slow_mo=250)
+        b = engine.launch_chromium(p, headless=headless, slow_mo=250)
         page = b.new_context(viewport={"width": 1440, "height": 900}).new_page()
         page.set_default_timeout(8000)
         try:

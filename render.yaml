@@ -14,3 +14,5 @@ services:
         sync: false
       - key: LLM_MODEL
         value: gpt-4o
+      - key: CAPTURE_HEADLESS
+        value: "true"

@@ -2,7 +2,7 @@
 # Reads recipes/Q{NN}_capture.json (an ordered action plan), logs into DISH POS,
 # executes the actions, and writes output/manifest_q{NN}.json with screenshots
 # tagged to their script step number. One engine for all 25 questions.
-import sys, json, argparse, re
+import sys, json, argparse, re, os
 from pathlib import Path
 from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parent.parent
@@ -13,6 +13,33 @@ from playwright.sync_api import sync_playwright
 URLS = {"LOGIN": LOGIN_URL, "PRODUCTS": PRODUCTS_URL, "MENUS": MENUS_URL,
         "CREATE": PRODUCTS_URL.rstrip("/") + "/(aside_content:createproduct)",
         "DASHBOARD": LOGIN_URL.replace("/login", "/dashboard")}
+
+
+def cloud_headless(default=False):
+    """True on Render / Streamlit / Linux servers without a display."""
+    flag = os.environ.get("CAPTURE_HEADLESS", "").strip().lower()
+    if flag in ("1", "true", "yes", "on"):
+        return True
+    if flag in ("0", "false", "no", "off"):
+        return False
+    if os.environ.get("RENDER") or os.environ.get("RENDER_SERVICE_ID"):
+        return True
+    if os.environ.get("STREAMLIT_SERVER_PORT"):
+        return True
+    if sys.platform.startswith("linux") and not os.environ.get("DISPLAY"):
+        return True
+    return default
+
+
+def launch_chromium(playwright, headless=False, slow_mo=250):
+    """Launch Chromium; cloud/Docker needs headless + no-sandbox."""
+    if headless is None:
+        headless = cloud_headless(default=False)
+    args = ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"] if headless else []
+    if headless:
+        slow_mo = min(slow_mo, 50)
+    print("ENGINE: chromium headless=%s" % headless, flush=True)
+    return playwright.chromium.launch(headless=headless, slow_mo=slow_mo, args=args)
 
 
 def _vhint(sels):
@@ -412,7 +439,7 @@ def main(qid=1, headless=False, slowmo=250, extra_vars=None, guides=None):
     print("ENGINE: live capture for %s (%s)%s" % (label, wf_title,
           " [one continuous session]" if composite else "")); sys.stdout.flush()
     with sync_playwright() as p:
-        b = p.chromium.launch(headless=headless, slow_mo=slowmo)
+        b = launch_chromium(p, headless=headless, slow_mo=slowmo)
         page = b.new_context(viewport={"width": 1440, "height": 900}).new_page()
         page.set_default_timeout(8000)
         try:

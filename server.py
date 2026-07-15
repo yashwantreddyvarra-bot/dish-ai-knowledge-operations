@@ -327,8 +327,9 @@ BUILD = {"running": False, "qid": None, "log": [], "done": False, "output": None
 
 
 def _capture_headless():
-    """Streamlit Cloud has no display — Playwright must run headless."""
-    return bool(os.environ.get("STREAMLIT_SERVER_PORT"))
+    """Cloud/server has no display — Playwright must run headless."""
+    from capture.engine import cloud_headless
+    return cloud_headless(default=False)
 
 
 def _build_extra_vars(qid, request_text):
@@ -524,6 +525,7 @@ def _run_build(qid, do_capture, extra_vars=None, guides=None, headless=None):
             if do_capture:
                 try:
                     print("Logging into DISH POS and capturing every step (one session)...")
+                    print("Capture mode: headless=%s" % headless)
                     from capture import engine
                     res = engine.main(qid=qid, headless=headless, extra_vars=extra_vars, guides=guides)
                     if isinstance(res, dict) and res.get("name"):
@@ -685,7 +687,7 @@ def _run_live_build(task, section=None):
         with contextlib.redirect_stdout(_Tee()):
             print("Brand-new question -> the live agent will attempt it on the SANDBOX.")
             from intelligence import live_agent
-            man = live_agent.solve(task, qid=LIVE_TMP_QID, headless=False)
+            man = live_agent.solve(task, qid=LIVE_TMP_QID, headless=_capture_headless())
             if not man or man.get("error"):
                 BUILD["output"] = {"error": (man or {}).get("error", "live agent failed"), "live": True}
                 return
