@@ -2,7 +2,7 @@
 # Reads recipes/Q{NN}_capture.json (an ordered action plan), logs into DISH POS,
 # executes the actions, and writes output/manifest_q{NN}.json with screenshots
 # tagged to their script step number. One engine for all 25 questions.
-import sys, json, argparse, re, os
+import sys, json, argparse, re, os, time
 from pathlib import Path
 from datetime import datetime, timezone
 ROOT = Path(__file__).resolve().parent.parent
@@ -35,7 +35,8 @@ def launch_chromium(playwright, headless=False, slow_mo=250):
     """Launch Chromium; cloud/Docker needs headless + no-sandbox."""
     if headless is None:
         headless = cloud_headless(default=False)
-    args = ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"] if headless else []
+    args = ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
+            "--disable-blink-features=AutomationControlled"] if headless else []
     if headless:
         slow_mo = min(slow_mo, 50)
     print("ENGINE: chromium headless=%s" % headless, flush=True)
@@ -44,7 +45,11 @@ def launch_chromium(playwright, headless=False, slow_mo=250):
 
 def new_browser_page(browser, viewport=None):
     """New page with consent pre-accepted so the login form is not blocked."""
-    ctx = browser.new_context(viewport=viewport or {"width": 1440, "height": 900})
+    ctx = browser.new_context(
+        viewport=viewport or {"width": 1440, "height": 900},
+        user_agent=("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"),
+    )
     ctx.add_init_script(
         "try{localStorage.setItem('uxp',JSON.stringify({lasthit:Date.now(),event:'consent_status'}));}catch(e){}"
     )
@@ -225,49 +230,46 @@ def select_field(page, trigger, prefs):
 
 def _login_creds():
     """Read credentials at call time (Render env vars may load after import)."""
-    email = (os.getenv("DISH_EMAIL") or EMAIL or "").strip()
-    password = (os.getenv("DISH_PASSWORD") or PASSWORD or "").strip()
+    email = (os.getenv("DISH_EMAIL") or EMAIL or "").strip().strip('"').strip("'")
+    password = (os.getenv("DISH_PASSWORD") or PASSWORD or "").strip().strip('"').strip("'")
     return email, password
 
 
-def _fill_login_field(page, selectors, value, label="field"):
+def _angular_fill(page, selectors, value, label="field"):
+    """Fill Angular reactive form fields (plain fill() often does not bind)."""
     if not value:
         print("  login: missing %s (set DISH_EMAIL / DISH_PASSWORD)" % label)
         return False
     for s in selectors:
         try:
             loc = page.locator(s).first
-            loc.wait_for(state="visible", timeout=5000)
+            loc.wait_for(state="visible", timeout=10000)
             loc.click(timeout=2000)
             loc.fill("")
-            loc.fill(value)
+            loc.press_sequentially(value, delay=35)
+            loc.evaluate("""(el, val) => {
+                el.value = val;
+                el.dispatchEvent(new Event('input', {bubbles: true}));
+                el.dispatchEvent(new Event('change', {bubbles: true}));
+                el.dispatchEvent(new Event('blur', {bubbles: true}));
+            }""", value)
+            got = ""
             try:
-                loc.dispatch_event("input")
-                loc.dispatch_event("change")
+                got = (loc.input_value(timeout=2000) or "").strip()
             except Exception:
-                pass
-            got = (loc.input_value(timeout=1500) or "").strip()
-            if got and (got == value or got.endswith(value.split("@")[-1])):
+                got = value if label == "password" else ""
+            ok = (label == "password" and len(got) == len(value)) or got == value
+            if ok or (label == "email" and "@" in got):
                 print("  login: filled %s" % label)
                 return True
         except Exception:
             continue
-    for text in (("Email address", "Email") if label == "email" else ("Password",)):
-        try:
-            loc = page.get_by_label(text, exact=False).first
-            loc.wait_for(state="visible", timeout=3000)
-            loc.click()
-            loc.fill(value)
-            print("  login: filled %s via label" % label)
-            return True
-        except Exception:
-            pass
+    ph = "Your email address" if label == "email" else "Your password"
     try:
-        ph = "Your email address" if label == "email" else "Your password"
         loc = page.get_by_placeholder(ph).first
-        loc.wait_for(state="visible", timeout=3000)
+        loc.wait_for(state="visible", timeout=5000)
         loc.click()
-        loc.fill(value)
+        loc.press_sequentially(value, delay=35)
         print("  login: filled %s via placeholder" % label)
         return True
     except Exception:
@@ -276,19 +278,79 @@ def _fill_login_field(page, selectors, value, label="field"):
     return False
 
 
-def _click_login_button(page, labels=("Continue", "Log in", "Login")):
-    for text in labels:
-        for sel in ('[data-testid="continueButton"]', 'button[type="submit"]',
-                    'button:has-text("%s")' % text):
-            try:
-                loc = page.locator(sel).first
-                loc.wait_for(state="visible", timeout=3000)
-                loc.click(timeout=3000)
-                print("  login: clicked %s" % text)
-                return True
-            except Exception:
-                continue
+def _click_continue(page):
+    """DISH login uses one Continue button for email AND password steps."""
+    for sel in ('[data-testid="continueButton"]', 'button.add-item-button[type="submit"]',
+                'button:has-text("Continue")', 'button[type="submit"]'):
+        try:
+            loc = page.locator(sel).first
+            loc.wait_for(state="visible", timeout=5000)
+            loc.click(timeout=5000)
+            print("  login: clicked Continue")
+            return True
+        except Exception:
+            continue
     return False
+
+
+def _wait_password_visible(page, timeout_ms=15000):
+    page.wait_for_function("""() => {
+        const el = document.querySelector('#password');
+        if (!el) return false;
+        const st = window.getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        return st.display !== 'none' && st.visibility !== 'hidden'
+               && r.width > 8 && r.height > 8;
+    }""", timeout=timeout_ms)
+
+
+def _login_error_text(page):
+    for sel in ('.login-error', '.form-group-password .login-error',
+                '[data-testid="passwordAlertIcon"]'):
+        try:
+            t = page.locator(sel).first.inner_text(timeout=800).strip()
+            if t:
+                return t
+        except Exception:
+            pass
+    return ""
+
+
+def _wait_logged_in(page, timeout_ms=35000):
+    """Wait until we leave the login screen (URL or nav chrome)."""
+    deadline = time.time() + timeout_ms / 1000.0
+    dash = re.compile(r".*/(dashboard|products|menus)(/|$|\?)", re.I)
+    while time.time() < deadline:
+        url = page.url or ""
+        if dash.search(url):
+            settle(page, 1500)
+            print("  login: reached %s" % url[:80])
+            return True
+        if "/login" not in url.lower() and "myplace.dish.co" in url:
+            settle(page, 1500)
+            print("  login: left login page -> %s" % url[:80])
+            return True
+        for sel in ('app-nav-link', 'app-left-menu', 'span:has-text("Products")',
+                    'text=Products', '[class*="left-menu"]'):
+            try:
+                if page.locator(sel).first.is_visible(timeout=600):
+                    print("  login: dashboard nav visible")
+                    return True
+            except Exception:
+                pass
+        page.wait_for_timeout(500)
+    return False
+
+
+def _login_debug_shot(page, tag="fail"):
+    try:
+        d = ROOT / "output" / "screenshots"
+        d.mkdir(parents=True, exist_ok=True)
+        path = d / ("login_%s.png" % tag)
+        page.screenshot(path=str(path), full_page=True)
+        print("  login: debug screenshot -> %s" % path)
+    except Exception:
+        pass
 
 
 def _dismiss_consent(page):
@@ -322,40 +384,62 @@ def _dismiss_consent(page):
     return False
 
 
-def _logged_in(page):
-    if "/login" not in (page.url or "").lower():
-        return True
-    try:
-        page.locator('span:has-text("Products"), app-nav-link').first.wait_for(state="visible", timeout=4000)
-        return True
-    except Exception:
-        return False
-
-
 def login(page):
     email, password = _login_creds()
-    print("  login: using %s" % (email or "(no email configured)"))
-    page.goto(LOGIN_URL, wait_until="domcontentloaded"); settle(page, 1500)
+    if not email or not password:
+        raise RuntimeError("DISH login failed — DISH_EMAIL or DISH_PASSWORD is empty on Render")
+    print("  login: using %s (password len=%d)" % (email, len(password)))
+    page.goto(LOGIN_URL, wait_until="domcontentloaded")
+    settle(page, 2000)
     _dismiss_consent(page)
-    _fill_login_field(page, [
+
+    if not _angular_fill(page, [
         '#username', 'input#username', '[formcontrolname="username"]',
-        'input[placeholder="Your email address"]', 'input[type="email"]',
-    ], email, label="email")
-    _click_login_button(page, labels=("Continue",))
-    page.wait_for_timeout(2000)
-    _dismiss_consent(page)
+        'input[placeholder="Your email address"]',
+    ], email, label="email"):
+        _login_debug_shot(page, "email_fail")
+        raise RuntimeError("DISH login failed — could not fill email field")
+
+    if not _click_continue(page):
+        raise RuntimeError("DISH login failed — Continue button not found (email step)")
+
     try:
-        page.locator('#password, [formcontrolname="password"]').first.wait_for(state="visible", timeout=8000)
+        _wait_password_visible(page, timeout_ms=20000)
     except Exception:
-        print("  login: password field did not appear")
-    _fill_login_field(page, [
+        _login_debug_shot(page, "no_password_field")
+        raise RuntimeError("DISH login failed — password field never appeared after email")
+
+    page.wait_for_timeout(800)
+    _dismiss_consent(page)
+
+    if not _angular_fill(page, [
         '#password', 'input#password', '[formcontrolname="password"]',
         'input[type="password"]', 'input[placeholder="Your password"]',
-    ], password, label="password")
-    _click_login_button(page, labels=("Log in", "Login", "Continue"))
-    settle(page, 4000)
-    if not _logged_in(page):
-        raise RuntimeError("DISH login failed — check DISH_EMAIL and DISH_PASSWORD on Render")
+    ], password, label="password"):
+        _login_debug_shot(page, "password_fail")
+        raise RuntimeError("DISH login failed — could not fill password field")
+
+    # DISH uses the same Continue button for both steps (not "Log in").
+    submitted = False
+    for method in ("continue", "enter"):
+        try:
+            if method == "continue":
+                _click_continue(page)
+            else:
+                page.locator('#password').first.press("Enter")
+            page.wait_for_load_state("domcontentloaded", timeout=20000)
+            page.wait_for_timeout(1500)
+            if _wait_logged_in(page, timeout_ms=25000):
+                submitted = True
+                break
+        except Exception as e:
+            print("  login: submit via %s: %s" % (method, str(e)[:90]))
+
+    if not submitted:
+        err = _login_error_text(page)
+        _login_debug_shot(page, "fail")
+        hint = (" — %s" % err) if err else " — check DISH_EMAIL and DISH_PASSWORD on Render (no extra quotes)"
+        raise RuntimeError("DISH login failed%s" % hint)
 
 
 def run_actions(page, actions, V, shots):
